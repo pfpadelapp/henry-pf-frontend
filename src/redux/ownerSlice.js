@@ -1,16 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit'
+import { getOwner } from './ownerSliceActions'
 
 export const ownerSlice = createSlice({
-    name: 'owners',
-    initialState:{
-        owner: []
-    },
-    reducers:{
-        getOwners: (state, action) => {
-            state.owner = action.payload;
-        }
+  name: 'owners',
+  initialState: {
+    owner: []
+  },
+  reducers: {},
+  extraReducers: {
+    [getOwner.fullfilled]: (state, action) => {
+      state.owner = action.payload
     }
+  }
 })
-export const { getOwners } = ownerSlice.actions
 
-export default ownerSlice.reducers
+export default ownerSlice.reducer

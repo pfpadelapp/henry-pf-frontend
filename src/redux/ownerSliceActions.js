@@ -1,19 +1,15 @@
-import axios from 'axios';
-import { getOwners } from './ownerSlice'
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import axios from 'axios'
 
-export function getOwner(){
-    return async function(dispatch){
-    const owners = await axios.get('https://api-rest-server-padel.herokuapp.com/owners');
-    return dispatch({getOwners(owners.data)})
+export const getOwner = createAsyncThunk(
+  'owner/getOwner',
+  async (thunkAPI) => {
+    try {
+      const owners = await axios.get('https://api-rest-server-padel.herokuapp.com/owners')
+      console.log(owners.data)
+      return owners.data
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
     }
-}
-export function getRecipe(){
-    return async function(dispatch){
-        let json = await axios.get("http://localhost:3001/recipe",{
-        });
-        return dispatch({
-            type: "GET_RECIPE",
-            payload: json.data
-        })
-    }
-}
+  }
+)
