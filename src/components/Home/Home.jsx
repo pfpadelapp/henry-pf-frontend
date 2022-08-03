@@ -6,7 +6,7 @@ import { fetchAllPadelFields } from '../../redux/padelField/padelFieldSlice'
 import SearchBar from "../SearchBar/SearchBar";
 import CardPadel from '../CardPadel/CardPadel.jsx'
 import { FiMenu } from "react-icons/fi";
-import { Flex , Avatar, Heading, Text, Divider, IconButton} from '@chakra-ui/react'
+import { Flex , Avatar, Heading, Text, Divider, IconButton, Center, SimpleGrid} from '@chakra-ui/react'
 
 export default function Home() {
 
@@ -25,9 +25,10 @@ export default function Home() {
     dispatch(fetchAllPadelFields())
   }, [])
 
-  const[navSize, changeNavSize] = useState("large")
+  const [navSize, changeNavSize] = useState("large")
 
   return (
+    <div>
       <Flex 
         pos="sticky" 
         left="5" 
@@ -36,7 +37,6 @@ export default function Home() {
         w={navSize == "small" ? "75px" : "400px"}
         flexDir="column" 
         justifyContent="space-between">
-        
         <Flex 
             p="5%" 
             flexDir="column" 
@@ -45,15 +45,14 @@ export default function Home() {
               <IconButton 
                 backgroun="none" 
                 mt={5} 
-                _hover={{backgroun:"none"}} 
+                _hover={{backgroun:"none"}}
                 icon={<FiMenu />}  
                 onClick={()=>{
-                      if (navSize == "small") changeNavSize("large")
-                      else changeNavSize("small")
+                  if (navSize == "small") changeNavSize("large")
+                  else changeNavSize("small")
                 }}
           />
         </Flex>
-
         <Flex
           p="5%"
           flexDir="column"
@@ -72,5 +71,21 @@ export default function Home() {
           
         </Flex>
       </Flex>
+      <Center>
+        <SimpleGrid columns={3} spacing={20}>
+          {
+            allPadelField.padelField.map((card) => (
+              <CardPadel
+                key={card.id}
+                id={card.id}
+                location={card.location}
+                image={card.image}
+                owner={card.owner}
+              />
+            ))
+          }
+        </SimpleGrid>
+      </Center>
+    </div>
   )
 }
