@@ -17,13 +17,6 @@ export const { setUser } = userSlice.actions
 
 export default userSlice.reducer
 
-// export const fetchAllUsers = () => (dispatch) => {
-//   axios.get('https://api-rest-server-padel.herokuapp.com/users')
-//   .then((response) => {
-//     dispatch(setUser(response.data))
-//   })
-//   .catch((error) => console.log(error))
-// }
 export function fetchAllUsers() {
   return async function(dispatch) {
     try {
