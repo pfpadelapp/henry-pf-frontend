@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
+/* import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 export const getPadelField = createAsyncThunk(
@@ -6,10 +6,10 @@ export const getPadelField = createAsyncThunk(
   async (thunkAPI) => {
     try {
       const padelFields = await axios.get('https://api-rest-server-padel.herokuapp.com/padelFields')
-      console.log(padelFields.data)
       return padelFields.data
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
   }
 )
+ */

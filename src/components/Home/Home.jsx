@@ -1,21 +1,21 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { getOwner } from '../../redux/owner/ownerSliceActions'
-import { getUser } from '../../redux/users/userSliceActions'
-import { getPadelField } from '../../redux/padelField/padelFieldSliceActions'
+import { fetchAllOwners } from '../../redux/owner/ownerSlice'
+import { fetchAllUsers } from '../../redux/users/usersSlice'
+import { fetchAllPadelFields } from '../../redux/padelField/padelFieldSlice'
 
 export default function Home() {
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getOwner())
+    dispatch(fetchAllOwners())
   }, [])
 
   useEffect(() => {
-    dispatch(getUser())
+    dispatch(fetchAllUsers())
   }, [])
 
   useEffect(() => {
-    dispatch(getPadelField())
+    dispatch(fetchAllPadelFields())
   }, [])
 
   return (

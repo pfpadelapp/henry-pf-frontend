@@ -1,17 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getPadelField } from './padelfieldSliceActions'
+import axios from 'axios';
 
 export const padelfieldSlice = createSlice({
   name: 'padelfield',
   initialState: {
     padelfield: []
   },
-  reducers: {},
-  extraReducers: {
-    [getPadelField.fullfilled]: (state, action) => {
+  reducers: {
+    setPadelfield: (state, action) => {
       state.padelfield = action.payload
     }
-  }
+  },
 })
 
-export default padelfieldSlice.reducer
+export const { setPadelField } = padelfieldSlice.actions;
+
+export default padelfieldSlice.reducer;
+
+export const fetchAllPadelFields = () => (dispatch) => {
+  axios.get('https://api-rest-server-padel.herokuapp.com/padelFields')
+  .then((response) => {
+    dispatch(setPadelField(response.data));
+  })
+  .catch((error) => console.log(error));
+};

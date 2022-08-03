@@ -1,4 +1,4 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
+/* import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 export const getOwner = createAsyncThunk(
@@ -6,10 +6,10 @@ export const getOwner = createAsyncThunk(
   async (thunkAPI) => {
     try {
       const owners = await axios.get('https://api-rest-server-padel.herokuapp.com/owners')
-      console.log(owners.data)
       return owners.data
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
   }
 )
+ */

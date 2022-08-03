@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
-import owners from ''
+import owners from './owner/ownerSlice'
 import users from './users/usersSlice'
-import paddleFields from './padelField/padelFieldSlicejs'
+import padleFields from './padelField/padelFieldSlice'
 
 export default configureStore({
   reducer: {
-    owner: owners,
-    //users: users
-    //paddleFields: paddleFields,
+    owners,
+    users,
+    padleFields
   }
 })

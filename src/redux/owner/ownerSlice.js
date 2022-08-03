@@ -1,17 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getOwner } from './ownerSliceActions'
+import axios from 'axios';
 
 export const ownerSlice = createSlice({
   name: 'owners',
   initialState: {
     owner: []
   },
-  reducers: {},
-  extraReducers: {
-    [getOwner.fullfilled]: (state, action) => {
+  reducers: {
+    setOwner: (state, action) => {
       state.owner = action.payload
     }
-  }
+  },
 })
 
-export default ownerSlice.reducer
+export const { setOwner } = ownerSlice.actions;
+
+export default ownerSlice.reducer;
+
+export const fetchAllOwners = () => (dispatch) => {
+  axios.get('https://api-rest-server-padel.herokuapp.com/owners')
+  .then((response) => {
+    dispatch(setOwner(response.data));
+  })
+  .catch((error) => console.log(error));
+};
