@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import axios from 'axios';
+import axios from 'axios'
 
 export const userSlice = createSlice({
   name: 'users',
@@ -10,17 +10,17 @@ export const userSlice = createSlice({
     setUser: (state, action) => {
       state.user = action.payload
     }
-  },
+  }
 })
 
-export const { setUser } = userSlice.actions;
+export const { setUser } = userSlice.actions
 
-export default userSlice.reducer;
+export default userSlice.reducer
 
 export const fetchAllUsers = () => (dispatch) => {
   axios.get('https://api-rest-server-padel.herokuapp.com/users')
   .then((response) => {
-    dispatch(setUser(response.data));
+    dispatch(setUser(response.data))
   })
-  .catch((error) => console.log(error));
-};
+  .catch((error) => console.log(error))
+}
