@@ -9,7 +9,7 @@ export default function App() {
         <Landing/>
       </Route> */}
       <Route path = '/detail/:id' element={<DetailPadelField/>} />
-      <Route index element={<Home/>}/>
+      <Route exact path ='/' element={<Home/>}/>
     </Routes>
   )
 }

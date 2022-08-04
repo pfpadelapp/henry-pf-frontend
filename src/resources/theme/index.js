@@ -9,7 +9,7 @@ const colors = {
     iconsColor: '#B8B8D2',
     paginationBtn: '#F2F2F2',
     backgroundBox: '#FFEBF0',
-    textSecundary: '#E6C1E3'
+    textSecundary: '#9E45BD'
   }
 }
 

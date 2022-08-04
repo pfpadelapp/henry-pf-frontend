@@ -13,16 +13,18 @@ export default function Sidebar() {
             pos="sticky" 
             h="95vh" 
             backgroundColor="#F8F8F8"
-            marginTop="2.5vh" 
+            // marginTop="2.5vh" 
             borderRadius={navSize =="small" ? "15px" : "30px"}
             w={navSize == "small" ? "75px" : "400px"}
             flexDir="column" 
             justifyContent="space-between"
+            height='100vh'
+            margin='0'
             >
             <Flex 
                 p="5%" 
                 flexDir="column" 
-                alignItems={navSize == "small" ? "center" : "flex-start"} 
+                align-items={navSize == "small" ? "center" : "flex-start"} 
                 as="nav">
                 <IconButton 
                     background="none" 
@@ -45,7 +47,7 @@ export default function Sidebar() {
                     p="5%"
                     flexDir="column"
                     w="100%"
-                    alingItems={navSize == "small" ? "center" : "flex-start"} 
+                    aling-items={navSize == "small" ? "center" : "flex-start"} 
                     mb={4}
                 >
                     <Flex mt={4} align="center">

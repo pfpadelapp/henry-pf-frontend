@@ -27,8 +27,9 @@ export default padelfieldSlice.reducer
 export function fetchAllPadelFields() {
   return async function(dispatch) {
     try {
-      const allPadelFields = await axios.get('https://api-rest-server-padel.herokuapp.com/padelFields')
+      const allPadelFields = await axios.get('http://127.0.0.1:3000/field')
       dispatch(setPadelField(allPadelFields.data))
+      // console.log(allPadelFields.data)
     } catch (error) {
       console.log(error)
     }
@@ -38,9 +39,9 @@ export function fetchAllPadelFields() {
 export function getPadelFieldsById(idPadelField) {
   return async function(dispatch) {
     try {
-      const padelFieldById = await axios.get(`https://api-rest-server-padel.herokuapp.com/padelFields/${idPadelField}`)
+      const padelFieldById = await axios.get(`http://127.0.0.1:3000/field/${idPadelField}`)
       dispatch(setPadelFieldById(padelFieldById.data))
-      console.log('REDUX', padelFieldById.data)
+      // console.log('REDUX', padelFieldById.data)
     } catch (error) {
       console.log(error)
     }
