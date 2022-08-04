@@ -12,7 +12,7 @@ export default function Home() {
 
   const dispatch = useDispatch()
   const allPadelField = useSelector((state) => state.padelFields)
-  console.table(allPadelField.padelField)
+  // console.table(allPadelField.padelField)
   useEffect(() => {
     dispatch(fetchAllOwners())
   }, [])
