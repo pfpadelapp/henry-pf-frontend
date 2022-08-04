@@ -7,7 +7,7 @@ export default function NavItem({navSize, title, icon, active}) {
             mt={30}
             flexDir="column"
             w="100%"
-            alingItems={navSize == "small" ? "center" : "flex-start"}
+            aling-Items={navSize == "small" ? "center" : "flex-start"}
         >
             <Menu placement='right'>
                 <Link 
