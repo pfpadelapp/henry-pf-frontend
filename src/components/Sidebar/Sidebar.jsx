@@ -45,7 +45,7 @@ export default function Sidebar() {
                     p="5%"
                     flexDir="column"
                     w="100%"
-                    alingItems={navSize == "small" ? "center" : "flex-start"} 
+                    aling-Items={navSize == "small" ? "center" : "flex-start"} 
                     mb={4}
                 >
                     <Flex mt={4} align="center">
