@@ -5,8 +5,8 @@ import { fetchAllUsers } from '../../redux/users/usersSlice'
 import { fetchAllPadelFields, filterByType, orderByPrice, orderByAvailability } from '../../redux/padelField/padelFieldSlice'
 import CardPadel from '../CardPadel/CardPadel.jsx'
 import Sidebar from "../Sidebar/Sidebar"
-import SearchBar from "../SearchBar/SearchBar"
-import { Flex, Stack, Select, Avatar, Heading, Text, Divider, IconButton, Center, SimpleGrid} from '@chakra-ui/react'
+import { Flex, Stack, Select, Avatar, Heading, Text, Divider, IconButton, Center, SimpleGrid, Spacer} from '@chakra-ui/react'
+import { NavBar } from '../NavBar/NavBar'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -34,6 +34,8 @@ export default function Home() {
 }
 
   return (
+    <>
+    <NavBar/>
     <Flex>
       <Sidebar/>
       <Stack spacing={3}>
@@ -50,7 +52,6 @@ export default function Home() {
            <option value='false'>No disponible</option>
         </Select>
       </Stack>
-      <SearchBar/>
     <Flex margin="2.5vh">
       <Center>
         <SimpleGrid columns={3} spacing={20}>
@@ -70,5 +71,6 @@ export default function Home() {
       </Center>
     </Flex>
     </Flex>
+    </>
   )
 }

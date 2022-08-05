@@ -25,7 +25,7 @@ export default function SearchBar () {
             pointerEvents='none'
             children={<FiSearch color='gray.300'/>}
             />
-            <Input type='text' placeholder='Search' value={name} onChange={(e) => handleInput(e)}/>
+            <Input backgroundColor="white" type='text' placeholder='Search' value={name} onChange={(e) => handleInput(e)}/>
             <Button onClick={(e) => handleSubmit(e)}>
                 Search
             </Button>
