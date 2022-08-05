@@ -53,7 +53,7 @@ export function getPadelFieldsById(idPadelField) {
     try {
       const padelFieldById = await axios.get(`http://127.0.0.1:3000/field/${idPadelField}`)
       dispatch(setPadelFieldById(padelFieldById.data.results))
-      // console.log('REDUX', padelFieldById.data)
+      console.log('REDUX', padelFieldById.data)
     } catch (error) {
       console.log(error)
     }
