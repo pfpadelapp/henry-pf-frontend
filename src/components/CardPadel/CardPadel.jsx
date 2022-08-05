@@ -4,9 +4,9 @@ import { FaMapMarkerAlt } from 'react-icons/fa'
 
 export default function CardPadel({ id, location, image, name }) {
   return (
-    <Box w='xs' H='30%' borderWidth='1px' borderRadius='lg' overflow='hidden' border='none'>
+    <Box width='xs' height='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' border='none'>
       <Link to={`detail/${id}`}>
-        <Image borderRadius='xl' width='30%' height='300px' fallbackSrc='https://via.placeholder.com/150' src={image} alt={id}/>
+        <Image borderRadius='xl' width='sm' height='300px' fallbackSrc='https://via.placeholder.com/150' src={image} alt={id}/>
         <Box mt='3'>
           <Text fontWeight='bold' fontSize='2xl'>
             {name[0].toUpperCase() + name.slice(1)}

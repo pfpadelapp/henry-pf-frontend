@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export const padelfieldSlice = createSlice({
   name: 'padelFields',
@@ -111,9 +112,23 @@ export function getInfoByName(padelName) {
   return async function(dispatch) {
     try {
       const padelFieldSearch = await axios.get(`http://127.0.0.1:3000/field/search?name=${padelName}&page=1&limit=6`)
-      if (padelName === '') return alert('Ingresa un nombre por favor')
-      if (padelFieldSearch.data.results.length === 0) return alert('La cancha de padel no ha sido encontrada')
-      dispatch(setInfoByName(padelFieldSearch.data.results))
+      if (padelName === '') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Debes ingresar el nombre de una cancha',
+          confirmButtonColor: '#F27474'
+        })
+      } else if (padelFieldSearch.data.results.length === 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Oops...',
+          text: 'La cancha de padel no ha sido encontrada',
+          confirmButtonColor: '#FACEA8'
+        })
+      } else {
+        dispatch(setInfoByName(padelFieldSearch.data.results))
+      }
     } catch (error) {
       console.log(error)
     }
