@@ -52,24 +52,22 @@ export default function Home() {
            <option value='false'>No disponible</option>
         </Select>
       </Stack>
-    <Flex margin="2.5vh">
-      <Center>
-        <SimpleGrid columns={3} spacing={20}>
-          {
-            allPadelField.padelField?.map((card) => (
-              <CardPadel
-                key={card.id}
-                id={card.id}
-                location={card.location}
-                image={card.image}
-                name={card.name}
-                type={card.type}
-              />
-            ))
-          }
-        </SimpleGrid>
-      </Center>
-    </Flex>
+        <Flex margin="2.5vh" w='100%' justifyContent='center'>
+          <SimpleGrid spacing={10} columns={3}>
+            {
+              allPadelField.padelField?.map((card) => (
+                <CardPadel
+                  key={card.id}
+                  id={card.id}
+                  location={card.location}
+                  image={card.image}
+                  name={card.name}
+                  type={card.type}
+                />
+              ))
+            }
+          </SimpleGrid>
+        </Flex>
     </Flex>
     </>
   )
