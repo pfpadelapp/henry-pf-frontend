@@ -1,6 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { FiSearch } from "react-icons/fi";
+import { InputGroup, InputLeftElement, Input, Avatar, Heading, Text, Divider, IconButton, Center, SimpleGrid} from '@chakra-ui/react'
+
 
 export default function SearchBar () {
     
@@ -19,16 +22,12 @@ export default function SearchBar () {
     }
 
     return(
-        <div>
-            <form className="Form">
-                <input 
-                    className="Container"
-                    type= "text"
-                    placeholder="search..."
-                    onChange={handleInput}
-                />
-                <button className="buttonSearch" type="submit" onClick={handleSubmit}></button>
-            </form>
-        </div>
+        <InputGroup maxWidth="22.5vw">
+            <InputLeftElement
+            pointerEvents='none'
+            children={<FiSearch color='gray.300' />}
+            />
+            <Input type='tel' placeholder='Phone number' />
+        </InputGroup>
     )
 }
