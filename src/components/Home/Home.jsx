@@ -11,7 +11,7 @@ import { Flex, Stack, Select, Avatar, Heading, Text, Divider, IconButton, Center
 export default function Home() {
   const dispatch = useDispatch()
   const allPadelField = useSelector((state) => state.padelFields)
-  //console.table(allPadelField.padelField)
+  console.table(allPadelField.padelField)
  
   useEffect(() => {
     dispatch(fetchAllOwners())
@@ -44,11 +44,11 @@ export default function Home() {
         </Select>
         <Select variant='filled' placeholder='Price' size='md' onChange={e => handleOrderPrice(e)}>
            <option value='1'>Ascendente</option>
-           <option value='min'>Descendiente</option>
+           <option value='-1'>Descendiente</option>
         </Select>
         <Select variant='filled' placeholder='Disponibilidad' size='md' onChange={e => handleOrderAvailability(e)}>
-           <option value='1'>Disponible</option>
-           <option value='0'>No disponible</option>
+           <option value='true'>Disponible</option>
+           <option value='false'>No disponible</option>
         </Select>
       </Stack>
       <SearchBar/>

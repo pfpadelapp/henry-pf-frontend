@@ -42,6 +42,7 @@ export function fetchAllPadelFields() {
     try {
       const allPadelFields = await axios.get('http://127.0.0.1:3000/field?page=1&limit=6')
       dispatch(setPadelField(allPadelFields.data.results))
+      // console.log('redux', allPadelFields)
     } catch (error) {
       console.log(error)
     }
@@ -52,7 +53,7 @@ export function getPadelFieldsById(idPadelField) {
   return async function(dispatch) {
     try {
       const padelFieldById = await axios.get(`http://127.0.0.1:3000/field/${idPadelField}`)
-      dispatch(setPadelFieldById(padelFieldById.data.results))
+      dispatch(setPadelFieldById(padelFieldById.data))
       console.log('REDUX', padelFieldById.data)
     } catch (error) {
       console.log(error)
@@ -65,7 +66,7 @@ export function filterByType(type) {
     try {
       const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/typeField?typeField=${type}`)
       dispatch(setPadelFieldType(padelFieldType.data))
-      console.log('REDUX', padelFieldType.data)
+      // console.log('REDUX', padelFieldType.data)
     } catch (error) {
       console.log(error)
     }
@@ -75,9 +76,9 @@ export function filterByType(type) {
 export function orderByPrice(price) {
   return async function(dispatch) {
     try {
-      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/price?price=${price}`)
+      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/price?sort=${price}`)
       dispatch(setPadelFieldType(padelFieldType.data))
-      console.log('REDUX', padelFieldType.data)
+      // console.log('REDUX', padelFieldType.data)
     } catch (error) {
       console.log(error)
     }
@@ -99,5 +100,17 @@ export function orderByAvailability(availability) {
 export function cleanDetailPadelField() {
   return function(dispatch) {
     dispatch(cleanDetail())
+  }
+}
+
+export function getInfoByName(padelName) {
+  return async function(dispatch) {
+    try {
+      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/able?active=${availability}`)
+      dispatch(setPadelFieldAvailability(padelFieldType.data))
+      console.log('REDUX', padelFieldType.data)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
