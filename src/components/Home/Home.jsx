@@ -18,40 +18,11 @@ export default function Home() {
     dispatch(fetchAllPadelFields())
   }, [])
 
-  function handleFilterType(e){
-    e.preventDefault();
-    dispatch(filterByType(e.target.value))
-}
-
-  function handleOrderPrice(e){
-    e.preventDefault();
-    dispatch(orderByPrice(e.target.value))
-}
-  
-  function handleOrderAvailability(e){
-    e.preventDefault();
-    dispatch(orderByAvailability(e.target.value))
-}
-
   return (
     <>
     <NavBar/>
     <Flex>
       <Sidebar/>
-      <Stack spacing={3}>
-        <Select variant='filled' placeholder='Tipo' size='md' onChange={e => handleFilterType(e)}>
-           <option value='covered'>Techada</option>
-           <option value='uncovered'>Sin Techo</option>
-        </Select>
-        <Select variant='filled' placeholder='Price' size='md' onChange={e => handleOrderPrice(e)}>
-           <option value='1'>Ascendente</option>
-           <option value='-1'>Descendiente</option>
-        </Select>
-        <Select variant='filled' placeholder='Disponibilidad' size='md' onChange={e => handleOrderAvailability(e)}>
-           <option value='true'>Disponible</option>
-           <option value='false'>No disponible</option>
-        </Select>
-      </Stack>
         <Flex margin="2.5vh" w='100%' justifyContent='center'>
           <SimpleGrid spacing={10} columns={3}>
             {
