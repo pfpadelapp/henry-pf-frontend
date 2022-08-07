@@ -34,10 +34,12 @@ export default function DetailPadelField() {
         <Text fontWeight='bold' fontSize='4xl' textTransform='capitalize' m='1rem 0'>
           {padelField.name}
         </Text>
-        <Box as='span' color='gray.500' fontSize='lg' fontWeight='medium' textTransform='capitalize' m='1rem 0'>
-          <Icon verticalAlign='center' color='gray.500' p='0' marginRight='5px' as={FaMapMarkerAlt}/>
-          {padelField.location}
-        </Box>
+        <HStack as='span' color='gray.500' fontSize='lg' fontWeight='medium' textTransform='capitalize' m='1rem 0'>
+          <Icon verticalAlign='center' color='gray.500' as={FaMapMarkerAlt}/>
+          <Text>
+            {padelField.location}
+          </Text>
+        </HStack>
         <HStack m='1rem 0'>
           <Text color='brand.primary' fontWeight='bolder' fontSize='lg'>
             ${padelField.price}
