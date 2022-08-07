@@ -11,7 +11,7 @@ export default function CardPadel({ id, location, image, name }) {
       borderRadius='lg'
       overflow='hidden'
       border='none'>
-      <Link to={`detail/${id}`}>
+      <Link to={`/detail/${id}`}>
         <Image borderRadius='xl' width='sm' height='320px' fallbackSrc='https://via.placeholder.com/150' src={image} alt={id}/>
         <Box mt='3'>
           <Text fontWeight='bold' fontSize='2xl'>
