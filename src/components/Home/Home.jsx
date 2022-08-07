@@ -20,25 +20,27 @@ export default function Home() {
 
   return (
     <>
-    <NavBar/>
     <Flex>
       <Sidebar/>
-      <Flex margin="2.5vh 0" w='100%' justifyContent='center'>
-        <SimpleGrid spacing={50} columns={{ base: 1, lg: 2, xl: 3 }}>
-          {
-            allPadelField.padelField?.map((card) => (
-              <CardPadel
-                key={card.id}
-                id={card.id}
-                location={card.location}
-                image={card.image}
-                name={card.name}
-                type={card.type}
-              />
-            ))
-          }
-        </SimpleGrid>
+      <Center margin="20px" flexDir="column">
+          <NavBar/>
+          <Flex margin="2.5vh 0" w='100%' justifyContent='center'>
+            <SimpleGrid spacing={50} columns={{ base: 1, lg: 2, xl: 3 }}>
+              {
+                allPadelField.padelField?.map((card) => (
+                  <CardPadel
+                    key={card.id}
+                    id={card.id}
+                    location={card.location}
+                    image={card.image}
+                    name={card.name}
+                    type={card.type}
+                  />
+                ))
+              }
+            </SimpleGrid>
       </Flex>
+      </Center>
     </Flex>
     </>
   )

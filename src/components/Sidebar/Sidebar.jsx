@@ -52,7 +52,7 @@ export default function Sidebar() {
                     else changeNavSize("small")
                     }}
                 />
-                    <NavItem navSize={navSize} icon={FiHome} title="Inicio" active/>
+                    <NavItem  navSize={navSize} icon={FiHome} title="Inicio" active/>
                     <NavItem navSize={navSize} icon={FiBell} title="Notificaciones"/>
                     <Flex
                         onClick={onOpen} 
@@ -80,8 +80,6 @@ export default function Sidebar() {
             
                     </Flex>
                     <NavItem navSize={navSize} icon={FiClipboard} title="Turnos"/>
-                    <NavItem navSize={navSize} icon={FiInfo} title="Contacto"/>
-                    <NavItem navSize={navSize} icon={FiHome} title="Acerca de nosotros"/>
                 </Flex>
                     
                     <Modal isOpen={isOpen} onClose={onClose}>
@@ -107,7 +105,7 @@ export default function Sidebar() {
                         </ModalBody>
 
                         <ModalFooter>
-                            <Button colorScheme='blue' mr={3} onClick={onClose}>
+                            <Button colorScheme='blue' mr={3} onClick={onClose} bgColor="#98D035">
                                  Cerrar
                             </Button>
                         </ModalFooter>
