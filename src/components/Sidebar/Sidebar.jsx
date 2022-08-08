@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FiMenu, FiHome, FiBell, FiFilter, FiClipboard, FiInfo } from "react-icons/fi";
-import { Flex , Menu, Link, MenuButton, useDisclosure, Button, Icon, Avatar, ModalCloseButton, ModalFooter, ModalBody, Heading, Text, Modal, IconButton, ModalOverlay, ModalContent, Stack, Select, ModalHeader} from '@chakra-ui/react'
+import { Flex , Menu, Link, MenuButton, useDisclosure, Button, Icon, Avatar, ModalCloseButton, ModalFooter, ModalBody, Heading, Text, Modal, IconButton, ModalOverlay, ModalContent, Stack, Select, ModalHeader, calc} from '@chakra-ui/react'
 import NavItem from "../NavItem/NavItem"
 import {filterByType, orderByPrice, orderByAvailability } from '../../redux/padelField/padelFieldSlice'
 
@@ -27,42 +27,41 @@ export default function Sidebar() {
 
     return(
         <Flex 
-            margin="5"
-            pos="sticky" 
-            h="95vh" 
+            margin="5px"
+            pos="sticky"
             backgroundColor="#F8F8F8"
             borderRadius={navSize =="small" ? "15px" : "30px"}
             w={navSize == "small" ? "75px" : "400px"}
-            flexDir="column" 
+            flexDir="column"
             justifyContent="space-between"
-            height='100vh'
+            height='calc(100vh - 95px)'
             >
             <Flex 
                 p="5%" 
-                flexDir="column" 
-                align-items={navSize == "small" ? "center" : "flex-start"} 
+                flexDir="column"
+                align-items={navSize == "small" ? "center" : "flex-start"}
                 as="nav">
                 <IconButton 
-                    background="none" 
+                    background="none"
                     mt={5} 
                     _hover={{background:"#ffff"}}
-                    icon={<FiMenu />}  
+                    icon={<FiMenu />}
                     onClick={()=>{
                     if (navSize == "small") changeNavSize("large")
                     else changeNavSize("small")
                     }}
                 />
-                    <NavItem  navSize={navSize} icon={FiHome} title="Inicio" active/>
+                    <NavItem navSize={navSize} icon={FiHome} title="Inicio" active/>
                     <NavItem navSize={navSize} icon={FiBell} title="Notificaciones"/>
                     <Flex
-                        onClick={onOpen} 
+                        onClick={onOpen}
                         mt={30}
                         flexDir="column"
                         w="100%"
                         aling-items={navSize == "small" ? "center" : "flex-start"}
                     >
                         <Menu placement='right'>
-                            <Link 
+                            <Link
                                 backgroundColor={/*active &&*/ "none"}
                                 p={3}
                                 borderRadius={8}
