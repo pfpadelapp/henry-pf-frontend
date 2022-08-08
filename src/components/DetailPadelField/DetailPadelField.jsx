@@ -6,6 +6,7 @@ import { Flex, Image, Box, Divider, Text, Badge, HStack, Icon, Stack } from '@ch
 import Sidebar from '../Sidebar/Sidebar.jsx'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
+import { NavBar } from '../NavBar/NavBar'
 
 export default function DetailPadelField() {
   const dispatch = useDispatch()
@@ -18,6 +19,8 @@ export default function DetailPadelField() {
     }
   }, [id, dispatch])
   return (
+    <>
+    <NavBar/>
     <Flex>
       <Sidebar/>
       <Box width='max' margin='6vh' p='4' display={{ md: 'flex' }} align-items='top' maxH='xl'>
@@ -64,5 +67,6 @@ export default function DetailPadelField() {
       </Flex>
       </Box>
     </Flex>
+    </>
   )
 }

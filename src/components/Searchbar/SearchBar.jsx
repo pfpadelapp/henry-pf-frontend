@@ -17,12 +17,11 @@ export default function SearchBar () {
     setName("")
   }
   return (
-    <Flex backgroundColor="#F8F8F8" w="20vw" padding="12px" borderRadius="50px">
-      <InputGroup maxWidth="26.5vw" borderColor="transparent" backgroundColor="transparent">
-        <Input variant='unstyled' backgroundColor="#F8F8F8" type='text' placeholder='Search' value={name} onChange={(e) => handleInput(e)}/>
-        <Button bg="none" children={<FiSearch color='gray.300'/>} borderRadius="70px" onClick={(e) => handleSubmit(e)}/>
-      </InputGroup>
-    </Flex>
-    )
-
+  <Flex backgroundColor="#F8F8F8" w="20vw" padding="12px" borderRadius="3xl">
+    <InputGroup maxWidth="26.5vw" borderColor="transparent" backgroundColor="transparent">
+      <Input padding='0 0.5rem' variant='unstyled' backgroundColor="#F8F8F8" type='text' placeholder='Busqueda' value={name} onChange={(e) => handleInput(e)}/>
+      <Button _hover={{ color: 'brand.primary' }} _active={{ backgroundColor: '#F8F8F8' }} color='gray.500' bg="none" children={<FiSearch/>} borderRadius="3xl" onClick={(e) => handleSubmit(e)}/>
+    </InputGroup>
+  </Flex>
+  )
 }
