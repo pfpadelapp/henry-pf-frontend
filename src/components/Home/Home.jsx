@@ -24,24 +24,22 @@ export default function Home() {
     <NavBar/>
     <Flex>
       <Sidebar/>
-      <Center w='100%' justifyContent='center' flexDir="column">
-        <Flex>
-          <SimpleGrid spacing={20} columns={{ base: 1, lg: 2, xl: 3 }}>
-            {
-              allPadelField.padelField?.map((card) => (
-                <CardPadel
-                  key={card.id}
-                  id={card.id}
-                  location={card.location}
-                  image={card.image}
-                  name={card.name}
-                  type={card.type}
-                  price={card.price}
-                />
-              ))
-            }
-          </SimpleGrid>
-      </Flex>
+      <Center marginTop='30px' w='100%' justifyContent='center' flexDir="column" alignSelf='flex-start'>
+        <SimpleGrid spacing={20} columns={{ base: 1, lg: 2, xl: 3 }}>
+          {
+            allPadelField.padelField?.map((card) => (
+              <CardPadel
+                key={card.id}
+                id={card.id}
+                location={card.location}
+                image={card.image}
+                name={card.name}
+                type={card.type}
+                price={card.price}
+              />
+            ))
+          }
+        </SimpleGrid>
       </Center>
     </Flex>
     </>
