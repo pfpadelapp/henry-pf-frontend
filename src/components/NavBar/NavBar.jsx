@@ -3,8 +3,13 @@ import { Flex, Box, Spacer, Text} from '@chakra-ui/react'
 export function NavBar() {
   return (
     <Flex
+    width='100%'
+    position='fixed'
+    top='0'
+    height='10%'
     padding='10px 100px'
     justifyContent='space-between'
+    backgroundColor='white'
     alignItems='center'
     borderBottomColor="#E3FFB2"
     borderBottomStyle="solid"
