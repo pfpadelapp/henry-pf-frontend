@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FiMenu, FiHome, FiBell, FiFilter, FiClipboard, FiInfo } from "react-icons/fi";
 import { Flex , Menu, Link, MenuButton, useDisclosure, Button, Icon, Avatar, ModalCloseButton, ModalFooter, ModalBody, Heading, Text, Modal, IconButton, ModalOverlay, ModalContent, Stack, Select, ModalHeader, calc} from '@chakra-ui/react'
 import NavItem from "../NavItem/NavItem"
-import {filterByType, orderByPrice, orderByAvailability } from '../../redux/padelField/padelFieldSlice'
+import {filterByType, orderByPrice, orderByAvailability, fetchAllPadelFields } from '../../redux/padelField/padelFieldSlice'
 
 export default function Sidebar() {
     const dispatch = useDispatch()
@@ -12,17 +12,29 @@ export default function Sidebar() {
 
     function handleFilterType(e){
         e.preventDefault();
-        dispatch(filterByType(e.target.value))
+        if(!e.target.value){
+            dispatch(fetchAllPadelFields())
+        }else{
+            dispatch(filterByType(e.target.value))
+        }
     }
     
       function handleOrderPrice(e){
         e.preventDefault();
+        if(!e.target.value){
+            dispatch(fetchAllPadelFields())
+        }else{
         dispatch(orderByPrice(e.target.value))
+        }
     }
       
       function handleOrderAvailability(e){
         e.preventDefault();
+        if(!e.target.value){
+            dispatch(fetchAllPadelFields())
+        }else{
         dispatch(orderByAvailability(e.target.value))
+        }
     }
 
     return(
