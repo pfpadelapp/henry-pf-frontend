@@ -7,10 +7,7 @@ export const padelfieldSlice = createSlice({
   initialState: {
     padelField: [],
     detailPadelField: [],
-    padelFieldFilterByType: [],
-    padelFieldOrderByPrice: [],
-    padelFieldOrderByAvailability: [],
-    errores: ['No se encontro']
+    hoursByDatePadelField: []
   },
   reducers: {
     setPadelField: (state, action) => {
@@ -25,7 +22,6 @@ export const padelfieldSlice = createSlice({
     setPadelFieldType: (state, action) => {
       state.padelField = action.payload
     },
-
     setPadelFieldAvailability: (state, action) => {
       state.padelField = action.payload
     },
@@ -37,11 +33,17 @@ export const padelfieldSlice = createSlice({
     },
     setFilterPrice: (state, action) => {
       state.padelField = action.payload
+    },
+    setDateActual: (state, action) => {
+      state.hoursByDatePadelField = action.payload
+    },
+    setCleanHoursByDate: (state) => {
+      state.hoursByDatePadelField = []
     }
   }
 })
 
-export const { setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability,  cleanDetail } = padelfieldSlice.actions
+export const { setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability,  cleanDetail } = padelfieldSlice.actions
 
 export default padelfieldSlice.reducer
 
@@ -156,5 +158,25 @@ export function getFilterPrice(minPrice, maxPrice, currentPage) {
     } catch (error) {
       console.log(error)
     }
+  }
+}
+
+export function getHoursByDate(date, idPadelField) {
+  return async function(dispatch) {
+    try {
+      const hoursByDate = await axios.get(`http://127.0.0.1:3000/booking/hours?idField=${idPadelField}&day=${date}`)
+      // console.log(hoursByDate.data)
+      // console.log(idPadelField)
+      // console.log(date)
+      dispatch(setDateActual(hoursByDate.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function cleanHoursByDate() {
+  return function(dispatch) {
+    dispatch(setCleanHoursByDate())
   }
 }

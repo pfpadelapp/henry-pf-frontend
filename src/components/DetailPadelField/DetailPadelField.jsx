@@ -1,23 +1,75 @@
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { getPadelFieldsById, cleanDetailPadelField } from '../../redux/padelField/padelFieldSlice'
-import { Flex, Image, Box, Divider, Text, Badge, HStack, Icon, Button, Center, Stack, Avatar } from '@chakra-ui/react'
+import { useEffect, useState, useRef } from 'react'
+import { cleanHoursByDate, getHoursByDate, getPadelFieldsById, cleanDetailPadelField } from '../../redux/padelField/padelFieldSlice'
+import { Input, Flex, Image, Box, Divider, Text, Badge, HStack, Icon, Button, Center, Stack, Avatar, useDisclosure, Drawer, DrawerOverlay, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from '@chakra-ui/react'
 import Sidebar from '../Sidebar/Sidebar.jsx'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import { NavBar } from '../NavBar/NavBar'
+import turnoImage from '../../resources/assets/turnDrawer.svg'
 
 export default function DetailPadelField() {
   const dispatch = useDispatch()
   const { id } = useParams()
   const padelField = useSelector((state) => state.padelFields.detailPadelField)
+  const hourByDatePadelFiels = useSelector((state) => state.padelFields.hoursByDatePadelField)
+  // console.log('horas disponibles', hourByDatePadelFiels)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  // const date = new Date()
+  // const output = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear()
+  // const output2 = new Date()
+  // // const diaNumActual = date.getDate()
+  // const diaStringActual = date.getDay()
+  // const arrayDatesByWeek = []
+  // // console.log(output)
+  // function sumarDias(fecha, dias) {
+  //   fecha.setDate(fecha.getDate() + dias)
+  //   fecha = String(fecha.getDate()).padStart(2, '0') + '/' + String(fecha.getMonth() + 1).padStart(2, '0') + '/' + fecha.getFullYear()
+  //   return fecha
+  // }
+  // const [dias, setDias] = useState({
+  //   output,
+  //   output2: sumarDias(output2, 1),
+  //   output3: sumarDias(output2, 1),
+  //   output4: sumarDias(output2, 1),
+  //   output5: sumarDias(output2, 1),
+  //   output6: sumarDias(output2, 2)
+  // })
+  // console.log(dias)
+  // diaStringActual === 1
+  // ? arrayDatesByWeek.push('Hoy', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado')
+  //   : diaStringActual === 2
+  //   ? arrayDatesByWeek.push('Hoy', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Lunes')
+  //     : diaStringActual === 3
+  //     ? arrayDatesByWeek.push('Hoy', 'Jueves', 'Viernes', 'Sabado', 'Lunes', 'Martes')
+  //     : diaStringActual === 4
+  //         ? arrayDatesByWeek.push('Hoy', 'Viernes', 'Sabado', 'Lunes', 'Martes', 'Miercoles')
+  //         : diaStringActual === 5
+  //         ? arrayDatesByWeek.push('Hoy', 'Sabado', 'Lunes', 'Martes', 'Miercoles', 'Jueves')
+  //         : arrayDatesByWeek.push('Hoy', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes')
+  // console.log(arrayDatesByWeek)
+  // console.log(output) => 09/08/2022
+  // console.log(diaNumActual) //fecha '9' / 08 / 2022
+  // console.log(diaStringActual) //0 dom - 1 lun - 2 mar - 3 mie - 4 jue - 5 vie - 6 sab
   useEffect(() => {
     dispatch(getPadelFieldsById(id))
     return () => {
       dispatch(cleanDetailPadelField())
     }
   }, [id, dispatch])
+  const [date, setDate] = useState('')
+  function handleDate(e) {
+    e.preventDefault()
+    const aux = e.target.value.split('-')
+    const dateFormat = aux[2] + '/' + aux[1]
+    setDate(dateFormat)
+    dispatch(getHoursByDate(id, dateFormat))
+  }
+  function handleCleanHoursByDate(e) {
+    e.preventDefault(e)
+    dispatch(cleanHoursByDate())
+  }
   return (
     <Flex flexDirection='column'>
       <NavBar/>
@@ -66,20 +118,66 @@ export default function DetailPadelField() {
                 <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
                 <Text>117 reseñas</Text>
               </HStack>
-              <Button
-                marginTop='2rem'
-                fontSize='xl'
-                height='60px'
-                width='120px'
-                textColor='#ffff'
-                borderRadius='2xl'
-                transition='all 1s'
-                _hover={{ color: '#98D035', transition: 'all .5s ease', backgroundColor: '#E3FFB2' }}
-                backgroundColor='#98D035'>
-                <Link to='/sacarTurno'>
+              <>
+                <Button
+                  marginTop='2rem'
+                  fontSize='xl'
+                  height='60px'
+                  width='120px'
+                  textColor='#ffff'
+                  borderRadius='2xl'
+                  transition='all 1s'
+                  onClick={onOpen}
+                  _hover={{ color: '#98D035', transition: 'all .5s ease', backgroundColor: '#E3FFB2' }}
+                  backgroundColor='#98D035'
+                >
                   Reservar
-                </Link>
-              </Button>
+                </Button>
+                <Drawer onClose={onClose} isOpen={isOpen} size='md' >
+                  <DrawerOverlay/>
+                  <DrawerContent p='2rem'>
+                    <DrawerCloseButton />
+                    <DrawerHeader borderBottomWidth='1px'>Reserva una cancha</DrawerHeader>
+                    <DrawerBody>
+                      <Text fontWeight='medium' margin='1rem 0' >
+                        Selecciona el dia:
+                      </Text>
+                      {/* <Stack>
+                        <Button onClick={() => handleDate(output)} >{arrayDatesByWeek[0]}</Button>
+                        <Button>{arrayDatesByWeek[1]}</Button>
+                        <Button>{arrayDatesByWeek[2]}</Button>
+                        <Button>{arrayDatesByWeek[3]}</Button>
+                        <Button>{arrayDatesByWeek[4]}</Button>
+                        <Button>{arrayDatesByWeek[5]}</Button>
+                      </Stack> */}
+                      <Input bg='gray.100' type='date'onChange={(e) => handleDate(e)} marginBottom='4rem'/>
+                      <Center>
+                        <Stack w='100%'>
+                          {hourByDatePadelFiels.length > 0
+                            ? hourByDatePadelFiels?.map((element, i) => {
+                              if (element < 13) {
+                                return (<Button key={i}>{element} am</Button>)
+                              }
+                              return (<Button key={i}>{element} pm</Button>)
+                            })
+                            : (<Stack gap='2rem'>
+                                <Image height='sx' width='sx' src={turnoImage} alt='Sacar turno'/>
+                                <Text textAlign='center' color='gray.500'> Para poder visualizar los horarios disponibles primero debes seleccionar una fecha</Text>
+                              </Stack>)
+                          }
+                        </Stack>
+                      </Center>
+                      {date
+                        ? <Text m='20px' textAlign='center' color='gray.500'>Seleccionaste la cancha {padelField.name} de 9hs a 10hs el dia {date}</Text>
+                        : null}
+                    </DrawerBody>
+                    <DrawerFooter>
+                    <Button variant='outline' mr={3} onClick={(e) => handleCleanHoursByDate(e)}>Cancel</Button>
+                    <Button bg='brand.primary' color='white'>Submit</Button>
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
+              </>
             </Flex>
           </Box>
           <Center p='4'>

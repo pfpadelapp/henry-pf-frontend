@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
 import { fetchAllOwners } from '../../redux/owner/ownerSlice'
 import { fetchAllUsers } from '../../redux/users/usersSlice'
 import { fetchAllPadelFields, filterByType, orderByPrice, orderByAvailability } from '../../redux/padelField/padelFieldSlice'
