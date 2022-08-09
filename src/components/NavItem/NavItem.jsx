@@ -3,30 +3,33 @@ import React from 'react'
 
 export default function NavItem({navSize, title, icon, active}) {
     return (
-        <Flex
-            mt={30}
-            flexDir="column"
-            w="100%"
-            aling-items={navSize == "small" ? "center" : "flex-start"}
-        >
-            <Menu placement='right'>
-                <Link 
-                    backgroundColor={active && "#ffff"}
-                    p={3}
-                    borderRadius={8}
-                    _hover={{textDecor:"none", background:"#ffff"}}
-                    w={navSize == "large" && "100%"}
-                >
-                    <MenuButton w="100%" >
-                        <Flex justifyContent={navSize == "small" ? "center" : "flex-start"}>
-                            <Icon as={icon} fontSize="xl" color={active ? "#98D035" : "gray.500"}/>
-                            <Text ml={5} color={active ? "#98D035" : "gray.500"} display={navSize == "small" ? "none" : "flex"}>{title}</Text>
-                        </Flex>
-                    </MenuButton>
-                </Link>
-            </Menu>
+        <Link to="/inicio">
+            <Flex
+                mt={30}
+                flexDir="column"
+                w="100%"
+                aling-items={navSize == "small" ? "center" : "flex-start"}
+            >
+                <Menu placement='right'>
+                    <Link 
+                        backgroundColor={active && "#ffff"}
+                        p={3}
+                        borderRadius={8}
+                        _hover={{textDecor:"none", background:"#ffff"}}
+                        w={navSize == "large" && "100%"}
+                    >
+                        <MenuButton w="100%" >
+                            <Flex justifyContent={navSize == "small" ? "center" : "flex-start"}>
+                                <Icon as={icon} fontSize="xl" color={active ? "#98D035" : "gray.500"}/>
+                                <Text ml={5} color={active ? "#98D035" : "gray.500"} display={navSize == "small" ? "none" : "flex"}>{title}</Text>
+                            </Flex>
+                        </MenuButton>
+                    </Link>
+                </Menu>
 
-        </Flex>
+            </Flex>
+        
+        </Link>
 
     )
 }

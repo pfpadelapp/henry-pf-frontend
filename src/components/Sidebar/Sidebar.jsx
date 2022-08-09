@@ -41,7 +41,6 @@ export default function Sidebar() {
         <Flex
             zIndex='1'
             marginTop='10vh'
-            position='fixed'
             backgroundColor="#F8F8F8"
             borderRadius={navSize =="small" ? "15px" : "30px"}
             w={navSize == "small" ? "75px" : "400px"}
