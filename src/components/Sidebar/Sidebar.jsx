@@ -1,21 +1,25 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FiMenu, FiHome, FiBell, FiFilter, FiClipboard, FiInfo } from "react-icons/fi";
-import { Flex , Menu, Link, MenuButton, useDisclosure, Button, Icon, Avatar, ModalCloseButton, ModalFooter, ModalBody, Heading, Text, Modal, IconButton, ModalOverlay, ModalContent, Stack, Select, ModalHeader, calc} from '@chakra-ui/react'
+import { Box, Flex, Menu, Link, MenuButton, useDisclosure, Button, Icon, Avatar, ModalCloseButton, ModalFooter, ModalBody, Heading, Text, Modal, IconButton, ModalOverlay, ModalContent, Stack, Select, ModalHeader, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Tooltip } from '@chakra-ui/react'
 import NavItem from "../NavItem/NavItem"
-import {filterByType, orderByPrice, orderByAvailability, fetchAllPadelFields } from '../../redux/padelField/padelFieldSlice'
+import { getFilterPrice, filterByType, orderByPrice, orderByAvailability, fetchAllPadelFields } from '../../redux/padelField/padelFieldSlice'
 
-export default function Sidebar() {
+export default function Sidebar({currentPage}) {
     const dispatch = useDispatch()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [navSize, changeNavSize] = useState("large")
+    const [limit, setLimit] = useState([500, 9000])
+    const onChange = (val) => {
+        setLimit(val)
+    }
 
     function handleFilterType(e){
         e.preventDefault();
         if(!e.target.value){
             dispatch(fetchAllPadelFields())
         }else{
-            dispatch(filterByType(e.target.value))
+            dispatch(filterByType(e.target.value, currentPage))
         }
     }
     
@@ -24,7 +28,7 @@ export default function Sidebar() {
         if(!e.target.value){
             dispatch(fetchAllPadelFields())
         }else{
-        dispatch(orderByPrice(e.target.value))
+        dispatch(orderByPrice(e.target.value, currentPage))
         }
     }
       
@@ -33,13 +37,15 @@ export default function Sidebar() {
         if(!e.target.value){
             dispatch(fetchAllPadelFields())
         }else{
-        dispatch(orderByAvailability(e.target.value))
+        dispatch(orderByAvailability(e.target.value, currentPage))
         }
     }
-
+    function handleFilterPrice() {
+        dispatch(getFilterPrice(limit[0], limit[1], currentPage))
+    }
     return(
         <Flex
-            zIndex='1'
+            zIndex='2'
             marginTop='10vh'
             backgroundColor="#F8F8F8"
             borderRadius={navSize =="small" ? "15px" : "30px"}
@@ -47,6 +53,7 @@ export default function Sidebar() {
             flexDir="column"
             justifyContent="space-between"
             height='90vh'
+            position='fixed'
             >
             <Flex 
                 p="5%" 
@@ -96,22 +103,54 @@ export default function Sidebar() {
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
-                        <ModalHeader>Filtro</ModalHeader>
+                        <ModalHeader>Filtros</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
-                            <Stack spacing={3}>
-                                <Select variant='filled' placeholder='Tipo' size='md' onChange={e => handleFilterType(e)}>
+                            <Stack spacing={5}>
+                                <Select variant='filled' placeholder='Ordenar por' size='md' onChange={e => handleFilterType(e)}>
                                 <option value='covered'>Techada</option>
                                 <option value='uncovered'>Sin Techo</option>
                                 </Select>
-                                <Select variant='filled' placeholder='Price' size='md' onChange={e => handleOrderPrice(e)}>
+                                <Select variant='filled' placeholder='Ordenar precio' size='md' onChange={e => handleOrderPrice(e)}>
                                 <option value='1'>Ascendente</option>
                                 <option value='-1'>Descendiente</option>
                                 </Select>
-                                <Select variant='filled' placeholder='Disponibilidad' size='md' onChange={e => handleOrderAvailability(e)}>
+                                <Select variant='filled' placeholder='Filtrar por disponibilidad' size='md' onChange={e => handleOrderAvailability(e)}>
                                 <option value='true'>Disponible</option>
                                 <option value='false'>No disponible</option>
                                 </Select>
+                                <Text>Precio</Text>
+                                <RangeSlider onChange={onChange} defaultValue={[500, 9000]} min={0} max={10000} step={500}>
+                                    <RangeSliderTrack bg='#E3FFB2'>
+                                        <RangeSliderFilledTrack bg='#98D035' />
+                                    </RangeSliderTrack>
+                                    <Tooltip
+                                        label={`$${limit[0]}`}
+                                        bg="white"
+                                        borderRadius='full'
+                                        color="gray.500"
+                                        placement="bottom"
+                                        pl={3}
+                                        pr={3}
+                                        isOpen
+                                    >
+                                        <RangeSliderThumb boxSize={6} index={0} onChange={(e) => handleFilterPrice(e)}/>
+                                    </Tooltip>
+                                    <Tooltip
+                                        onChange={(e) => handleFilterPrice(e)}
+                                        label={`$${limit[1]}`}
+                                        bg="white"
+                                        borderRadius='full'
+                                        color="gray.500"
+                                        placement="bottom"
+                                        pl={3}
+                                        pr={3}
+                                        isOpen
+                                    >
+                                        <RangeSliderThumb boxSize={6} index={1} />
+                                    </Tooltip>
+                                </RangeSlider>
+                                <Button textColor="#ffff" backgroundColor="#98D035" _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }} onClick={() => handleFilterPrice()}>Buscar</Button>
                             </Stack>
                         </ModalBody>
 
