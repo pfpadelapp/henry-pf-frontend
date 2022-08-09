@@ -38,15 +38,15 @@ export default function Sidebar() {
     }
 
     return(
-        <Flex 
-            margin="5px"
-            pos="sticky"
+        <Flex
+            zIndex='1'
+            marginTop='10vh'
             backgroundColor="#F8F8F8"
             borderRadius={navSize =="small" ? "15px" : "30px"}
             w={navSize == "small" ? "75px" : "400px"}
             flexDir="column"
             justifyContent="space-between"
-            height='calc(100vh - 95px)'
+            height='90vh'
             >
             <Flex 
                 p="5%" 
@@ -81,7 +81,7 @@ export default function Sidebar() {
                                 w={navSize == "large" && "100%"}
                             >
                                 <MenuButton w="100%">
-                                    <Flex>
+                                    <Flex justifyContent={navSize == "small" ? "center" : "flex-start"}>
                                         <Icon as={FiFilter} fontSize="xl" color={/*active ? "#98D035" :*/ "gray.500"}/>
                                         <Text ml={5} color={/*active ? "#98D035" : */"gray.500"} display={navSize == "small" ? "none" : "flex"}>Filtrar</Text>
                                     </Flex>

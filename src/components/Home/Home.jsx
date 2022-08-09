@@ -24,8 +24,8 @@ export default function Home() {
     <NavBar/>
     <Flex>
       <Sidebar/>
-      <Center marginTop='30px' w='100%' justifyContent='center' flexDir="column" alignSelf='flex-start'>
-        <SimpleGrid spacing={20} columns={{ base: 1, lg: 2, xl: 3 }}>
+      <Flex width='100%' margin='12vh 10vw 0vh 10vw' justifyContent='center' flexDir="column" alignSelf='flex-start'>
+        <SimpleGrid marginLeft='75px' spacing={20} columns={{ base: 1, lg: 2, xl: 3 }}>
           {
             allPadelField.padelField?.map((card) => (
               <CardPadel
@@ -40,7 +40,7 @@ export default function Home() {
             ))
           }
         </SimpleGrid>
-      </Center>
+      </Flex>
     </Flex>
     </>
   )
