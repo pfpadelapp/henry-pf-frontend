@@ -34,18 +34,21 @@ export const padelfieldSlice = createSlice({
     },
     setInfoByName: (state, action) => {
       state.padelField = action.payload
+    },
+    setFilterPrice: (state, action) => {
+      state.padelField = action.payload
     }
   }
 })
 
-export const { setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability,  cleanDetail } = padelfieldSlice.actions
+export const { setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability,  cleanDetail } = padelfieldSlice.actions
 
 export default padelfieldSlice.reducer
 
-export function fetchAllPadelFields() {
+export function fetchAllPadelFields(currentPage) {
   return async function(dispatch) {
     try {
-      const allPadelFields = await axios.get('http://127.0.0.1:3000/field?page=1&limit=6')
+      const allPadelFields = await axios.get(`http://127.0.0.1:3000/field?page=${currentPage}&limit=6`)
       dispatch(setPadelField(allPadelFields.data.results))
       // console.log('redux', allPadelFields)
     } catch (error) {
@@ -66,10 +69,10 @@ export function getPadelFieldsById(idPadelField) {
   }
 }
 
-export function filterByType(type) {
+export function filterByType(type, currentPage) {
   return async function(dispatch) {
     try {
-      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/typeField?typeField=${type}&page=1&limit=6`)
+      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/typeField?typeField=${type}&page=${currentPage}&limit=6`)
       dispatch(setPadelFieldType(padelFieldType.data.results))
       // console.log('REDUX', padelFieldType.data)
     } catch (error) {
@@ -78,10 +81,10 @@ export function filterByType(type) {
   }
 }
 
-export function orderByPrice(price) {
+export function orderByPrice(price, currentPage) {
   return async function(dispatch) {
     try {
-      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/sort?price=${price}&page=1&limit=6`)
+      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/sort?price=${price}&page=${currentPage}&limit=6`)
       dispatch(setPadelFieldType(padelFieldType.data.results))
       // console.log('REDUX', padelFieldType.data)
     } catch (error) {
@@ -90,10 +93,10 @@ export function orderByPrice(price) {
   }
 }
 
-export function orderByAvailability(availability) {
+export function orderByAvailability(availability, currentPage) {
   return async function(dispatch) {
     try {
-      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/able?active=${availability}&page=1&limit=6`)
+      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/able?active=${availability}&page=${currentPage}&limit=6`)
       dispatch(setPadelFieldAvailability(padelFieldType.data.results))
       // console.log('REDUX', padelFieldType.data)
     } catch (error) {
@@ -108,10 +111,10 @@ export function cleanDetailPadelField() {
   }
 }
 
-export function getInfoByName(padelName) {
+export function getInfoByName(padelName, currentPage) {
   return async function(dispatch) {
     try {
-      const padelFieldSearch = await axios.get(`http://127.0.0.1:3000/field/search?name=${padelName}&page=1&limit=6`)
+      const padelFieldSearch = await axios.get(`http://127.0.0.1:3000/field/search?name=${padelName}&page=${currentPage}&limit=6`)
       if (padelName === '') {
         Swal.fire({
           icon: 'error',
@@ -128,6 +131,27 @@ export function getInfoByName(padelName) {
         })
       } else {
         dispatch(setInfoByName(padelFieldSearch.data.results))
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function getFilterPrice(minPrice, maxPrice, currentPage) {
+  return async function(dispatch) {
+    try {
+      const filterPrice = await axios.get(`http://127.0.0.1:3000/field/rangePrice?minPrice=${minPrice}&maxPrice=${maxPrice}&page=${currentPage}&limit=6`)
+      // console.log(filterPrice.data.results)
+      if (filterPrice.data.results.length === 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Oops...',
+          text: 'No hay ninguna cancha de padel en ese rango de precio',
+          confirmButtonColor: '#FACEA8'
+        })
+      } else {
+        dispatch(setFilterPrice(filterPrice.data.results))
       }
     } catch (error) {
       console.log(error)

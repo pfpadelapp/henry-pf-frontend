@@ -12,18 +12,19 @@ import { NavBar } from '../NavBar/NavBar'
 export default function Home() {
   const dispatch = useDispatch()
   const allPadelField = useSelector((state) => state.padelFields)
+  const [currentPage, setCurrentPage] = useState(1)
   // console.table(allPadelField.padelField)
   useEffect(() => {
     dispatch(fetchAllOwners())
     dispatch(fetchAllUsers())
-    dispatch(fetchAllPadelFields())
+    dispatch(fetchAllPadelFields(currentPage))
   }, [])
 
   return (
     <>
     <NavBar/>
     <Flex>
-      <Sidebar/>
+      <Sidebar currentPage={currentPage}/>
       <Flex width='100%' margin='12vh 10vw 0vh 10vw' justifyContent='center' flexDir="column" alignSelf='flex-start'>
         <SimpleGrid marginLeft='75px' spacing={20} columns={{ base: 1, lg: 2, xl: 3 }}>
           {

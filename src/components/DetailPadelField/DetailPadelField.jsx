@@ -67,7 +67,6 @@ export default function DetailPadelField() {
                 <Text>117 reseñas</Text>
               </HStack>
               <Button
-                zIndex='-10'
                 marginTop='2rem'
                 fontSize='xl'
                 height='60px'
@@ -77,7 +76,7 @@ export default function DetailPadelField() {
                 transition='all 1s'
                 _hover={{ color: '#98D035', transition: 'all .5s ease', backgroundColor: '#E3FFB2' }}
                 backgroundColor='#98D035'>
-                <Link to='/checkout'>
+                <Link to='/sacarTurno'>
                   Reservar
                 </Link>
               </Button>
