@@ -7,6 +7,7 @@ import CardPadel from '../CardPadel/CardPadel.jsx'
 import Sidebar from "../Sidebar/Sidebar"
 import { Flex, HStack, Box, Button, Stack, Select, Avatar, Heading, Text, Divider, IconButton, Center, SimpleGrid, Spacer} from '@chakra-ui/react'
 import { NavBar } from '../NavBar/NavBar'
+import Paginado from '../Paginado/Paginado.jsx'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -17,13 +18,15 @@ export default function Home() {
     dispatch(fetchAllOwners())
     dispatch(fetchAllUsers())
     dispatch(fetchAllPadelFields(currentPage))
-  }, [])
-
+  }, [currentPage])
+  const paginado = (pageNumber) => {
+    setCurrentPage(pageNumber)
+  }
   return (
     <>
     <NavBar/>
     <Flex>
-      <Sidebar currentPage={currentPage}/>
+      <Sidebar />
       <Flex width='100%' margin='12vh 10vw 0vh 10vw' justifyContent='center' flexDir="column" alignSelf='flex-start'>
         <SimpleGrid marginLeft='75px' spacing={20} columns={{ base: 1, lg: 2, xl: 3 }}>
           {
@@ -40,6 +43,9 @@ export default function Home() {
             ))
           }
         </SimpleGrid>
+        <Center margin='4rem 0'>
+          <Paginado pageFunction={paginado} current={currentPage}/>
+        </Center>
       </Flex>
     </Flex>
     </>

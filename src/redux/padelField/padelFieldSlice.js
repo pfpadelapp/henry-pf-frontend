@@ -7,7 +7,8 @@ export const padelfieldSlice = createSlice({
   initialState: {
     padelField: [],
     detailPadelField: [],
-    hoursByDatePadelField: []
+    hoursByDatePadelField: [],
+    allPages: []
   },
   reducers: {
     setPadelField: (state, action) => {
@@ -39,11 +40,14 @@ export const padelfieldSlice = createSlice({
     },
     setCleanHoursByDate: (state) => {
       state.hoursByDatePadelField = []
+    },
+    getCountPages: (state, action) => {
+      state.allPages = action.payload
     }
   }
 })
 
-export const { setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability,  cleanDetail } = padelfieldSlice.actions
+export const { getCountPages, setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability,  cleanDetail } = padelfieldSlice.actions
 
 export default padelfieldSlice.reducer
 
@@ -178,5 +182,17 @@ export function getHoursByDate(date, idPadelField) {
 export function cleanHoursByDate() {
   return function(dispatch) {
     dispatch(setCleanHoursByDate())
+  }
+}
+
+export function getAllPagesPadelField() {
+  return async function(dispatch) {
+    try {
+      const countPages = await axios.get('http://127.0.0.1:3000/field?page=1&limit=6')
+      // console.log('aca', countPages.data)
+      dispatch(getCountPages(countPages.data))
+    } catch (error) {
+      console.log(error)
+    }
   }
 }

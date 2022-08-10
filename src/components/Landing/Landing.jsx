@@ -5,26 +5,12 @@ import loginImage from '../../resources/assets/login.svg'
 import turnoImage from '../../resources/assets/turno.svg'
 import payImage from '../../resources/assets/pay.svg'
 import playImage from '../../resources/assets/play.svg'
-
-import LoginGoogle from '../GoogleLogin/GoogleLogin'
-import LogoutGoogle from '../GoogleLogin/GoogleLogout'
-import {gapi} from 'gapi-script'
-const clientId = "927003271837-l4b8egb4pilglgk1vumu8sjsvngbkkl3.apps.googleusercontent.com"
-
-
+import LoginButton from '../LoginButton/LoginButton'
 
 export function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [slide, setSlide] = useState(1)
-  useEffect(()=>{
-    function start(){
-      gapi.client.init({
-        clientId: clientId,
-        scope:""
-      })
-    }
-    gapi.load("client:auth2", start);
-  })
+
 
   return (
     <>
@@ -38,20 +24,13 @@ export function Landing() {
       </HStack>
       <Spacer/>
       <HStack as="nav" spacing="5">
+        <LoginButton/>
         <Button
           fontSize="15px"
-          width="97px"
-          height="35px"
-          textColor="#98D035"
-          backgroundColor="#E3FFB2"
           onClick={onOpen}
-          _hover={{ color: '#E3FFB2', backgroundColor: '#98D035' }}
-        >Ingresar</Button>
-        <Button
-          fontSize="15px"
           width="118px"
           height="35px"
-          textColor="#ffff" 
+          textColor="#ffff"
           backgroundColor="#98D035"
           _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
         >Registrarse</Button>
@@ -170,9 +149,6 @@ export function Landing() {
             </ModalFooter>
             <Divider margin="20px"/>
             <Center textColor="gray.500">O ingresa con:</Center>
-            <Center margin="20px">
-              <LoginGoogle/>
-            </Center>
           </ModalBody>
         </ModalContent>
       </Modal>
