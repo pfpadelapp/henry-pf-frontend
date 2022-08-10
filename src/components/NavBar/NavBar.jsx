@@ -1,5 +1,6 @@
 import SearchBar from '../Searchbar/SearchBar'
 import { Flex, Box, Spacer, Text} from '@chakra-ui/react'
+
 export function NavBar() {
   return (
     <Flex
@@ -11,9 +12,9 @@ export function NavBar() {
     justifyContent='space-between'
     backgroundColor='white'
     alignItems='center'
-    borderBottomColor="#E3FFB2"
+    borderBottomColor="none"
     borderBottomStyle="solid"
-    borderBottomWidth="1px">
+    borderBottomWidth="0px">
       <Text fontWeight='bold' fontSize='2xl'>
         PadelApp
       </Text>
