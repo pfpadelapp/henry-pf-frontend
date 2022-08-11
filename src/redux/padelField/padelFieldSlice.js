@@ -9,35 +9,36 @@ export const padelfieldSlice = createSlice({
     detailPadelField: [],
     hoursByDatePadelField: [],
     allPages: [],
-    padelFieldFilter: {results: []}
+    padelFieldFilter: [],
+    postReserve: []
   },
   reducers: {
     setPadelField: (state, action) => {
       state.padelField = action.payload
     },
     setPadelFieldFilter: (state, action) => {
-      state.padelFieldFilter = action.payload
+      state.padelField = action.payload
     },
     setPadelFieldById: (state, action) => {
-      state.detailPadelField = action.payload
+      state.padelField = action.payload
     },
     setPadelFieldFilterByType: (state, action) => {
-      state.padelFieldFilter = action.payload
+      state.padelField = action.payload
     },
     setPadelFieldType: (state, action) => {
-      state.padelFieldFilter = action.payload
+      state.padelField = action.payload
     },
     setPadelFieldAvailability: (state, action) => {
-      state.padelFieldFilter = action.payload
+      state.padelField = action.payload
     },
     cleanDetail: (state) => {
       state.detailPadelField = []
     },
     setInfoByName: (state, action) => {
-      state.padelFieldFilter = action.payload
+      state.padelField = action.payload
     },
     setFilterPrice: (state, action) => {
-      state.padelFieldFilter = action.payload
+      state.padelField = action.payload
     },
     setDateActual: (state, action) => {
       state.hoursByDatePadelField = action.payload
@@ -49,7 +50,7 @@ export const padelfieldSlice = createSlice({
       state.allPages = action.payload
     },
     postReservePadelField: (state, action) => {
-      state.allPages = action.payload
+      state.postReserve = action.payload
     }
   }
 })
@@ -100,7 +101,7 @@ export function filterByType(type, currentPage) {
   return async function(dispatch) {
     try {
       const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/typeField?typeField=${type}&page=${currentPage}&limit=6`)
-      dispatch(setPadelFieldType(padelFieldType.data.results))
+      dispatch(setPadelFieldType(padelFieldType.data))
       // console.log('REDUX', padelFieldType.data)
     } catch (error) {
       console.log(error)
@@ -112,7 +113,7 @@ export function orderByPrice(price, currentPage) {
   return async function(dispatch) {
     try {
       const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/sort?price=${price}&page=${currentPage}&limit=6`)
-      dispatch(setPadelFieldType(padelFieldType.data.results))
+      dispatch(setPadelFieldType(padelFieldType.data))
       // console.log('REDUX', padelFieldType.data)
     } catch (error) {
       console.log(error)
@@ -124,7 +125,7 @@ export function orderByAvailability(availability, currentPage) {
   return async function(dispatch) {
     try {
       const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/able?active=${availability}&page=${currentPage}&limit=6`)
-      dispatch(setPadelFieldAvailability(padelFieldType.data.results))
+      dispatch(setPadelFieldAvailability(padelFieldType.data))
       // console.log('REDUX', padelFieldType.data)
     } catch (error) {
       console.log(error)
@@ -181,7 +182,7 @@ export function getFilterPrice(minPrice, maxPrice, currentPage) {
           confirmButtonColor: '#FACEA8'
         })
       } else {
-        dispatch(setFilterPrice(filterPrice.data.results))
+        dispatch(setFilterPrice(filterPrice.data))
       }
     } catch (error) {
       console.log(error)
@@ -225,8 +226,8 @@ export function postReserveHourPadelField(input) {
   return async function(dispatch) {
     try {
       const post = await axios.post('http://127.0.0.1:3000/booking/', input)
-      // console.log(post)
-      dispatch(postReservePadelField(post))
+      console.log('rtk, el id que devuelve es: ', post.data)
+      dispatch(postReservePadelField(post.data))
     } catch (error) {
       console.log(error)
     }

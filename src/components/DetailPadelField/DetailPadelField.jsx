@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState, useRef } from 'react'
 import { postReserveHourPadelField, cleanHoursByDate, getHoursByDate, getPadelFieldsById, cleanDetailPadelField } from '../../redux/padelField/padelFieldSlice'
-import { Input, Flex, Image, Box, Divider, Text, Badge, HStack, Icon, Button, Center, Stack, Avatar, useDisclosure, Drawer, DrawerOverlay, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from '@chakra-ui/react'
+import { Input, Flex, Image, Box, Divider, Text, Badge, HStack, Icon, Button, Center, Stack, Avatar, useDisclosure, Drawer, DrawerOverlay, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogCloseButton, AlertDialogBody, AlertDialogFooter } from '@chakra-ui/react'
 import Sidebar from '../Sidebar/Sidebar.jsx'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
@@ -14,6 +14,11 @@ export default function DetailPadelField() {
   const { id } = useParams()
   const padelField = useSelector((state) => state.padelFields.detailPadelField)
   const hourByDatePadelFiels = useSelector((state) => state.padelFields.hoursByDatePadelField)
+  const menuRightModal = useDisclosure()
+  const alertModal = useDisclosure()
+  const cancelRef = useRef()
+  const [date, setDate] = useState('')
+  const [getHour, setGetHour] = useState()
   // console.log('horas disponibles', hourByDatePadelFiels)
   const { isOpen, onOpen, onClose } = useDisclosure()
   // const date = new Date()
@@ -58,41 +63,40 @@ export default function DetailPadelField() {
       dispatch(cleanDetailPadelField())
     }
   }, [id, dispatch])
-  const [date, setDate] = useState('')
-  function hourToPost(getHour) {
-    const aux = getHour < 10 ? `0${getHour}:00:00` : `${getHour}:00:00`
-    return aux
-  }
-  function handleDate(e) {
-    e.preventDefault()
-    const dateFormat = e.target.value.split('-').reverse().join('/')
-    setDate(dateFormat)
-    // console.log(id)
-    // console.log(e.target.value)
-    dispatch(getHoursByDate(id, dateFormat))
-  }
-  function handleCleanHoursByDate(e) {
-    e.preventDefault(e)
-    dispatch(cleanHoursByDate())
-  }
   const [input, setInput] = useState({
     idUser: '62eab574cac7d39b3b7427c5',
-    idField: id,
-    date: ''
+    idField: '62eab82fb501f29111badcf4',
+    date: '2022-08-25T18:00:00'
   })
-  const [getHour, setGetHour] = useState()
-  const dateFormat = date.split('/').reverse().join('-')
-
-  function handlePostReserve(e) {
-    console.log(getHour)
+  function handleDate(e) {
     e.preventDefault()
-    const aux = hourToPost(e.target.value)
+    setDate(e.target.value)
+    const dateFormat = e.target.value.split('-').reverse().join('/')
+    dispatch(getHoursByDate(id, dateFormat))
+  }
+  function handleHour(e) {
+    e.preventDefault()
+    setGetHour(e.target.value) // 10
+    // console.log(e.target.value)
+  }
+  function handleCleanHoursByDate(e) {
+    e.preventDefault()
+    dispatch(cleanHoursByDate())
+  }
+
+  function handleDateToPostBtn(e) {
+    e.preventDefault()
+    const dateFormat = date.split('/').reverse().join('-') // 2022-08-25
+    const dateToPost = getHour === 9 ? `0${getHour}:00:00` : `${getHour}:00:00` // 10:00:00
+    const dateFormatToInput = dateFormat + 'T' + dateToPost // 2022-08-25T17:00:00
     setInput({
-      idUser: '62eab574cac7d39b3b7427c5',
-      idField: id,
-      date: `${dateFormat}'T'${aux}`
+      ...input,
+      date: dateFormatToInput
     })
-    // console.log(input)
+  }
+  function handlePostReserve(e) {
+    e.preventDefault()
+    console.log('cuarto', input)
     dispatch(postReserveHourPadelField(input))
   }
   return (
@@ -152,14 +156,14 @@ export default function DetailPadelField() {
                   textColor='#ffff'
                   borderRadius='2xl'
                   transition='all 1s'
-                  onClick={onOpen}
+                  onClick={menuRightModal.onOpen}
                   _hover={{ color: '#98D035', transition: 'all .5s ease', backgroundColor: '#E3FFB2' }}
                   _active={{ color: '#98D035', transition: 'all .5s ease', backgroundColor: '#E3FFB2' }}
                   backgroundColor='#98D035'
                 >
                   Reservar
                 </Button>
-                <Drawer onClose={onClose} isOpen={isOpen} size='md' >
+                <Drawer onClose={menuRightModal.onClose} isOpen={menuRightModal.isOpen} size='md' closeOnEsc={true} preserveScrollBarGap={true}>
                   <DrawerOverlay/>
                   <DrawerContent p='2rem'>
                     <DrawerCloseButton />
@@ -181,10 +185,36 @@ export default function DetailPadelField() {
                         <Stack w='100%'>
                           {hourByDatePadelFiels.length > 0
                             ? hourByDatePadelFiels?.map((element, i) => {
-                              if (element < 13) {
-                                return (<Button key={i} value={element} onClick={(e) => { handlePostReserve(e); setGetHour(e) }}>{element} am</Button>)
-                              }
-                              return (<Button key={i} value={element} onClick={(e) => { handlePostReserve(e); setGetHour(e) }}>{element} pm</Button>)
+                              return (
+                                <div key={i}>
+                                  <Button width='100%' value={element} onClick={(e) => { handleHour(e); alertModal.onOpen() }}>
+                                    {element} hs
+                                  </Button>
+                                  <AlertDialog
+                                    motionPreset='slideInBottom'
+                                    leastDestructiveRef={cancelRef}
+                                    onClose={alertModal.onClose}
+                                    isOpen={alertModal.isOpen}
+                                    isCentered
+                                  >
+                                    <AlertDialogContent>
+                                      <AlertDialogHeader>Confirmar Turno</AlertDialogHeader>
+                                      <AlertDialogCloseButton/>
+                                      <AlertDialogBody>
+                                        Seleccionaste la cancha {padelField.name} de {element}hs a {element + 1}hs el dia {date.split('-').reverse().join('/')}
+                                      </AlertDialogBody>
+                                      <AlertDialogFooter>
+                                        <Button ref={cancelRef} onClick={alertModal.onClose}>
+                                          No
+                                        </Button>
+                                        <Button color='white' bg='brand.primary' ml='3' onClick={(e) => { handleDateToPostBtn(e); alertModal.onClose() }} >
+                                          Si
+                                        </Button>
+                                      </AlertDialogFooter>
+                                    </AlertDialogContent>
+                                  </AlertDialog>
+                                </div>
+                              )
                             })
                             : (<Stack gap='2rem'>
                                 <Image height='sx' width='sx' src={turnoImage} alt='Sacar turno'/>
@@ -193,13 +223,10 @@ export default function DetailPadelField() {
                           }
                         </Stack>
                       </Center>
-                      {date
-                        ? <Text m='20px' textAlign='center' color='gray.500'>Seleccionaste la cancha {padelField.name} de 9hs a 10hs el dia {date}</Text>
-                        : null}
                     </DrawerBody>
                     <DrawerFooter>
-                    <Button variant='outline' mr={3} onClick={(e) => { handleCleanHoursByDate(e); onClose() }}>Cancel</Button>
-                    <Button bg='brand.primary' _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }} _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }} color='white'>Submit</Button>
+                    <Button variant='outline' mr={3} onClick={(e) => { handleCleanHoursByDate(e); menuRightModal.onClose() }}>Cancelar</Button>
+                    <Button onClick={(e) => handlePostReserve(e) } bg='brand.primary' _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }} _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }} color='white'>Reservar</Button>
                     </DrawerFooter>
                   </DrawerContent>
                 </Drawer>

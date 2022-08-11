@@ -5,8 +5,9 @@ import { GrFormPrevious, GrFormNext } from 'react-icons/gr'
 
 export default function Paginado ({ pageFunction, current }) {
   // console.log(pageFunction, ' y ', current)
-  const padelFieldAllPages = useSelector((state) => state.padelFields.padelFieldFilter)
+  const padelFieldAllPages = useSelector((state) => state.padelFields.padelField)
   // console.log('Desde el paginado ', padelFieldAllPages)
+  console.log('Paginado ', padelFieldAllPages)
   const countPadelfieldPages = Math.ceil(padelFieldAllPages.count / 6)
   const arrayCountPages = []
 
