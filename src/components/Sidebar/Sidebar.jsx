@@ -4,50 +4,52 @@ import { FiMenu, FiHome, FiBell, FiFilter, FiClipboard, FiInfo } from "react-ico
 import { Box, Flex, Menu, Link, MenuButton, useDisclosure, Button, Icon, Avatar, ModalCloseButton, ModalFooter, ModalBody, Heading, Text, Modal, IconButton, ModalOverlay, ModalContent, Stack, Select, ModalHeader, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Tooltip } from '@chakra-ui/react'
 import NavItem from "../NavItem/NavItem"
 import { getFilterPrice, filterByType, orderByPrice, orderByAvailability, fetchAllPadelFields } from '../../redux/padelField/padelFieldSlice'
+import { useColorMode } from "@chakra-ui/color-mode"
 
-export default function Sidebar({currentPage}) {
+export default function Sidebar({current}) {
     const dispatch = useDispatch()
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [navSize, changeNavSize] = useState("large")
     const [limit, setLimit] = useState([500, 9000])
+    const [navSize, changeNavSize] = useState("small")
+    const {colorMode, toggleColorMode}= useColorMode();
     const onChange = (val) => {
         setLimit(val)
     }
-
+    // ----------------------------- Error linea 84 -------------------------------------
     function handleFilterType(e){
         e.preventDefault();
         if(!e.target.value){
-            dispatch(fetchAllPadelFields())
+            dispatch(fetchAllPadelFields(1))
         }else{
-            dispatch(filterByType(e.target.value, currentPage))
+            dispatch(filterByType(e.target.value, 1))
         }
     }
     
-      function handleOrderPrice(e){
+      function handleOrderPrice(e) {
         e.preventDefault();
         if(!e.target.value){
-            dispatch(fetchAllPadelFields())
+            dispatch(fetchAllPadelFields(1))
         }else{
-        dispatch(orderByPrice(e.target.value, currentPage))
+        dispatch(orderByPrice(e.target.value, 1))
         }
     }
       
       function handleOrderAvailability(e){
         e.preventDefault();
         if(!e.target.value){
-            dispatch(fetchAllPadelFields())
+            dispatch(fetchAllPadelFields(1))
         }else{
-        dispatch(orderByAvailability(e.target.value, currentPage))
+        dispatch(orderByAvailability(e.target.value, 1))
         }
     }
     function handleFilterPrice() {
-        dispatch(getFilterPrice(limit[0], limit[1], currentPage))
+        dispatch(getFilterPrice(limit[0], limit[1], current))
     }
     return(
         <Flex
             zIndex='2'
             marginTop='10vh'
-            backgroundColor="#F8F8F8"
+            backgroundColor={colorMode === "dark" ? "#2c313d" : "#F8F8F8"}
             borderRadius={navSize =="small" ? "15px" : "30px"}
             w={navSize == "small" ? "75px" : "400px"}
             flexDir="column"
@@ -63,7 +65,7 @@ export default function Sidebar({currentPage}) {
                 <IconButton 
                     background="none"
                     mt={5} 
-                    _hover={{background:"#ffff"}}
+                    _hover={{background:(colorMode === "dark" ? "#3d414c" : "white")}}
                     icon={<FiMenu />}
                     onClick={()=>{
                     if (navSize == "small") changeNavSize("large")
@@ -80,11 +82,12 @@ export default function Sidebar({currentPage}) {
                         aling-items={navSize == "small" ? "center" : "flex-start"}
                     >
                         <Menu placement='right'>
+                            {/* Link to ??? */}
                             <Link
                                 backgroundColor={/*active &&*/ "none"}
                                 p={3}
                                 borderRadius={8}
-                                _hover={{textDecor:"none", background:"#ffff"}}
+                                _hover={{textDecor:"none",background:(colorMode === "dark" ? "#3d414c" : "white")}}
                                 w={navSize == "large" && "100%"}
                             >
                                 <MenuButton w="100%">
@@ -150,7 +153,7 @@ export default function Sidebar({currentPage}) {
                                         <RangeSliderThumb boxSize={6} index={1} />
                                     </Tooltip>
                                 </RangeSlider>
-                                <Button textColor="#ffff" backgroundColor="#98D035" _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }} onClick={() => handleFilterPrice()}>Buscar</Button>
+                                <Button textColor="#ffff" backgroundColor="#98D035" _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }} _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }} onClick={() => handleFilterPrice()}>Buscar</Button>
                             </Stack>
                         </ModalBody>
 
@@ -166,10 +169,10 @@ export default function Sidebar({currentPage}) {
                     p="5%"
                     flexDir="column"
                     w="100%"
-                    aling-items={navSize == "small" ? "center" : "flex-start"} 
+                    align-items={navSize == "small" ? "center" : "flex-start"}
                     mb={4}
                 >
-                    <Flex mt={4} align-items="center">
+                       <Flex mt={4} justifyContent={navSize == "small" ? "center" : "flex-start"}>
                         <Avatar size="sm"/>
                         <Flex flexDir="column" ml={4} display={navSize == "small" ? "none" : "flex"}>
                             <Heading as="h3" size="sm"  color="gray.500">Mati Ferrari</Heading>

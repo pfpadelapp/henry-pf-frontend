@@ -5,8 +5,9 @@ import { Provider } from 'react-redux'
 import { StrictMode } from 'react'
 import App from './App'
 import store from './redux/store'
-import { theme } from './resources/theme'
+import theme from './resources/theme'
 import {Auth0Provider} from '@auth0/auth0-react'
+import { ColorModeScript } from '@chakra-ui/react'
 
 
 const domain= "dev-7666qcn6.us.auth0.com"
@@ -21,6 +22,7 @@ createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <Router>
         <ChakraProvider theme={ theme }>
+        <ColorModeScript initialColorMode={theme.config.initialColorMode}/>
           <Auth0Provider
             domain={domain}
             clientId={clientId}

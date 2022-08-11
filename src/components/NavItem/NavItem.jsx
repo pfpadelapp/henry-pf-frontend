@@ -1,7 +1,11 @@
 import { Flex, Avatar, Heading, Text, Divider, IconButton, Center, SimpleGrid, Menu, Link, MenuButton, Icon} from '@chakra-ui/react'
 import React from 'react'
+import { useColorMode } from "@chakra-ui/color-mode"
 
 export default function NavItem({navSize, title, icon, active}) {
+    
+    const {colorMode, toggleColorMode}= useColorMode();
+
     return (
         <Link to="/inicio">
             <Flex
@@ -15,7 +19,7 @@ export default function NavItem({navSize, title, icon, active}) {
                         backgroundColor={active && "#ffff"}
                         p={3}
                         borderRadius={8}
-                        _hover={{textDecor:"none", background:"#ffff"}}
+                        _hover={{textDecor:"none", background:(colorMode === "dark" ? "#3d414c" : "white")}}
                         w={navSize == "large" && "100%"}
                     >
                         <MenuButton w="100%" >

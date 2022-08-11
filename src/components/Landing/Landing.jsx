@@ -6,21 +6,25 @@ import turnoImage from '../../resources/assets/turno.svg'
 import payImage from '../../resources/assets/pay.svg'
 import playImage from '../../resources/assets/play.svg'
 import LoginButton from '../LoginButton/LoginButton'
+import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
+import { useColorMode } from "@chakra-ui/color-mode"
+
 
 export function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [slide, setSlide] = useState(1)
+  const {colorMode, toggleColorMode}= useColorMode();
 
 
   return (
     <>
-    <Flex width='100%' height="10vh" padding='0 100px' backgroundColor="white" borderBottomColor="#F8F1F1">
+    <Flex width='100%' height="10vh" padding='0 100px' backgroundColor={colorMode === "dark" ? "#2c313d" : "white"} borderBottomColor="#F8F1F1">
       <HStack as="nav" spacing="5">
         <Link to="/home">
-          <Button fontSize="15px" backgroundColor="white">Inicio</Button>
+        <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Inicio</Button>
         </Link>
-        <Button fontSize="15px" backgroundColor="white">Contacto</Button>
-        <Button fontSize="15px" backgroundColor="white">Acerca de Nosotros</Button>
+        <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Contacto</Button>
+        <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Acerca de Nosotros</Button>
       </HStack>
       <Spacer/>
       <HStack as="nav" spacing="5">
@@ -30,10 +34,12 @@ export function Landing() {
           onClick={onOpen}
           width="118px"
           height="35px"
-          textColor="#ffff"
+          textColor={colorMode === "dark" ? "#F8F8F8" : "#2c313d"}
           backgroundColor="#98D035"
           _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+          _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
         >Registrarse</Button>
+            <ToggleColorMode/>
       </HStack>
     </Flex>
     <Flex width='100%' h='calc(100vh - 20vh)' justifyContent='center' alignItems='center' gap='7rem'>
