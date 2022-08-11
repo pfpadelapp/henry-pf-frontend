@@ -9,11 +9,14 @@ export const padelfieldSlice = createSlice({
     detailPadelField: [],
     hoursByDatePadelField: [],
     allPages: [],
-    padelFieldFilter: []
+    padelFieldFilter: {results: []}
   },
   reducers: {
     setPadelField: (state, action) => {
       state.padelField = action.payload
+    },
+    setPadelFieldFilter: (state, action) => {
+      state.padelFieldFilter = action.payload
     },
     setPadelFieldById: (state, action) => {
       state.detailPadelField = action.payload
@@ -51,7 +54,7 @@ export const padelfieldSlice = createSlice({
   }
 })
 
-export const { postReservePadelField, getCountPages, setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability,  cleanDetail } = padelfieldSlice.actions
+export const { setPadelFieldFilter, postReservePadelField, getCountPages, setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability,  cleanDetail } = padelfieldSlice.actions
 
 export default padelfieldSlice.reducer
 
@@ -59,6 +62,19 @@ export function fetchAllPadelFields(currentPage) {
   return async function(dispatch) {
     try {
       const allPadelFields = await axios.get(`http://127.0.0.1:3000/field?page=${currentPage}&limit=6`)
+      // console.log('REDUX ALL : ', allPadelFields.data)
+      dispatch(setPadelField(allPadelFields.data))
+      // console.log('redux', allPadelFields)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function fetchAllPadelFieldsFilter(currentPage) {
+  return async function(dispatch) {
+    try {
+      const allPadelFields = await axios.get(`http://127.0.0.1:3000/field/search?name=${padelName}&page=${currentPage}&limit=6`)
       // console.log('REDUX ALL : ', allPadelFields.data)
       dispatch(setPadelField(allPadelFields.data))
       // console.log('redux', allPadelFields)

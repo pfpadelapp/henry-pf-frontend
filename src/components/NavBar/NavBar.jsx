@@ -1,7 +1,11 @@
 import SearchBar from '../Searchbar/SearchBar'
 import { Flex, Box, Spacer, Text } from '@chakra-ui/react'
+import { useColorMode } from "@chakra-ui/color-mode"
+import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 
 export function NavBar({setCurrentPage}) {
+  const {colorMode, toggleColorMode}= useColorMode();
+
   return (
     <Flex
     zIndex='1'
@@ -11,7 +15,7 @@ export function NavBar({setCurrentPage}) {
     height='10%'
     padding='10px 100px'
     justifyContent='space-between'
-    backgroundColor='white'
+    backgroundColor={colorMode === "dark" ? "#2c313d" : "#F8F8F8"}
     alignItems='center'
     borderBottomColor="none"
     borderBottomStyle="solid"
@@ -24,6 +28,7 @@ export function NavBar({setCurrentPage}) {
         <Box>
           <SearchBar setCurrentPage ={setCurrentPage}/>
         </Box>
+        <ToggleColorMode/>
       </Flex>
     </Flex>
   )
