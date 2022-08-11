@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState, useRef } from 'react'
-import { cleanHoursByDate, getHoursByDate, getPadelFieldsById, cleanDetailPadelField } from '../../redux/padelField/padelFieldSlice'
+import { postReserveHourPadelField, cleanHoursByDate, getHoursByDate, getPadelFieldsById, cleanDetailPadelField } from '../../redux/padelField/padelFieldSlice'
 import { Input, Flex, Image, Box, Divider, Text, Badge, HStack, Icon, Button, Center, Stack, Avatar, useDisclosure, Drawer, DrawerOverlay, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter } from '@chakra-ui/react'
 import Sidebar from '../Sidebar/Sidebar.jsx'
 import { FaMapMarkerAlt } from 'react-icons/fa'
@@ -59,16 +59,41 @@ export default function DetailPadelField() {
     }
   }, [id, dispatch])
   const [date, setDate] = useState('')
+  function hourToPost(getHour) {
+    const aux = getHour < 10 ? `0${getHour}:00:00` : `${getHour}:00:00`
+    return aux
+  }
   function handleDate(e) {
     e.preventDefault()
-    const aux = e.target.value.split('-')
-    const dateFormat = aux[2] + '/' + aux[1]
+    const dateFormat = e.target.value.split('-').reverse().join('/')
     setDate(dateFormat)
+    // console.log(id)
+    // console.log(e.target.value)
     dispatch(getHoursByDate(id, dateFormat))
   }
   function handleCleanHoursByDate(e) {
     e.preventDefault(e)
     dispatch(cleanHoursByDate())
+  }
+  const [input, setInput] = useState({
+    idUser: '62eab574cac7d39b3b7427c5',
+    idField: id,
+    date: ''
+  })
+  const [getHour, setGetHour] = useState()
+  const dateFormat = date.split('/').reverse().join('-')
+
+  function handlePostReserve(e) {
+    console.log(getHour)
+    e.preventDefault()
+    const aux = hourToPost(e.target.value)
+    setInput({
+      idUser: '62eab574cac7d39b3b7427c5',
+      idField: id,
+      date: `${dateFormat}'T'${aux}`
+    })
+    // console.log(input)
+    dispatch(postReserveHourPadelField(input))
   }
   return (
     <Flex flexDirection='column'>
@@ -129,6 +154,7 @@ export default function DetailPadelField() {
                   transition='all 1s'
                   onClick={onOpen}
                   _hover={{ color: '#98D035', transition: 'all .5s ease', backgroundColor: '#E3FFB2' }}
+                  _active={{ color: '#98D035', transition: 'all .5s ease', backgroundColor: '#E3FFB2' }}
                   backgroundColor='#98D035'
                 >
                   Reservar
@@ -156,9 +182,9 @@ export default function DetailPadelField() {
                           {hourByDatePadelFiels.length > 0
                             ? hourByDatePadelFiels?.map((element, i) => {
                               if (element < 13) {
-                                return (<Button key={i}>{element} am</Button>)
+                                return (<Button key={i} value={element} onClick={(e) => { handlePostReserve(e); setGetHour(e) }}>{element} am</Button>)
                               }
-                              return (<Button key={i}>{element} pm</Button>)
+                              return (<Button key={i} value={element} onClick={(e) => { handlePostReserve(e); setGetHour(e) }}>{element} pm</Button>)
                             })
                             : (<Stack gap='2rem'>
                                 <Image height='sx' width='sx' src={turnoImage} alt='Sacar turno'/>
@@ -172,8 +198,8 @@ export default function DetailPadelField() {
                         : null}
                     </DrawerBody>
                     <DrawerFooter>
-                    <Button variant='outline' mr={3} onClick={(e) => handleCleanHoursByDate(e)}>Cancel</Button>
-                    <Button bg='brand.primary' color='white'>Submit</Button>
+                    <Button variant='outline' mr={3} onClick={(e) => { handleCleanHoursByDate(e); onClose() }}>Cancel</Button>
+                    <Button bg='brand.primary' _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }} _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }} color='white'>Submit</Button>
                     </DrawerFooter>
                   </DrawerContent>
                 </Drawer>

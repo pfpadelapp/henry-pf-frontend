@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { FiSearch } from "react-icons/fi";
-import { InputGroup, InputLeftElement, Input, Avatar, Heading, Text, Divider, IconButton, Center, SimpleGrid, Button, Flex} from '@chakra-ui/react'
+import { InputGroup, Input, Button, Flex} from '@chakra-ui/react'
 import { getInfoByName } from '../../redux/padelField/padelFieldSlice.js'
 
-export default function SearchBar ({currentPage}) {
+export default function SearchBar ({setCurrentPage}) {
   const dispatch = useDispatch()
   const [name, setName] = useState('')
   function handleInput(e) {
@@ -13,7 +13,8 @@ export default function SearchBar ({currentPage}) {
   }
   function handleSubmit(e) {
     e.preventDefault()
-    dispatch(getInfoByName(name, currentPage))
+    dispatch(getInfoByName(name))
+    setCurrentPage(1)
     setName("")
   }
   return (

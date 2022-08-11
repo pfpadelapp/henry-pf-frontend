@@ -33,6 +33,7 @@ export function Landing() {
           textColor="#ffff"
           backgroundColor="#98D035"
           _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+          _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
         >Registrarse</Button>
       </HStack>
     </Flex>

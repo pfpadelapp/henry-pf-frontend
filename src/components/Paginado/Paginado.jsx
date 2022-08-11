@@ -1,43 +1,56 @@
-import { Button, HStack, Text } from '@chakra-ui/react'
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getAllPagesPadelField } from '../../redux/padelField/padelFieldSlice.js'
+import { Button, HStack, IconButton } from '@chakra-ui/react'
+import { useSelector } from 'react-redux'
+import { MdFirstPage, MdLastPage } from 'react-icons/md'
+import { GrFormPrevious, GrFormNext } from 'react-icons/gr'
 
 export default function Paginado ({ pageFunction, current }) {
-  console.log(pageFunction, ' y ', current)
-  const dispatch = useDispatch()
-  useEffect(() => {
-    dispatch(getAllPagesPadelField())
-  }, [])
-  const padelFieldAllPages = useSelector((state) => state.padelFields.allPages)
+  // console.log(pageFunction, ' y ', current)
+  const padelFieldAllPages = useSelector((state) => state.padelFields.padelFieldFilter)
+  // console.log('Desde el paginado ', padelFieldAllPages)
   const countPadelfieldPages = Math.ceil(padelFieldAllPages.count / 6)
   const arrayCountPages = []
+
   for (let i = 1; i <= countPadelfieldPages; i++) {
     arrayCountPages.push(i)
   }
   // console.log(arrayCountPages)
+  // console.log(current)
   const handleClick = (page) => {
     pageFunction(page)
   }
-  const handleNextPage = (e, page) => {
-    e.preventDefault()
-    if (page === arrayCountPages?.length) pageFunction(3)
+  const handleNextPage = (page) => {
+    if (page === arrayCountPages?.length) pageFunction(arrayCountPages?.length)
     else pageFunction(page + 1)
   }
-  const handlePrevPage = (e, page) => {
-    e.preventDefault()
+  const handlePrevPage = (page) => {
     if (page === 1) pageFunction(1)
     else pageFunction(page - 1)
   }
+  const handleLastPage = () => {
+    pageFunction(arrayCountPages?.length)
+  }
+  const handleFirstPage = () => {
+    pageFunction(1)
+  }
   const buttomsCount = arrayCountPages?.map((element, i) => {
-    return <Button key={i} id={element} onClick={() => handleClick(element)}>{element}</Button>
+    return <Button
+              bg={current === element ? 'brand.secundary' : 'gray.100'}
+              _hover={current === element ? { backgroundColor: '#C3F577' } : { backgroundColor: 'gray.200' }}
+              _active={current === element ? { backgroundColor: '#C3F577' } : { backgroundColor: 'gray.200' }}
+              key={i} id={element}
+              onClick={() => handleClick(element)}
+            >
+              {element}
+            </Button>
   })
   return (
     <>
       <HStack>
-        <Button onClick={(e) => handlePrevPage(e, current)}>{'< Prev'}</Button>
+        <IconButton onClick={() => handleFirstPage()} icon={<MdFirstPage/>}/>
+        <IconButton onClick={() => handlePrevPage(current)} icon={<GrFormPrevious/>}/>
         {buttomsCount}
-        <Button onClick={(e) => handleNextPage(e, current)}>{'Next >'}</Button>
+        <IconButton onClick={() => handleNextPage(current)} icon={<GrFormNext/>}/>
+        <IconButton onClick={() => handleLastPage()} icon={<MdLastPage/>}/>
       </HStack>
     </>
   )

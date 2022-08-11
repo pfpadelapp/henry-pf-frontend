@@ -5,7 +5,7 @@ import { Box, Flex, Menu, Link, MenuButton, useDisclosure, Button, Icon, Avatar,
 import NavItem from "../NavItem/NavItem"
 import { getFilterPrice, filterByType, orderByPrice, orderByAvailability, fetchAllPadelFields } from '../../redux/padelField/padelFieldSlice'
 
-export default function Sidebar({currentPage}) {
+export default function Sidebar({current}) {
     const dispatch = useDispatch()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [navSize, changeNavSize] = useState("large")
@@ -13,35 +13,35 @@ export default function Sidebar({currentPage}) {
     const onChange = (val) => {
         setLimit(val)
     }
-
+    // ----------------------------- Error linea 84 -------------------------------------
     function handleFilterType(e){
         e.preventDefault();
         if(!e.target.value){
-            dispatch(fetchAllPadelFields())
+            dispatch(fetchAllPadelFields(1))
         }else{
-            dispatch(filterByType(e.target.value, currentPage))
+            dispatch(filterByType(e.target.value, 1))
         }
     }
     
-      function handleOrderPrice(e){
+      function handleOrderPrice(e) {
         e.preventDefault();
         if(!e.target.value){
-            dispatch(fetchAllPadelFields())
+            dispatch(fetchAllPadelFields(1))
         }else{
-        dispatch(orderByPrice(e.target.value, currentPage))
+        dispatch(orderByPrice(e.target.value, 1))
         }
     }
       
       function handleOrderAvailability(e){
         e.preventDefault();
         if(!e.target.value){
-            dispatch(fetchAllPadelFields())
+            dispatch(fetchAllPadelFields(1))
         }else{
-        dispatch(orderByAvailability(e.target.value, currentPage))
+        dispatch(orderByAvailability(e.target.value, 1))
         }
     }
     function handleFilterPrice() {
-        dispatch(getFilterPrice(limit[0], limit[1], currentPage))
+        dispatch(getFilterPrice(limit[0], limit[1], current))
     }
     return(
         <Flex
@@ -80,6 +80,7 @@ export default function Sidebar({currentPage}) {
                         aling-items={navSize == "small" ? "center" : "flex-start"}
                     >
                         <Menu placement='right'>
+                            {/* Link to ??? */}
                             <Link
                                 backgroundColor={/*active &&*/ "none"}
                                 p={3}
@@ -150,7 +151,7 @@ export default function Sidebar({currentPage}) {
                                         <RangeSliderThumb boxSize={6} index={1} />
                                     </Tooltip>
                                 </RangeSlider>
-                                <Button textColor="#ffff" backgroundColor="#98D035" _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }} onClick={() => handleFilterPrice()}>Buscar</Button>
+                                <Button textColor="#ffff" backgroundColor="#98D035" _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }} _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }} onClick={() => handleFilterPrice()}>Buscar</Button>
                             </Stack>
                         </ModalBody>
 

@@ -1,7 +1,7 @@
 import SearchBar from '../Searchbar/SearchBar'
 import { Flex, Box, Spacer, Text } from '@chakra-ui/react'
 
-export function NavBar() {
+export function NavBar({setCurrentPage}) {
   return (
     <Flex
     zIndex='1'
@@ -22,7 +22,7 @@ export function NavBar() {
       <Flex padding="30px 15px" height="45px" align="center" justifyContent="space.between" >
         <Spacer/>
         <Box>
-          <SearchBar/>
+          <SearchBar setCurrentPage ={setCurrentPage}/>
         </Box>
       </Flex>
     </Flex>
