@@ -144,7 +144,7 @@ export function getInfoByName(padelName) {
     try {
       const padelFieldSearch = await axios.get(`http://127.0.0.1:3000/field/search?name=${padelName}&page=1&limit=6`)
       // console.log('REdux', padelFieldSearch.data.results)
-      // console.log('REDUX 2', padelFieldSearch.data)
+      console.log('REDUX 2', padelFieldSearch.data)
       if (padelName === '') {
         Swal.fire({
           icon: 'error',

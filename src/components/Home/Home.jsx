@@ -12,16 +12,16 @@ import Paginado from '../Paginado/Paginado.jsx'
 export default function Home() {
   const dispatch = useDispatch()
   const allPadelField = useSelector((state) => state.padelFields.padelField)
-  const allPadelFieldFilter = useSelector((state) => state.padelFields.padelField)
-  console.log('aca', allPadelField)
-  console.log('aca', allPadelFieldFilter)
+  // const allPadelFieldFilter = useSelector((state) => state.padelFields.padelField)
+  // console.log('aca', allPadelField)
+  // console.log('aca', allPadelFieldFilter)
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     // dispatch(fetchAllOwners())
     // dispatch(fetchAllUsers())
     dispatch(fetchAllPadelFields(currentPage))
-    dispatch(fetchAllPadelFieldsFilter(currentPage))
+    // dispatch(fetchAllPadelFieldsFilter(currentPage))
   }, [currentPage])
 
   const paginado = (pageNumber) => {
