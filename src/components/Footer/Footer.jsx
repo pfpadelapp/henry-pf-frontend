@@ -1,14 +1,15 @@
 import { Divider, Flex, Heading, Stack, Text, IconButton, Center } from '@chakra-ui/react'
-import { FaFacebookF, FaInstagram, FaTwitter, FaMapMarkerAlt, FaPhoneVolume } from 'react-icons/fa'
+import { FaUserFriends, FaFacebookF, FaInstagram, FaTwitter, FaMapMarkerAlt, FaPhoneVolume } from 'react-icons/fa'
 import { IoIosMail } from 'react-icons/io'
 import { BsFillPersonFill } from 'react-icons/bs'
+import { RiCustomerService2Fill } from 'react-icons/ri'
 
 export default function Footer() {
   return (
     <>
       <Divider height='2px' backgroundColor='brand.primary' width='100%'/>
       <Flex flexDirection='row' justifyContent='space-evenly' margin='0 4vw' padding='3rem 0'>
-        <Stack>
+        <Stack width='20%'>
           <Heading size='md' paddingBottom='2rem'>
             Contactanos
           </Heading>
@@ -25,28 +26,21 @@ export default function Footer() {
             <Text fontSize='medium' color='gray.500'>PadelfieldApp@proyectohenry.com</Text>
           </Flex>
         </Stack>
-        <Stack>
+        <Stack width='20%'>
           <Heading size='md' paddingBottom='2rem'>
             Quienes somos
           </Heading>
           <Flex flexDirection='row' alignItems='center' gap='10px'>
-            {/* <IconButton variant='outline' color='#98D035' icon={<BsFillPersonFill/>}/> */}
+            <IconButton variant='outline' color='#98D035' icon={<BsFillPersonFill/>}/>
             <Text fontSize='medium' color='gray.500'>Servicios</Text>
           </Flex>
           <Flex flexDirection='row' alignItems='center' gap='10px'>
-            <Text fontSize='medium' color='gray.500'>
-              Miembros del equipo
-            </Text>
+            <IconButton variant='outline' color='#98D035' icon={<FaUserFriends/>}/>
+            <Text fontSize='medium' color='gray.500'>Miembros del equipo</Text>
           </Flex>
           <Flex flexDirection='row' alignItems='center' gap='10px'>
-            <Text fontSize='medium' color='gray.500'>
-              Suscribete
-            </Text>
-          </Flex>
-          <Flex flexDirection='row' alignItems='center' gap='10px'>
-            <Text fontSize='medium' color='gray.500'>
-              Soporte tecnico
-            </Text>
+            <IconButton variant='outline' color='#98D035' icon={<RiCustomerService2Fill/>}/>
+            <Text fontSize='medium' color='gray.500'>Soporte tecnico</Text>
           </Flex>
         </Stack>
         <Stack>
