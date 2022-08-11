@@ -2,26 +2,23 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllOwners } from '../../redux/owner/ownerSlice'
 import { fetchAllUsers } from '../../redux/users/usersSlice'
-import { fetchAllPadelFields, fetchAllPadelFieldsFilter } from '../../redux/padelField/padelFieldSlice'
+import { fetchAllPadelFields, fetchAllPadelFieldsFilter, getInfoByName } from '../../redux/padelField/padelFieldSlice'
 import CardPadel from '../CardPadel/CardPadel.jsx'
 import Sidebar from '../Sidebar/Sidebar'
 import { Flex, Center, SimpleGrid } from '@chakra-ui/react'
 import { NavBar } from '../NavBar/NavBar'
 import Paginado from '../Paginado/Paginado.jsx'
+import Footer from '../Footer/Footer'
 
 export default function Home() {
   const dispatch = useDispatch()
   const allPadelField = useSelector((state) => state.padelFields.padelField)
-  // const allPadelFieldFilter = useSelector((state) => state.padelFields.padelField)
-  // console.log('aca', allPadelField)
-  // console.log('aca', allPadelFieldFilter)
   const [currentPage, setCurrentPage] = useState(1)
-
+  console.log(allPadelField)
   useEffect(() => {
     // dispatch(fetchAllOwners())
     // dispatch(fetchAllUsers())
     dispatch(fetchAllPadelFields(currentPage))
-    // dispatch(fetchAllPadelFieldsFilter(currentPage))
   }, [currentPage])
 
   const paginado = (pageNumber) => {
@@ -78,6 +75,7 @@ export default function Home() {
         </Center>
       </Flex>
     </Flex>
+    <Footer/>
     </>
   )
 }

@@ -10,7 +10,8 @@ export const padelfieldSlice = createSlice({
     hoursByDatePadelField: [],
     allPages: [],
     padelFieldFilter: [],
-    postReserve: []
+    postReserve: [],
+    payReserve: [],
   },
   reducers: {
     setPadelField: (state, action) => {
@@ -20,7 +21,7 @@ export const padelfieldSlice = createSlice({
       state.padelField = action.payload
     },
     setPadelFieldById: (state, action) => {
-      state.padelField = action.payload
+      state.detailPadelField = action.payload
     },
     setPadelFieldFilterByType: (state, action) => {
       state.padelField = action.payload
@@ -51,11 +52,14 @@ export const padelfieldSlice = createSlice({
     },
     postReservePadelField: (state, action) => {
       state.postReserve = action.payload
+    },
+    setPaymentPadelfield: (state, action) => {
+      state.payReserve = action.payload
     }
   }
 })
 
-export const { setPadelFieldFilter, postReservePadelField, getCountPages, setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability,  cleanDetail } = padelfieldSlice.actions
+export const { setPaymentPadelfield, setPadelFieldFilter, postReservePadelField, getCountPages, setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability,  cleanDetail } = padelfieldSlice.actions
 
 export default padelfieldSlice.reducer
 
@@ -63,7 +67,7 @@ export function fetchAllPadelFields(currentPage) {
   return async function(dispatch) {
     try {
       const allPadelFields = await axios.get(`http://127.0.0.1:3000/field?page=${currentPage}&limit=6`)
-      // console.log('REDUX ALL : ', allPadelFields.data)
+      console.log('REDUX desde fetchall', allPadelFields.data)
       dispatch(setPadelField(allPadelFields.data))
       // console.log('redux', allPadelFields)
     } catch (error) {
@@ -144,7 +148,7 @@ export function getInfoByName(padelName) {
     try {
       const padelFieldSearch = await axios.get(`http://127.0.0.1:3000/field/search?name=${padelName}&page=1&limit=6`)
       // console.log('REdux', padelFieldSearch.data.results)
-      console.log('REDUX 2', padelFieldSearch.data)
+      console.log('REDUX desde el searchBar', padelFieldSearch.data)
       if (padelName === '') {
         Swal.fire({
           icon: 'error',
@@ -228,6 +232,18 @@ export function postReserveHourPadelField(input) {
       const post = await axios.post('http://127.0.0.1:3000/booking/', input)
       console.log('rtk, el id que devuelve es: ', post.data)
       dispatch(postReservePadelField(post.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function getPaymentPadelField(input) {
+  return async function(dispatch) {
+    try {
+      const payment = await axios.post('http://127.0.0.1:3000/payment/createPayment', input)
+      console.log(payment)
+      dispatch(getPaymentPadelField(payment.data))
     } catch (error) {
       console.log(error)
     }

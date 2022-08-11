@@ -1,11 +1,12 @@
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState, useRef } from 'react'
-import { postReserveHourPadelField, cleanHoursByDate, getHoursByDate, getPadelFieldsById, cleanDetailPadelField } from '../../redux/padelField/padelFieldSlice'
+import { getPaymentPadelField, postReserveHourPadelField, cleanHoursByDate, getHoursByDate, getPadelFieldsById, cleanDetailPadelField } from '../../redux/padelField/padelFieldSlice'
 import { Input, Flex, Image, Box, Divider, Text, Badge, HStack, Icon, Button, Center, Stack, Avatar, useDisclosure, Drawer, DrawerOverlay, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogCloseButton, AlertDialogBody, AlertDialogFooter } from '@chakra-ui/react'
 import Sidebar from '../Sidebar/Sidebar.jsx'
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
+import { MdOutlinePayments } from 'react-icons/md'
 import { NavBar } from '../NavBar/NavBar'
 import turnoImage from '../../resources/assets/turnDrawer.svg'
 
@@ -13,14 +14,20 @@ export default function DetailPadelField() {
   const dispatch = useDispatch()
   const { id } = useParams()
   const padelField = useSelector((state) => state.padelFields.detailPadelField)
+  const inputPayment = {
+    idField: id,
+    cost: padelField.price
+  }
+  console.log(inputPayment)
   const hourByDatePadelFiels = useSelector((state) => state.padelFields.hoursByDatePadelField)
   const menuRightModal = useDisclosure()
   const alertModal = useDisclosure()
   const cancelRef = useRef()
   const [date, setDate] = useState('')
   const [getHour, setGetHour] = useState()
+  const [renderMsg, setRenderMsg] = useState(1)
+  const msgRenderHourInDrawer = Number(getHour)
   // console.log('horas disponibles', hourByDatePadelFiels)
-  const { isOpen, onOpen, onClose } = useDisclosure()
   // const date = new Date()
   // const output = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear()
   // const output2 = new Date()
@@ -96,8 +103,13 @@ export default function DetailPadelField() {
   }
   function handlePostReserve(e) {
     e.preventDefault()
-    console.log('cuarto', input)
+    // console.log('cuarto', input)
     dispatch(postReserveHourPadelField(input))
+  }
+  function handlePaymentReserve(e) {
+    e.preventDefault()
+    console.log(inputPayment)
+    dispatch(getPaymentPadelField(inputPayment))
   }
   return (
     <Flex flexDirection='column'>
@@ -187,32 +199,9 @@ export default function DetailPadelField() {
                             ? hourByDatePadelFiels?.map((element, i) => {
                               return (
                                 <div key={i}>
-                                  <Button width='100%' value={element} onClick={(e) => { handleHour(e); alertModal.onOpen() }}>
+                                  <Button width='100%' value={element} onClick={(e) => { handleHour(e); setRenderMsg(2) }}>
                                     {element} hs
                                   </Button>
-                                  <AlertDialog
-                                    motionPreset='slideInBottom'
-                                    leastDestructiveRef={cancelRef}
-                                    onClose={alertModal.onClose}
-                                    isOpen={alertModal.isOpen}
-                                    isCentered
-                                  >
-                                    <AlertDialogContent>
-                                      <AlertDialogHeader>Confirmar Turno</AlertDialogHeader>
-                                      <AlertDialogCloseButton/>
-                                      <AlertDialogBody>
-                                        Seleccionaste la cancha {padelField.name} de {element}hs a {element + 1}hs el dia {date.split('-').reverse().join('/')}
-                                      </AlertDialogBody>
-                                      <AlertDialogFooter>
-                                        <Button ref={cancelRef} onClick={alertModal.onClose}>
-                                          No
-                                        </Button>
-                                        <Button color='white' bg='brand.primary' ml='3' onClick={(e) => { handleDateToPostBtn(e); alertModal.onClose() }} >
-                                          Si
-                                        </Button>
-                                      </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                  </AlertDialog>
                                 </div>
                               )
                             })
@@ -221,12 +210,50 @@ export default function DetailPadelField() {
                                 <Text textAlign='center' color='gray.500'> Para poder visualizar los horarios disponibles primero debes seleccionar una fecha</Text>
                               </Stack>)
                           }
+                          <AlertDialog
+                            motionPreset='slideInBottom'
+                            leastDestructiveRef={cancelRef}
+                            onClose={alertModal.onClose}
+                            isOpen={alertModal.isOpen}
+                            isCentered
+                          >
+                            <AlertDialogContent>
+                              <AlertDialogHeader>Generando Link de pago</AlertDialogHeader>
+                              <AlertDialogCloseButton/>
+                              <AlertDialogBody>
+                                Ingrese al link para ser re-dirigido al portal de pago
+                              </AlertDialogBody>
+                              <AlertDialogFooter>
+                                <Button
+                                  leftIcon={<MdOutlinePayments/>}
+                                  color='white' bg='#98D035'
+                                  _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+                                  _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+                                  onClick={(e) => { alertModal.onClose(); handlePaymentReserve(e); handleCleanHoursByDate(e); setRenderMsg(1) }} >
+                                  Link de pago
+                                </Button>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                          {renderMsg === 2 ? <Text fontWeight='medium' color='gray.500' paddingTop='3rem' >Seleccionaste la cancha {padelField.name} de {msgRenderHourInDrawer}hs a {msgRenderHourInDrawer + 1}hs el dia {date.split('-').reverse().join('/')}</Text> : null }
                         </Stack>
                       </Center>
                     </DrawerBody>
                     <DrawerFooter>
-                    <Button variant='outline' mr={3} onClick={(e) => { handleCleanHoursByDate(e); menuRightModal.onClose() }}>Cancelar</Button>
-                    <Button onClick={(e) => handlePostReserve(e) } bg='brand.primary' _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }} _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }} color='white'>Reservar</Button>
+                    <Button
+                      variant='outline'
+                      mr={3}
+                      onClick={(e) => { handleCleanHoursByDate(e); menuRightModal.onClose(); setRenderMsg(1) }}>
+                        Cancelar
+                      </Button>
+                    <Button
+                      bg='#98D035'
+                      onClick={ (e) => { alertModal.onOpen(); handleDateToPostBtn(e); handlePostReserve(e) } }
+                      _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+                      _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+                      color='white'>
+                        Reservar
+                      </Button>
                     </DrawerFooter>
                   </DrawerContent>
                 </Drawer>

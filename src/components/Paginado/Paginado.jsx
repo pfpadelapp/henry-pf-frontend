@@ -4,20 +4,16 @@ import { MdFirstPage, MdLastPage } from 'react-icons/md'
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr'
 
 export default function Paginado ({ pageFunction, current }) {
-  // console.log(pageFunction, ' y ', current)
   const padelFieldAllPages = useSelector((state) => state.padelFields.padelField)
-  // console.log('Desde el paginado ', padelFieldAllPages)
   const countPadelfieldPages = Math.ceil(padelFieldAllPages.count / 6)
   const arrayCountPages = []
-
   for (let i = 1; i <= countPadelfieldPages; i++) {
     arrayCountPages.push(i)
   }
-  // console.log(arrayCountPages)
-  // console.log(current)
   const handleClick = (page) => {
     pageFunction(page)
   }
+  // console.log('en el paginado el valor current es ', current)
   const handleNextPage = (page) => {
     if (page === arrayCountPages?.length) pageFunction(arrayCountPages?.length)
     else pageFunction(page + 1)
