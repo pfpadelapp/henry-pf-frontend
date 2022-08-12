@@ -50,7 +50,6 @@ export default function Sidebar({current}) {
             zIndex='2'
             marginTop='10vh'
             backgroundColor={colorMode === "dark" ? "#2c313d" : "#F8F8F8"}
-            borderRadius={navSize =="small" ? "15px" : "30px"}
             w={navSize == "small" ? "75px" : "400px"}
             flexDir="column"
             justifyContent="space-between"

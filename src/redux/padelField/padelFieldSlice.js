@@ -8,8 +8,6 @@ export const padelfieldSlice = createSlice({
     padelField: [],
     detailPadelField: [],
     hoursByDatePadelField: [],
-    allPages: [],
-    padelFieldFilter: [],
     postReserve: [],
     payReserve: [],
   },
@@ -63,24 +61,11 @@ export const { setPaymentPadelfield, setPadelFieldFilter, postReservePadelField,
 
 export default padelfieldSlice.reducer
 
-export function fetchAllPadelFields(currentPage) {
+export function fetchAllPadelFields() {
   return async function(dispatch) {
     try {
-      const allPadelFields = await axios.get(`http://127.0.0.1:3000/field?page=${currentPage}&limit=6`)
+      const allPadelFields = await axios.get(`http://127.0.0.1:3000/field`)
       console.log('REDUX desde fetchall', allPadelFields.data)
-      dispatch(setPadelField(allPadelFields.data))
-      // console.log('redux', allPadelFields)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}
-
-export function fetchAllPadelFieldsFilter(currentPage) {
-  return async function(dispatch) {
-    try {
-      const allPadelFields = await axios.get(`http://127.0.0.1:3000/field/search?name=${padelName}&page=${currentPage}&limit=6`)
-      // console.log('REDUX ALL : ', allPadelFields.data)
       dispatch(setPadelField(allPadelFields.data))
       // console.log('redux', allPadelFields)
     } catch (error) {
@@ -101,10 +86,10 @@ export function getPadelFieldsById(idPadelField) {
   }
 }
 
-export function filterByType(type, currentPage) {
+export function filterByType(type) {
   return async function(dispatch) {
     try {
-      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/typeField?typeField=${type}&page=${currentPage}&limit=6`)
+      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/typeField?typeField=${type}`)
       dispatch(setPadelFieldType(padelFieldType.data))
       // console.log('REDUX', padelFieldType.data)
     } catch (error) {
@@ -113,10 +98,10 @@ export function filterByType(type, currentPage) {
   }
 }
 
-export function orderByPrice(price, currentPage) {
+export function orderByPrice(price) {
   return async function(dispatch) {
     try {
-      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/sort?price=${price}&page=${currentPage}&limit=6`)
+      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/sort?price=${price}`)
       dispatch(setPadelFieldType(padelFieldType.data))
       // console.log('REDUX', padelFieldType.data)
     } catch (error) {
@@ -125,10 +110,10 @@ export function orderByPrice(price, currentPage) {
   }
 }
 
-export function orderByAvailability(availability, currentPage) {
+export function orderByAvailability(availability) {
   return async function(dispatch) {
     try {
-      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/able?active=${availability}&page=${currentPage}&limit=6`)
+      const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/able?active=${availability}`)
       dispatch(setPadelFieldAvailability(padelFieldType.data))
       // console.log('REDUX', padelFieldType.data)
     } catch (error) {
@@ -146,7 +131,7 @@ export function cleanDetailPadelField() {
 export function getInfoByName(padelName) {
   return async function(dispatch) {
     try {
-      const padelFieldSearch = await axios.get(`http://127.0.0.1:3000/field/search?name=${padelName}&page=1&limit=6`)
+      const padelFieldSearch = await axios.get(`http://127.0.0.1:3000/field/search?name=${padelName}`)
       // console.log('REdux', padelFieldSearch.data.results)
       console.log('REDUX desde el searchBar', padelFieldSearch.data)
       if (padelName === '') {
@@ -156,7 +141,7 @@ export function getInfoByName(padelName) {
           text: 'Debes ingresar el nombre de una cancha',
           confirmButtonColor: '#F27474'
         })
-      } else if (padelFieldSearch.data.results.length === 0) {
+      } else if (padelFieldSearch.data.length === 0) {
         Swal.fire({
           icon: 'warning',
           title: 'Oops...',
@@ -173,12 +158,12 @@ export function getInfoByName(padelName) {
   }
 }
 
-export function getFilterPrice(minPrice, maxPrice, currentPage) {
+export function getFilterPrice(minPrice, maxPrice) {
   return async function(dispatch) {
     try {
-      const filterPrice = await axios.get(`http://127.0.0.1:3000/field/rangePrice?minPrice=${minPrice}&maxPrice=${maxPrice}&page=${currentPage}&limit=6`)
-      // console.log(filterPrice.data.results)
-      if (filterPrice.data.results.length === 0) {
+      const filterPrice = await axios.get(`http://127.0.0.1:3000/field/rangePrice?minPrice=${minPrice}&maxPrice=${maxPrice}`)
+      console.log(filterPrice.data.results)
+      if (filterPrice.data.length === 0) {
         Swal.fire({
           icon: 'warning',
           title: 'Oops...',
@@ -214,17 +199,17 @@ export function cleanHoursByDate() {
   }
 }
 
-export function getAllPagesPadelField() {
-  return async function(dispatch) {
-    try {
-      const countPages = await axios.get('http://127.0.0.1:3000/field?page=1&limit=6')
-      // console.log('aca', countPages.data)
-      dispatch(getCountPages(countPages.data))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}
+// export function getAllPagesPadelField() {
+//   return async function(dispatch) {
+//     try {
+//       const countPages = await axios.get('http://127.0.0.1:3000/field?page=1&limit=6')
+//       // console.log('aca', countPages.data)
+//       dispatch(getCountPages(countPages.data))
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   }
+// }
 
 export function postReserveHourPadelField(input) {
   return async function(dispatch) {
