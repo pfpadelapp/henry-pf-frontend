@@ -18,7 +18,7 @@ export default function DetailPadelField() {
     idField: id,
     cost: padelField.price
   }
-  console.log(inputPayment)
+  // console.log(inputPayment)
   const hourByDatePadelFiels = useSelector((state) => state.padelFields.hoursByDatePadelField)
   const menuRightModal = useDisclosure()
   const alertModal = useDisclosure()
@@ -94,7 +94,8 @@ export default function DetailPadelField() {
   function handleDateToPostBtn(e) {
     e.preventDefault()
     const dateFormat = date.split('/').reverse().join('-') // 2022-08-25
-    const dateToPost = getHour === 9 ? `0${getHour}:00:00` : `${getHour}:00:00` // 10:00:00
+    const dateToPost = Number(getHour) === 9 ? `0${Number(getHour)}:00:00` : `${getHour}:00:00` // 10:00:00
+    console.log(dateToPost)
     const dateFormatToInput = dateFormat + 'T' + dateToPost // 2022-08-25T17:00:00
     setInput({
       ...input,
@@ -229,8 +230,8 @@ export default function DetailPadelField() {
                                   color='white' bg='#98D035'
                                   _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
                                   _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
-                                  onClick={(e) => { alertModal.onClose(); handlePaymentReserve(e); handleCleanHoursByDate(e); setRenderMsg(1) }} >
-                                  Link de pago
+                                  onClick={(e) => { handlePostReserve(e); alertModal.onClose(); handlePaymentReserve(e); handleCleanHoursByDate(e); setRenderMsg(1) }} >
+                                  Pagar
                                 </Button>
                               </AlertDialogFooter>
                             </AlertDialogContent>
@@ -248,7 +249,7 @@ export default function DetailPadelField() {
                       </Button>
                     <Button
                       bg='#98D035'
-                      onClick={ (e) => { alertModal.onOpen(); handleDateToPostBtn(e); handlePostReserve(e) } }
+                      onClick={ (e) => { alertModal.onOpen(); handleDateToPostBtn(e) } }
                       _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
                       _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
                       color='white'>

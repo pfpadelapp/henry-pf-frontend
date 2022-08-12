@@ -5,7 +5,7 @@ import { InputGroup, Input, Button, Flex} from '@chakra-ui/react'
 import { getInfoByName } from '../../redux/padelField/padelFieldSlice.js'
 import { useColorMode } from "@chakra-ui/color-mode"
 
-export default function SearchBar ({setCurrentPage, currentPage}) {
+export default function SearchBar () {
   const dispatch = useDispatch()
   const [name, setName] = useState('')
   const {colorMode, toggleColorMode}= useColorMode();
@@ -16,7 +16,6 @@ export default function SearchBar ({setCurrentPage, currentPage}) {
   function handleSubmit(e) {
     e.preventDefault()
     dispatch(getInfoByName(name))
-    setCurrentPage(1)
     setName("")
   }
   return (

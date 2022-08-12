@@ -9,7 +9,7 @@ export const padelfieldSlice = createSlice({
     detailPadelField: [],
     hoursByDatePadelField: [],
     postReserve: [],
-    payReserve: [],
+    payReserve: []
   },
   reducers: {
     setPadelField: (state, action) => {
@@ -53,6 +53,9 @@ export const padelfieldSlice = createSlice({
     },
     setPaymentPadelfield: (state, action) => {
       state.payReserve = action.payload
+    },
+    getUserById: (state, action) => {
+      state.user = action.payload
     }
   }
 })
@@ -64,7 +67,7 @@ export default padelfieldSlice.reducer
 export function fetchAllPadelFields() {
   return async function(dispatch) {
     try {
-      const allPadelFields = await axios.get(`http://127.0.0.1:3000/field`)
+      const allPadelFields = await axios.get('http://127.0.0.1:3000/field')
       console.log('REDUX desde fetchall', allPadelFields.data)
       dispatch(setPadelField(allPadelFields.data))
       // console.log('redux', allPadelFields)
@@ -229,6 +232,17 @@ export function getPaymentPadelField(input) {
       const payment = await axios.post('http://127.0.0.1:3000/payment/createPayment', input)
       console.log(payment)
       dispatch(getPaymentPadelField(payment.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function getUserId(id) {
+  return async function(dispatch) {
+    try {
+      const userId = await axios.get(`http://127.0.0.1:3000/user/${id}`)
+      dispatch(getUserId(userId.data))
     } catch (error) {
       console.log(error)
     }

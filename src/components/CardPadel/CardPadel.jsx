@@ -16,13 +16,13 @@ export default function CardPadel({ id, location, image, name, price }) {
         <Image zIndex='-10' transition='all 1s' _hover={{ filter: 'brightness(0.7)', transition: 'all .5s ease' }} borderRadius='xl' width='sm' height='300px' fallbackSrc='https://via.placeholder.com/150' src={image} alt={id}/>
         <HStack justifyContent='space-between'>
           <Box>
-            <Text fontWeight='bold' fontSize='2xl'>
-              {name[0].toUpperCase() + name.slice(1)}
+            <Text fontWeight='bold' fontSize='2xl' textTransform='capitalize'>
+              {name}
             </Text>
             <HStack as='span' color='gray.500' fontSize='md' fontWeight='medium'>
               <FaMapMarkerAlt/>
-              <Text>
-                {location[0].toUpperCase() + location.slice(1)}
+              <Text textTransform='capitalize'>
+                {location}
               </Text>
             </HStack>
           </Box>

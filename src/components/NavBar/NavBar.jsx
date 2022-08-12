@@ -3,7 +3,7 @@ import { Flex, Box, Spacer, Text } from '@chakra-ui/react'
 import { useColorMode } from "@chakra-ui/color-mode"
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 
-export function NavBar({setCurrentPage}) {
+export function NavBar() {
   const {colorMode, toggleColorMode}= useColorMode();
 
   return (
@@ -26,7 +26,7 @@ export function NavBar({setCurrentPage}) {
       <Flex padding="30px 15px" height="45px" align="center" justifyContent="space.between" >
         <Spacer/>
         <Box>
-          <SearchBar setCurrentPage ={setCurrentPage}/>
+          <SearchBar/>
         </Box>
         <ToggleColorMode/>
       </Flex>

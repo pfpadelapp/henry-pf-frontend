@@ -14,7 +14,7 @@ export default function Home() {
   const dispatch = useDispatch()
   const allPadelField = useSelector((state) => state.padelFields.padelField)
   const [currentPage, setCurrentPage] = useState(1)
-  console.log(allPadelField)
+  console.log('HOMeeee', allPadelField)
   useEffect(() => {
     // dispatch(fetchAllOwners())
     // dispatch(fetchAllUsers())
@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <>
-    <NavBar setCurrentPage ={setCurrentPage}/>
+    <NavBar/>
     <Flex>
       <Sidebar current={currentPage}/>
       <Flex width='100%' justifyContent='center' flexDir="column" alignSelf='flex-start'>
