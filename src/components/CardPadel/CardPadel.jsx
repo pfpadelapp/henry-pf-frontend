@@ -17,12 +17,12 @@ export default function CardPadel({ id, location, image, name, price }) {
         <HStack justifyContent='space-between'>
           <Box>
             <Text fontWeight='bold' fontSize='2xl'>
-              {name[0].toUpperCase() + name.slice(1)}
+              {name}
             </Text>
             <HStack as='span' color='gray.500' fontSize='md' fontWeight='medium'>
               <FaMapMarkerAlt/>
               <Text>
-                {location[0].toUpperCase() + location.slice(1)}
+                {location}
               </Text>
             </HStack>
           </Box>
