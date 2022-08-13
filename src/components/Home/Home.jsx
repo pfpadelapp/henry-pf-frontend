@@ -8,6 +8,7 @@ import { NavBar } from '../NavBar/NavBar'
 //import Paginado from '../Paginado/Paginado.jsx'
 import Footer from '../Footer/Footer'
 import ScrollToTop from 'react-scroll-to-top'
+import { IoIosArrowUp } from 'react-icons/io'
 
 export default function Home() {
   const dispatch = useDispatch()
@@ -45,7 +46,7 @@ export default function Home() {
         </Center> */}
       </Flex>
     </Flex>
-    <ScrollToTop smooth top='2'/>
+    <ScrollToTop smooth top='1400' component={<IoIosArrowUp/>} style={{ background: '#2C313D', paddingLeft: '11px', color: '#98D035', borderRadius: '6rem', justifyContent: 'center' }}/> {/*  2200 */}
     <Footer/>
     </>
   )

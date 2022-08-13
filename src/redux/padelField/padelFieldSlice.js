@@ -65,7 +65,7 @@ export function fetchAllPadelFields() {
   return async function(dispatch) {
     try {
       const allPadelFields = await axios.get('http://127.0.0.1:3000/field')
-      console.log('REDUX desde fetchall', allPadelFields.data)
+      // console.log('REDUX desde fetchall', allPadelFields.data)
       dispatch(setPadelField(allPadelFields.data))
       // console.log('redux', allPadelFields)
     } catch (error) {
@@ -162,7 +162,7 @@ export function getFilterPrice(minPrice, maxPrice) {
   return async function(dispatch) {
     try {
       const filterPrice = await axios.get(`http://127.0.0.1:3000/field/rangePrice?minPrice=${minPrice}&maxPrice=${maxPrice}`)
-      console.log(filterPrice.data.results)
+      // console.log(filterPrice.data.results)
       if (filterPrice.data.length === 0) {
         Swal.fire({
           icon: 'warning',
@@ -215,7 +215,7 @@ export function postReserveHourPadelField(input) {
   return async function(dispatch) {
     try {
       const post = await axios.post('http://127.0.0.1:3000/booking/', input)
-      console.log('rtk, el id que devuelve es: ', post.data)
+      // console.log('rtk, el id que devuelve es: ', post.data)
       dispatch(postReservePadelField(post.data))
     } catch (error) {
       console.log(error)
@@ -227,7 +227,7 @@ export function getPaymentPadelField(input) {
   return async function(dispatch) {
     try {
       const payment = await axios.post('http://127.0.0.1:3000/payment/createPayment', input)
-      console.log(payment)
+      // console.log(payment)
       dispatch(getPaymentPadelField(payment.data))
     } catch (error) {
       console.log(error)
