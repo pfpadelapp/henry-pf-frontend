@@ -53,9 +53,6 @@ export const padelfieldSlice = createSlice({
     },
     setPaymentPadelfield: (state, action) => {
       state.payReserve = action.payload
-    },
-    getUserById: (state, action) => {
-      state.user = action.payload
     }
   }
 })
@@ -232,17 +229,6 @@ export function getPaymentPadelField(input) {
       const payment = await axios.post('http://127.0.0.1:3000/payment/createPayment', input)
       console.log(payment)
       dispatch(getPaymentPadelField(payment.data))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}
-
-export function getUserId(id) {
-  return async function(dispatch) {
-    try {
-      const userId = await axios.get(`http://127.0.0.1:3000/user/${id}`)
-      dispatch(getUserId(userId.data))
     } catch (error) {
       console.log(error)
     }

@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FiMenu, FiHome, FiBell, FiFilter, FiClipboard, FiInfo } from "react-icons/fi";
-import { Box, Flex, Menu, Link, MenuButton, useDisclosure, Button, Icon, Avatar, ModalCloseButton, ModalFooter, ModalBody, Heading, Text, Modal, IconButton, ModalOverlay, ModalContent, Stack, Select, ModalHeader, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Tooltip } from '@chakra-ui/react'
+import { Link as Link2, Flex, Menu, MenuButton, useDisclosure, Button, Icon, Avatar, ModalCloseButton, ModalFooter, ModalBody, Heading, Text, Modal, IconButton, ModalOverlay, ModalContent, Stack, Select, ModalHeader, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Tooltip, MenuList, MenuItem } from '@chakra-ui/react'
 import NavItem from "../NavItem/NavItem"
 import { getFilterPrice, filterByType, orderByPrice, orderByAvailability, fetchAllPadelFields } from '../../redux/padelField/padelFieldSlice'
 import { useColorMode } from "@chakra-ui/color-mode"
+import { IoMdArrowDropdown } from 'react-icons/io'
+import { getUserById } from '../../redux/users/usersSlice.js'
+import { Link } from 'react-router-dom';
 
-export default function Sidebar({current}) {
+export default function Sidebar() {
     const dispatch = useDispatch()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [limit, setLimit] = useState([500, 9000])
     const [navSize, changeNavSize] = useState("small")
     const {colorMode, toggleColorMode}= useColorMode();
+    const idUser = '62eab574cac7d39b3b7427c5'
     const onChange = (val) => {
         setLimit(val)
     }
@@ -21,7 +25,7 @@ export default function Sidebar({current}) {
         if(!e.target.value){
             dispatch(fetchAllPadelFields(1))
         }else{
-            dispatch(filterByType(e.target.value, 1))
+            dispatch(filterByType(e.target.value))
         }
     }
     
@@ -30,7 +34,7 @@ export default function Sidebar({current}) {
         if(!e.target.value){
             dispatch(fetchAllPadelFields(1))
         }else{
-        dispatch(orderByPrice(e.target.value, 1))
+        dispatch(orderByPrice(e.target.value))
         }
     }
       
@@ -39,11 +43,14 @@ export default function Sidebar({current}) {
         if(!e.target.value){
             dispatch(fetchAllPadelFields(1))
         }else{
-        dispatch(orderByAvailability(e.target.value, 1))
+        dispatch(orderByAvailability(e.target.value))
         }
     }
     function handleFilterPrice() {
-        dispatch(getFilterPrice(limit[0], limit[1], current))
+        dispatch(getFilterPrice(limit[0], limit[1]))
+    }
+    function handleGetDetailPerfil() {
+        dispatch(getUserById(idUser))
     }
     return(
         <Flex
@@ -71,7 +78,9 @@ export default function Sidebar({current}) {
                     else changeNavSize("small")
                     }}
                 />
-                    <NavItem navSize={navSize} icon={FiHome} title="Inicio" active/>
+                    <Link to ='/home'>
+                        <NavItem navSize={navSize} icon={FiHome} title="Inicio" active/>
+                    </Link>
                     <NavItem navSize={navSize} icon={FiBell} title="Notificaciones"/>
                     <Flex
                         onClick={onOpen}
@@ -82,7 +91,7 @@ export default function Sidebar({current}) {
                     >
                         <Menu placement='right'>
                             {/* Link to ??? */}
-                            <Link
+                            <Link2
                                 backgroundColor={/*active &&*/ "none"}
                                 p={3}
                                 borderRadius={8}
@@ -95,7 +104,7 @@ export default function Sidebar({current}) {
                                         <Text ml={5} color={/*active ? "#98D035" : */"gray.500"} display={navSize == "small" ? "none" : "flex"}>Filtrar</Text>
                                     </Flex>
                                 </MenuButton>
-                            </Link>
+                            </Link2>
                         </Menu>
             
                     </Flex>
@@ -171,12 +180,29 @@ export default function Sidebar({current}) {
                     align-items={navSize == "small" ? "center" : "flex-start"}
                     mb={4}
                 >
-                       <Flex mt={4} justifyContent={navSize == "small" ? "center" : "flex-start"}>
+                    <Flex mt={4} justifyContent={navSize == "small" ? "center" : "flex-start"}>
                         <Avatar size="sm"/>
                         <Flex flexDir="column" ml={4} display={navSize == "small" ? "none" : "flex"}>
                             <Heading as="h3" size="sm"  color="gray.500">Mati Ferrari</Heading>
                             <Text color="gray">Admin</Text>
                         </Flex>
+                        <Menu>
+                            <MenuButton
+                                as={IconButton}
+                                display= {navSize === 'small' ? 'none' : 'flex'}
+                                aria-label='Options'
+                                icon={<IoMdArrowDropdown />}
+                                variant='outline'>
+                            </MenuButton>
+                            <MenuList>
+                                <Link to='/perfil'>
+                                    <MenuItem onClick={() => handleGetDetailPerfil()}>
+                                        Mi perfil
+                                    </MenuItem>
+                                </Link>
+                                <MenuItem>Desconectarse</MenuItem>
+                            </MenuList>
+                        </Menu>
                     </Flex>
                 </Flex>
         </Flex>

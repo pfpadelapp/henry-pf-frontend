@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllOwners } from '../../redux/owner/ownerSlice'
-import { fetchAllUsers } from '../../redux/users/usersSlice'
 import { fetchAllPadelFields} from '../../redux/padelField/padelFieldSlice'
 import CardPadel from '../CardPadel/CardPadel.jsx'
 import Sidebar from '../Sidebar/Sidebar'
@@ -9,18 +7,14 @@ import { Flex, Center, SimpleGrid } from '@chakra-ui/react'
 import { NavBar } from '../NavBar/NavBar'
 //import Paginado from '../Paginado/Paginado.jsx'
 import Footer from '../Footer/Footer'
+import ScrollToTop from 'react-scroll-to-top'
 
 export default function Home() {
   const dispatch = useDispatch()
   const allPadelField = useSelector((state) => state.padelFields.padelField)
-  const [currentPage, setCurrentPage] = useState(1)
-  console.log('HOMeeee', allPadelField)
   useEffect(() => {
-    // dispatch(fetchAllOwners())
-    // dispatch(fetchAllUsers())
-    dispatch(fetchAllPadelFields(currentPage))
-  }, [currentPage])
-
+    dispatch(fetchAllPadelFields())
+  }, [dispatch])
   // const paginado = (pageNumber) => {
   //   setCurrentPage(pageNumber)
   // }
@@ -29,7 +23,7 @@ export default function Home() {
     <>
     <NavBar/>
     <Flex>
-      <Sidebar current={currentPage}/>
+      <Sidebar/>
       <Flex width='100%' justifyContent='center' flexDir="column" alignSelf='flex-start'>
         <SimpleGrid margin='12vh 10vw 0vh 10vw' paddingLeft='75px' spacing={20} columns={{ base: 1, lg: 2, xl: 3 }}>
           {
@@ -51,6 +45,7 @@ export default function Home() {
         </Center> */}
       </Flex>
     </Flex>
+    <ScrollToTop smooth top='2'/>
     <Footer/>
     </>
   )

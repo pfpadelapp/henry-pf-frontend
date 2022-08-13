@@ -13,6 +13,9 @@ export const userSlice = createSlice({
     },
     setUsers: (state, action) => {
       state.userDetail = action.payload
+    },
+    setClearUserState: (state, action) => {
+      state.userDetail = []
     }
   }
 })
@@ -36,9 +39,15 @@ export function getUserById(id) {
   return async function(dispatch) {
     try {
       const userId = await axios.get(`http://127.0.0.1:3000/user/${id}`)
-      dispatch(setUser(userId.data))
+      dispatch(setUsers(userId.data))
     } catch (error) {
       console.log(error)
     }
+  }
+}
+
+export function clearUserDetail() {
+  return function(dispatch) {
+    dispatch(clearUserDetail)
   }
 }
