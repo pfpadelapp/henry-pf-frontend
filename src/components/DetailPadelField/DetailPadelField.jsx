@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 import { getPaymentPadelField, postReserveHourPadelField, cleanHoursByDate, getHoursByDate, getPadelFieldsById, cleanDetailPadelField } from '../../redux/padelField/padelFieldSlice'
 import { Input, Flex, Image, Box, Divider, Text, Badge, HStack, Icon, Button, Center, Stack, Avatar, useDisclosure, Drawer, DrawerOverlay, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogCloseButton, AlertDialogBody, AlertDialogFooter } from '@chakra-ui/react'
 import Sidebar from '../Sidebar/Sidebar.jsx'
+import { useColorMode } from "@chakra-ui/color-mode"
 import { FaMapMarkerAlt } from 'react-icons/fa'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import { MdOutlinePayments } from 'react-icons/md'
@@ -12,6 +13,7 @@ import turnoImage from '../../resources/assets/turnDrawer.svg'
 
 export default function DetailPadelField() {
   const dispatch = useDispatch()
+  const {colorMode, toggleColorMode}= useColorMode()
   const { id } = useParams()
   const padelField = useSelector((state) => state.padelFields.detailPadelField)
   const [ countReview, setCountReview ] = useState()
@@ -232,7 +234,7 @@ export default function DetailPadelField() {
                         <Button>{arrayDatesByWeek[4]}</Button>
                         <Button>{arrayDatesByWeek[5]}</Button>
                       </Stack> */}
-                      <Input bg='gray.100' type='date'onChange={(e) => handleDate(e)} marginBottom='4rem'/>
+                      <Input backgroundColor={colorMode === "dark" ? "#3d414c" : "white"} type='date'onChange={(e) => handleDate(e)} marginBottom='4rem'/>
                       <Center>
                         <Stack w='100%'>
                           {hourByDatePadelFiels.length > 0
