@@ -14,6 +14,7 @@ export default function DetailPadelField() {
   const dispatch = useDispatch()
   const { id } = useParams()
   const padelField = useSelector((state) => state.padelFields.detailPadelField)
+  const [ countReview, setCountReview ] = useState()
   const inputPayment = {
     idField: id,
     cost: padelField.price
@@ -152,14 +153,52 @@ export default function DetailPadelField() {
               <Text color='gray.500' fontWeight='medium' fontSize='lg' m='1rem 0'>
                 Puntaje:
               </Text>
-              <HStack color='brand.primary'>
-                <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                <Text>117 reseñas</Text>
-              </HStack>
+                {
+                  padelField.ratingsAverage === 1
+                    ? (<HStack color='brand.primary'>
+                        <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                        <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                        <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                        <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                        <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                        <Text>117 reseñas</Text>
+                      </HStack>)
+                    : padelField.ratingsAverage === 2
+                      ? (<HStack color='brand.primary'>
+                          <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                          <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                          <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                          <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                          <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                          <Text>117 reseñas</Text>
+                        </HStack>)
+                      : padelField.ratingsAverage === 3
+                        ? (<HStack color='brand.primary'>
+                            <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                            <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                            <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                            <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                            <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                            <Text>117 reseñas</Text>
+                          </HStack>)
+                        : padelField.ratingsAverage === 4
+                          ? (<HStack color='brand.primary'>
+                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                              <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                              <Text>117 reseñas</Text>
+                            </HStack>)
+                          : (<HStack color='brand.primary'>
+                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                              <Text>117 reseñas</Text>
+                            </HStack>)
+                }
               <>
                 <Button
                   marginTop='2rem'
@@ -268,60 +307,62 @@ export default function DetailPadelField() {
               <Text color='brand.primary' margin='0 2rem' fontWeight='medium' fontSize='2xl'>
                 Reseñas recientes
               </Text>
-              <HStack margin='2rem'alignItems='top' spacing={10}>
-                <Avatar zIndex='-10' size='lg' name='poro' src='https://images7.alphacoders.com/113/thumb-1920-1135835.jpg'/>
-                <Stack>
-                  <Text fontWeight='medium' fontSize='xl'>
-                    Nombre de usuario
-                  </Text>
-                  <HStack color='brand.primary'>
-                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                    <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                  </HStack>
-                  <Text style={{ hyphens: 'auto' }} color='gray.500' fontSize='lg'>
-                    Texto donde comenta una pequeña reseña de la cancha y ya no se que poner asi que voy a repetir esto 2 veces... Texto donde comenta una pequeña reseña de la cancha y ya no se que poner asi que voy a repetir esto 2 veces
-                  </Text>
-                </Stack>
-              </HStack>
-              <HStack margin='2rem'alignItems='top' spacing={10}>
-                <Avatar zIndex='-10' size='lg' name='poro' src='https://images6.alphacoders.com/107/1077773.jpg'/>
-                <Stack>
-                  <Text fontWeight='medium' fontSize='xl'>
-                    Otro usuario
-                  </Text>
-                  <HStack color='brand.primary'>
-                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                  </HStack>
-                  <Text style={{ hyphens: 'auto' }} color='gray.500' fontSize='lg'>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti id tempora, at ad distinctio assumenda excepturi quis optio placeat dolore libero fugit amet neque odio expedita sint modi! Reprehenderit, debitis?
-                  </Text>
-                </Stack>
-              </HStack>
-              <HStack margin='2rem'alignItems='top' spacing={10}>
-                <Avatar zIndex='-10' size='lg' name='poro' src='https://images2.alphacoders.com/106/1064322.jpg'/>
-                <Stack>
-                  <Text fontWeight='medium' fontSize='xl'>
-                    ladjlasdalsdasd
-                  </Text>
-                  <HStack color='brand.primary'>
-                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                    <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                    <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                    <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                    <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                  </HStack>
-                  <Text style={{ hyphens: 'auto' }} color='gray.500' fontSize='lg'>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Deleniti id tempora, at ad distinctio assumenda excepturi quis optio placeat dolore libero fugit amet neque odio expedita sint modi! Reprehenderit, debitis?
-                  </Text>
-                </Stack>
-              </HStack>
+                {padelField.review?.map((review, index) => {
+                  return (
+                    <HStack key={index} margin='2rem'alignItems='top' spacing={10}>
+                      <Avatar zIndex='-10' size='lg' name='poro' src='https://images7.alphacoders.com/113/thumb-1920-1135835.jpg'/>
+                      <Stack>
+                        <Text fontWeight='medium' fontSize='xl'>
+                          Nombre de usuario
+                        </Text>
+                        {
+                        review.rating === 1
+                          ? (<HStack color='brand.primary'>
+                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                              <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                              <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                              <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                              <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                            </HStack>)
+                          : review.rating === 2
+                            ? (<HStack color='brand.primary'>
+                                <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                                <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                                <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                              </HStack>)
+                            : review.rating === 3
+                              ? (<HStack color='brand.primary'>
+                                  <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                  <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                  <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                  <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                                  <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                                </HStack>)
+                              : review.rating === 4
+                                ? (<HStack color='brand.primary'>
+                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                    <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                                  </HStack>)
+                                : (<HStack color='brand.primary'>
+                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
+                                  </HStack>)
+                        }
+                        <Text style={{ hyphens: 'auto' }} color='gray.500' fontSize='lg'>
+                          {review.review ? review.review : 'El usuario no dejo un comentario'}
+                        </Text>
+                      </Stack>
+                    </HStack>
+                  )
+                })}
           </Box>
         </Flex>
       </Flex>
