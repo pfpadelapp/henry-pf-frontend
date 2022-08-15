@@ -6,8 +6,7 @@ export const userSlice = createSlice({
   initialState: {
     users: [],
     userDetail: [],
-    userByGoogle: [],
-    userId: []
+    userByGoogle: []
   },
   reducers: {
     setUser: (state, action) => {
@@ -30,7 +29,7 @@ export const { setUserInfoByGoogle, setUsers, setUser } = userSlice.actions
 export default userSlice.reducer
 
 export function fetchAllUsers() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const allUsers = await axios.get('https://api-rest-server-padel.herokuapp.com/users')
       dispatch(setUsers(allUsers.data))
@@ -41,7 +40,7 @@ export function fetchAllUsers() {
 }
 
 export function getUserById(id) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const userId = await axios.get(`http://127.0.0.1:3000/user/${id}`)
       dispatch(setUsers(userId.data))
@@ -52,13 +51,13 @@ export function getUserById(id) {
 }
 
 export function clearUserDetail() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(clearUserDetail)
   }
 }
 
 export function getInfoLoginGoogle(infoObjGoogle) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const infoGoogleUser = await infoObjGoogle
       console.log('redux', infoGoogleUser)
