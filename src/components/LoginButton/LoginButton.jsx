@@ -6,17 +6,19 @@ import { useEffect, useState } from 'react'
 
 const LoginButton = () => {
   const dispatch = useDispatch()
-  const { loginWithRedirect, isAuthenticated, user } = useAuth0()
+  const { loginWithRedirect, isAuthenticated, user, isLoading } = useAuth0()
   const [infoUser, setInfoUser] = useState()
   console.log('user', user)
   console.log(isAuthenticated)
   useEffect(() => {
     const userLogged = localStorage.getItem('Usuario logeado')
-    if (userLogged !== 'undefined') {
-      console.log('este es userlogged', userLogged)
-      const user = JSON.parse(userLogged)
-      setInfoUser(user)
-      dispatch(getInfoLoginGoogle(user))
+    if (!isLoading) {
+      if (isAuthenticated === true) {
+        console.log('este es userlogged', userLogged)
+        const user = JSON.parse(userLogged)
+        setInfoUser(user)
+        dispatch(getInfoLoginGoogle(user))
+      }
     } else {
       console.log('no funca')
     }
@@ -36,12 +38,11 @@ const LoginButton = () => {
   return (
     <Button
       fontSize="15px"
-      width="97px"
+      width="118px"
       height="35px"
-      textColor="#98D035"
-      backgroundColor="#E3FFB2"
-      _hover={{ color: '#E3FFB2', backgroundColor: '#98D035' }}
-      _active={{ color: '#E3FFB2', backgroundColor: '#98D035' }}
+      backgroundColor="#98D035"
+      _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+      _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
       onClick={(e) => { loginWithRedirect(); handleLogin(e) }} >Ingresar</Button>
   )
 }

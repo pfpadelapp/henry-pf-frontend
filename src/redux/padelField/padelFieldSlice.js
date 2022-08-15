@@ -57,12 +57,12 @@ export const padelfieldSlice = createSlice({
   }
 })
 
-export const { setPaymentPadelfield, setPadelFieldFilter, postReservePadelField, getCountPages, setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability,  cleanDetail } = padelfieldSlice.actions
+export const { setPaymentPadelfield, setPadelFieldFilter, postReservePadelField, getCountPages, setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability, cleanDetail } = padelfieldSlice.actions
 
 export default padelfieldSlice.reducer
 
 export function fetchAllPadelFields() {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const allPadelFields = await axios.get('http://127.0.0.1:3000/field')
       // console.log('REDUX desde fetchall', allPadelFields.data)
@@ -75,7 +75,7 @@ export function fetchAllPadelFields() {
 }
 
 export function getPadelFieldsById(idPadelField) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const padelFieldById = await axios.get(`http://127.0.0.1:3000/field/${idPadelField}`)
       dispatch(setPadelFieldById(padelFieldById.data))
@@ -87,7 +87,7 @@ export function getPadelFieldsById(idPadelField) {
 }
 
 export function filterByType(type) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/typeField?typeField=${type}`)
       dispatch(setPadelFieldType(padelFieldType.data))
@@ -99,7 +99,7 @@ export function filterByType(type) {
 }
 
 export function orderByPrice(price) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/sort?price=${price}`)
       dispatch(setPadelFieldType(padelFieldType.data))
@@ -111,7 +111,7 @@ export function orderByPrice(price) {
 }
 
 export function orderByAvailability(availability) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const padelFieldType = await axios.get(`http://127.0.0.1:3000/field/able?active=${availability}`)
       dispatch(setPadelFieldAvailability(padelFieldType.data))
@@ -123,13 +123,13 @@ export function orderByAvailability(availability) {
 }
 
 export function cleanDetailPadelField() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(cleanDetail())
   }
 }
 
 export function getInfoByName(padelName) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const padelFieldSearch = await axios.get(`http://127.0.0.1:3000/field/search?name=${padelName}`)
       // console.log('REdux', padelFieldSearch.data.results)
@@ -159,7 +159,7 @@ export function getInfoByName(padelName) {
 }
 
 export function getFilterPrice(minPrice, maxPrice) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const filterPrice = await axios.get(`http://127.0.0.1:3000/field/rangePrice?minPrice=${minPrice}&maxPrice=${maxPrice}`)
       // console.log(filterPrice.data.results)
@@ -180,10 +180,10 @@ export function getFilterPrice(minPrice, maxPrice) {
 }
 
 export function getHoursByDate(idPadelField, date) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const hoursByDate = await axios.get(`http://127.0.0.1:3000/booking/hours?idField=${idPadelField}&day=${date}`)
-      // console.log(hoursByDate.data)
+      console.log(hoursByDate.data)
       // console.log(idPadelField)
       // console.log(date)
       dispatch(setDateActual(hoursByDate.data))
@@ -194,7 +194,7 @@ export function getHoursByDate(idPadelField, date) {
 }
 
 export function cleanHoursByDate() {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch(setCleanHoursByDate())
   }
 }
@@ -211,8 +211,8 @@ export function cleanHoursByDate() {
 //   }
 // }
 
-export function postReserveHourPadelField(input) {
-  return async function(dispatch) {
+export function postReserveHourPadelField(input) { // esta no
+  return async function (dispatch) {
     try {
       const post = await axios.post('http://127.0.0.1:3000/booking/', input)
       // console.log('rtk, el id que devuelve es: ', post.data)
@@ -224,11 +224,11 @@ export function postReserveHourPadelField(input) {
 }
 
 export function getPaymentPadelField(input) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const payment = await axios.post('http://127.0.0.1:3000/payment/createPayment', input)
-      console.log(payment)
-      dispatch(getPaymentPadelField(payment.data))
+      // console.log('Este es el pago ', payment.data)
+      dispatch(setPaymentPadelfield(payment.data))
     } catch (error) {
       console.log(error)
     }

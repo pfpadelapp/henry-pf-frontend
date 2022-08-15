@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState, useRef } from 'react'
 import { getPaymentPadelField, postReserveHourPadelField, cleanHoursByDate, getHoursByDate, getPadelFieldsById, cleanDetailPadelField } from '../../redux/padelField/padelFieldSlice'
-import { Input, Flex, Image, Box, Divider, Text, Badge, HStack, Icon, Button, Center, Stack, Avatar, useDisclosure, Drawer, DrawerOverlay, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogCloseButton, AlertDialogBody, AlertDialogFooter } from '@chakra-ui/react'
+import { Link, Input, Flex, Image, Box, Divider, Text, Badge, HStack, Icon, Button, Center, Stack, Avatar, useDisclosure, Drawer, DrawerOverlay, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogCloseButton, AlertDialogBody, AlertDialogFooter } from '@chakra-ui/react'
 import Sidebar from '../Sidebar/Sidebar.jsx'
 import { useColorMode } from "@chakra-ui/color-mode"
 import { FaMapMarkerAlt } from 'react-icons/fa'
@@ -13,7 +13,7 @@ import turnoImage from '../../resources/assets/turnDrawer.svg'
 
 export default function DetailPadelField() {
   const dispatch = useDispatch()
-  const {colorMode, toggleColorMode}= useColorMode()
+  const { colorMode, toggleColorMode } = useColorMode()
   const { id } = useParams()
   const padelField = useSelector((state) => state.padelFields.detailPadelField)
   // const [countReview, setCountReview] = useState()
@@ -23,6 +23,8 @@ export default function DetailPadelField() {
   }
   // console.log(inputPayment)
   const hourByDatePadelFiels = useSelector((state) => state.padelFields.hoursByDatePadelField)
+  const linkPaymentPaypal = useSelector((state) => state.padelFields.payReserve)
+  console.log('Link de pago desde el detail', linkPaymentPaypal)
   const menuRightModal = useDisclosure()
   const alertModal = useDisclosure()
   const cancelRef = useRef()
@@ -73,11 +75,7 @@ export default function DetailPadelField() {
       dispatch(cleanDetailPadelField())
     }
   }, [id, dispatch])
-  const [input, setInput] = useState({
-    idUser: '62eab574cac7d39b3b7427c5',
-    idField: '62eab82fb501f29111badcf4',
-    date: '2022-08-25T18:00:00'
-  })
+  const [input, setInput] = useState(null)
   function handleDate(e) {
     e.preventDefault()
     setDate(e.target.value)
@@ -105,21 +103,22 @@ export default function DetailPadelField() {
       date: dateFormatToInput
     })
   }
-  function handlePostReserve(e) {
-    e.preventDefault()
-    // console.log('cuarto', input)
-    dispatch(postReserveHourPadelField(input))
-  }
+  // function handlePostReserve(e) {
+  //   e.preventDefault()
+  //   // console.log('cuarto', input)
+  //   dispatch(postReserveHourPadelField(input))
+  // }
   function handlePaymentReserve(e) {
     e.preventDefault()
     console.log(inputPayment)
     dispatch(getPaymentPadelField(inputPayment))
   }
+  console.log('EL INPUT ES', input)
   return (
     <Flex flexDirection='column'>
-      <NavBar/>
+      <NavBar />
       <Flex width='100%'>
-        <Sidebar/>
+        <Sidebar />
         <Flex flexDirection='column' width='100%' margin=' 3vh 4vw'>
           <Box width='max' margin='6vh' p='4' display={{ md: 'flex' }} align-items='top'>
             <Image
@@ -136,7 +135,7 @@ export default function DetailPadelField() {
                 {padelField.name}
               </Text>
               <HStack as='span' color='gray.500' fontSize='lg' fontWeight='medium' textTransform='capitalize' m='1rem 0'>
-                <Icon verticalAlign='center' color='gray.500' as={FaMapMarkerAlt}/>
+                <Icon verticalAlign='center' color='gray.500' as={FaMapMarkerAlt} />
                 <Text>
                   {padelField.location}
                 </Text>
@@ -155,52 +154,52 @@ export default function DetailPadelField() {
               <Text color='gray.500' fontWeight='medium' fontSize='lg' m='1rem 0'>
                 Puntaje:
               </Text>
-                {
-                  padelField.ratingsAverage === 1
+              {
+                padelField.ratingsAverage === 1
+                  ? (<HStack color='brand.primary'>
+                    <Icon h='2rem' w='2rem' as={AiFillStar} />
+                    <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                    <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                    <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                    <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                    <Text>117 reseñas</Text>
+                  </HStack>)
+                  : padelField.ratingsAverage === 2
                     ? (<HStack color='brand.primary'>
-                        <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                        <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                        <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                        <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                        <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                      <Icon h='2rem' w='2rem' as={AiFillStar} />
+                      <Icon h='2rem' w='2rem' as={AiFillStar} />
+                      <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                      <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                      <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                      <Text>117 reseñas</Text>
+                    </HStack>)
+                    : padelField.ratingsAverage === 3
+                      ? (<HStack color='brand.primary'>
+                        <Icon h='2rem' w='2rem' as={AiFillStar} />
+                        <Icon h='2rem' w='2rem' as={AiFillStar} />
+                        <Icon h='2rem' w='2rem' as={AiFillStar} />
+                        <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                        <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                         <Text>117 reseñas</Text>
                       </HStack>)
-                    : padelField.ratingsAverage === 2
-                      ? (<HStack color='brand.primary'>
-                          <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                          <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                          <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                          <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                          <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
+                      : padelField.ratingsAverage === 4
+                        ? (<HStack color='brand.primary'>
+                          <Icon h='2rem' w='2rem' as={AiFillStar} />
+                          <Icon h='2rem' w='2rem' as={AiFillStar} />
+                          <Icon h='2rem' w='2rem' as={AiFillStar} />
+                          <Icon h='2rem' w='2rem' as={AiFillStar} />
+                          <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                           <Text>117 reseñas</Text>
                         </HStack>)
-                      : padelField.ratingsAverage === 3
-                        ? (<HStack color='brand.primary'>
-                            <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                            <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                            <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                            <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                            <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                            <Text>117 reseñas</Text>
-                          </HStack>)
-                        : padelField.ratingsAverage === 4
-                          ? (<HStack color='brand.primary'>
-                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                              <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                              <Text>117 reseñas</Text>
-                            </HStack>)
-                          : (<HStack color='brand.primary'>
-                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                              <Text>117 reseñas</Text>
-                            </HStack>)
-                }
+                        : (<HStack color='brand.primary'>
+                          <Icon h='2rem' w='2rem' as={AiFillStar} />
+                          <Icon h='2rem' w='2rem' as={AiFillStar} />
+                          <Icon h='2rem' w='2rem' as={AiFillStar} />
+                          <Icon h='2rem' w='2rem' as={AiFillStar} />
+                          <Icon h='2rem' w='2rem' as={AiFillStar} />
+                          <Text>117 reseñas</Text>
+                        </HStack>)
+              }
               <>
                 <Button
                   marginTop='2rem'
@@ -218,7 +217,7 @@ export default function DetailPadelField() {
                   Reservar
                 </Button>
                 <Drawer onClose={menuRightModal.onClose} isOpen={menuRightModal.isOpen} size='md' closeOnEsc={true} preserveScrollBarGap={true}>
-                  <DrawerOverlay/>
+                  <DrawerOverlay />
                   <DrawerContent p='2rem'>
                     <DrawerCloseButton />
                     <DrawerHeader borderBottomWidth='1px'>Reserva una cancha</DrawerHeader>
@@ -234,23 +233,23 @@ export default function DetailPadelField() {
                         <Button>{arrayDatesByWeek[4]}</Button>
                         <Button>{arrayDatesByWeek[5]}</Button>
                       </Stack> */}
-                      <Input backgroundColor={colorMode === "dark" ? "#3d414c" : "white"} type='date'onChange={(e) => handleDate(e)} marginBottom='4rem'/>
+                      <Input backgroundColor={colorMode === "dark" ? "#3d414c" : "white"} type='date' onChange={(e) => handleDate(e)} marginBottom='4rem' />
                       <Center>
                         <Stack w='100%'>
                           {hourByDatePadelFiels.length > 0
                             ? hourByDatePadelFiels?.map((element, i) => {
                               return (
                                 <div key={i}>
-                                  <Button width='100%' value={element} onClick={(e) => { handleHour(e); setRenderMsg(2) }}>
+                                  <Button width='100%' value={element} onClick={(e) => { handleHour(e); setRenderMsg(2); handleDateToPostBtn(e) }}>
                                     {element} hs
                                   </Button>
                                 </div>
                               )
                             })
                             : (<Stack gap='2rem'>
-                                <Image height='sx' width='sx' src={turnoImage} alt='Sacar turno'/>
-                                <Text textAlign='center' color='gray.500'> Para poder visualizar los horarios disponibles primero debes seleccionar una fecha</Text>
-                              </Stack>)
+                              <Image height='sx' width='sx' src={turnoImage} alt='Sacar turno' />
+                              <Text textAlign='center' color='gray.500'> Para poder visualizar los horarios disponibles primero debes seleccionar una fecha</Text>
+                            </Stack>)
                           }
                           <AlertDialog
                             motionPreset='slideInBottom'
@@ -261,39 +260,43 @@ export default function DetailPadelField() {
                           >
                             <AlertDialogContent>
                               <AlertDialogHeader>Generando Link de pago</AlertDialogHeader>
-                              <AlertDialogCloseButton/>
+                              <AlertDialogCloseButton />
                               <AlertDialogBody>
                                 Ingrese al link para ser re-dirigido al portal de pago
                               </AlertDialogBody>
                               <AlertDialogFooter>
-                                <Button
-                                  leftIcon={<MdOutlinePayments/>}
-                                  color='white' bg='#98D035'
-                                  _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
-                                  _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
-                                  onClick={(e) => { handlePostReserve(e); alertModal.onClose(); handlePaymentReserve(e); handleCleanHoursByDate(e); setRenderMsg(1) }} >
-                                  Pagar
-                                </Button>
+                                <Link href={linkPaymentPaypal} isExternal>
+                                  <Button
+                                    isLoading={linkPaymentPaypal.length ? false : true}
+                                    leftIcon={<MdOutlinePayments />}
+                                    color='white' bg='#98D035'
+                                    _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+                                    _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+                                    onClick={(e) => { alertModal.onClose(); setRenderMsg(1) }} >
+                                    Pagar
+                                  </Button>
+                                </Link>
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
-                          {renderMsg === 2 ? <Text fontWeight='medium' color='gray.500' paddingTop='3rem' >Seleccionaste la cancha {padelField.name} de {msgRenderHourInDrawer}hs a {msgRenderHourInDrawer + 1}hs el dia {date.split('-').reverse().join('/')}</Text> : null }
+                          {renderMsg === 2 ? <Text fontWeight='medium' color='gray.500' paddingTop='3rem' >Seleccionaste la cancha {padelField.name} de {msgRenderHourInDrawer}hs a {msgRenderHourInDrawer + 1}hs el dia {date.split('-').reverse().join('/')}</Text> : null}
                         </Stack>
                       </Center>
                     </DrawerBody>
                     <DrawerFooter>
-                    <Button
-                      variant='outline'
-                      mr={3}
-                      onClick={(e) => { handleCleanHoursByDate(e); menuRightModal.onClose(); setRenderMsg(1) }}>
+                      <Button
+                        variant='outline'
+                        mr={3}
+                        onClick={(e) => { handleCleanHoursByDate(e); menuRightModal.onClose(); setRenderMsg(1) }}>
                         Cancelar
                       </Button>
-                    <Button
-                      bg='#98D035'
-                      onClick={ (e) => { alertModal.onOpen(); handleDateToPostBtn(e) } }
-                      _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
-                      _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
-                      color='white'>
+                      <Button
+                        bg='#98D035'
+                        isDisabled={input !== null ? false : true}
+                        onClick={(e) => { alertModal.onOpen(); handlePaymentReserve(e); handleCleanHoursByDate(e) }}
+                        _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+                        _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+                        color='white'>
                         Reservar
                       </Button>
                     </DrawerFooter>
@@ -303,68 +306,68 @@ export default function DetailPadelField() {
             </Flex>
           </Box>
           <Center p='4'>
-            <Divider zIndex='-10' height='2px' backgroundColor='brand.primary' width='90%'/>
+            <Divider zIndex='-10' height='2px' backgroundColor='brand.primary' width='90%' />
           </Center>
           <Box width='90%' margin='6vh' p='4'>
-              <Text color='brand.primary' margin='0 2rem' fontWeight='medium' fontSize='2xl'>
-                Reseñas recientes
-              </Text>
-                {padelField.review?.map((review, index) => {
-                  return (
-                    <HStack key={index} margin='2rem'alignItems='top' spacing={10}>
-                      <Avatar zIndex='-10' size='lg' name='poro' src='https://images7.alphacoders.com/113/thumb-1920-1135835.jpg'/>
-                      <Stack>
-                        <Text fontWeight='medium' fontSize='xl'>
-                          Nombre de usuario
-                        </Text>
-                        {
-                        review.rating === 1
+            <Text color='brand.primary' margin='0 2rem' fontWeight='medium' fontSize='2xl'>
+              Reseñas recientes
+            </Text>
+            {padelField.review?.map((review, index) => {
+              return (
+                <HStack key={index} margin='2rem' alignItems='top' spacing={10}>
+                  <Avatar zIndex='-10' size='lg' name='poro' src='https://images7.alphacoders.com/113/thumb-1920-1135835.jpg' />
+                  <Stack>
+                    <Text fontWeight='medium' fontSize='xl'>
+                      Nombre de usuario
+                    </Text>
+                    {
+                      review.rating === 1
+                        ? (<HStack color='brand.primary'>
+                          <Icon h='2rem' w='2rem' as={AiFillStar} />
+                          <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                          <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                          <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                          <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                        </HStack>)
+                        : review.rating === 2
                           ? (<HStack color='brand.primary'>
-                              <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                              <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                              <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                              <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                              <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                            </HStack>)
-                          : review.rating === 2
+                            <Icon h='2rem' w='2rem' as={AiFillStar} />
+                            <Icon h='2rem' w='2rem' as={AiFillStar} />
+                            <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                            <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                            <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                          </HStack>)
+                          : review.rating === 3
                             ? (<HStack color='brand.primary'>
-                                <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                                <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                                <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                              </HStack>)
-                            : review.rating === 3
+                              <Icon h='2rem' w='2rem' as={AiFillStar} />
+                              <Icon h='2rem' w='2rem' as={AiFillStar} />
+                              <Icon h='2rem' w='2rem' as={AiFillStar} />
+                              <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                              <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                            </HStack>)
+                            : review.rating === 4
                               ? (<HStack color='brand.primary'>
-                                  <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                  <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                  <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                  <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                                  <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                                </HStack>)
-                              : review.rating === 4
-                                ? (<HStack color='brand.primary'>
-                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                    <Icon h='2rem' w='2rem' as={AiOutlineStar}/>
-                                  </HStack>)
-                                : (<HStack color='brand.primary'>
-                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                    <Icon h='2rem' w='2rem' as={AiFillStar}/>
-                                  </HStack>)
-                        }
-                        <Text style={{ hyphens: 'auto' }} color='gray.500' fontSize='lg'>
-                          {review.review ? review.review : 'El usuario no dejo un comentario'}
-                        </Text>
-                      </Stack>
-                    </HStack>
-                  )
-                })}
+                                <Icon h='2rem' w='2rem' as={AiFillStar} />
+                                <Icon h='2rem' w='2rem' as={AiFillStar} />
+                                <Icon h='2rem' w='2rem' as={AiFillStar} />
+                                <Icon h='2rem' w='2rem' as={AiFillStar} />
+                                <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                              </HStack>)
+                              : (<HStack color='brand.primary'>
+                                <Icon h='2rem' w='2rem' as={AiFillStar} />
+                                <Icon h='2rem' w='2rem' as={AiFillStar} />
+                                <Icon h='2rem' w='2rem' as={AiFillStar} />
+                                <Icon h='2rem' w='2rem' as={AiFillStar} />
+                                <Icon h='2rem' w='2rem' as={AiFillStar} />
+                              </HStack>)
+                    }
+                    <Text style={{ hyphens: 'auto' }} color='gray.500' fontSize='lg'>
+                      {review.review ? review.review : 'El usuario no dejo un comentario'}
+                    </Text>
+                  </Stack>
+                </HStack>
+              )
+            })}
           </Box>
         </Flex>
       </Flex>
