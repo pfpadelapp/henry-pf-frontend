@@ -1,4 +1,4 @@
-import { Divider, Flex, Heading, Stack, Text, IconButton, Center } from '@chakra-ui/react'
+import { Divider, SimpleGrid, Flex, Heading, Stack, Text, IconButton, Center } from '@chakra-ui/react'
 import { FaUserFriends, FaFacebookF, FaInstagram, FaTwitter, FaMapMarkerAlt, FaPhoneVolume } from 'react-icons/fa'
 import { IoIosMail } from 'react-icons/io'
 import { BsFillPersonFill } from 'react-icons/bs'
@@ -7,9 +7,12 @@ import { RiCustomerService2Fill } from 'react-icons/ri'
 export default function Footer() {
   return (
     <>
-      <Divider height='2px' backgroundColor='brand.primary' width='100%'/>
-      <Flex flexDirection='row' justifyContent='space-evenly' margin='0 4vw' padding='3rem 0'>
-        <Stack width='20%'>
+      <Divider height='2px' backgroundColor='brand.primary' width='100%' padding='2rem 0'/>
+      <SimpleGrid
+        columns={{ base: 1, lg: 2, xl: 3 }}
+        justifyItems='center'
+        margin={{ base: '0 0 0 8vw', lg: '0 0 0 6vw', xl: '0 0 0 6vw' }} padding='3rem 0'>
+        <Stack width={{ base: 'xs', lg: 'sm', xl: 'base' }} margin={{ base: '2rem 0', lg: '2rem 0', xl: '0' }}>
           <Heading size='md' paddingBottom='2rem'>
             Contactanos
           </Heading>
@@ -26,7 +29,7 @@ export default function Footer() {
             <Text fontSize='medium' color='gray.500'>PadelfieldApp@proyectohenry.com</Text>
           </Flex>
         </Stack>
-        <Stack width='20%'>
+        <Stack width={{ base: 'xs', lg: 'sm', xl: 'base' }} margin={{ base: '2rem 0', lg: '2rem 0', xl: '0' }}>
           <Heading size='md' paddingBottom='2rem'>
             Quienes somos
           </Heading>
@@ -43,7 +46,7 @@ export default function Footer() {
             <Text fontSize='medium' color='gray.500'>Soporte tecnico</Text>
           </Flex>
         </Stack>
-        <Stack>
+        <Stack width={{ base: 'xs', lg: 'sm', xl: 'base' }} margin={{ base: '2rem 0', lg: '2rem 0', xl: '0' }}>
           <Heading size='md' paddingBottom='2rem'>
             Redes sociales
           </Heading>
@@ -60,7 +63,7 @@ export default function Footer() {
             <Text fontSize='medium' color='gray.500'>Twitter</Text>
           </Flex>
         </Stack>
-      </Flex>
+      </SimpleGrid>
       <Divider height='2px' backgroundColor='brand.primary' width='100%'/>
       <Center>
         <Text padding='2rem 0' fontSize='medium' color='gray.500'>Copyright © 2022 PadelfieldApp. Todos los derechos reservados</Text>

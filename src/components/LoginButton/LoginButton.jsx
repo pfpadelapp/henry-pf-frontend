@@ -1,23 +1,49 @@
-import {useAuth0} from '@auth0/auth0-react'
+import { useAuth0 } from '@auth0/auth0-react'
 import { Button } from '@chakra-ui/react'
-
+import { getInfoLoginGoogle } from '../../redux/users/usersSlice.js'
+import { useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
 
 const LoginButton = () => {
+  const dispatch = useDispatch()
+  const { loginWithRedirect, isAuthenticated, user } = useAuth0()
+  const [infoUser, setInfoUser] = useState()
+  console.log('user', user)
+  console.log(isAuthenticated)
+  useEffect(() => {
+    const userLogged = localStorage.getItem('Usuario logeado')
+    if (userLogged !== 'undefined') {
+      console.log('este es userlogged', userLogged)
+      const user = JSON.parse(userLogged)
+      setInfoUser(user)
+      dispatch(getInfoLoginGoogle(user))
+    } else {
+      console.log('no funca')
+    }
+  }, [])
 
-    const {loginWithRedirect, isAuthenticated,  user} = useAuth0()
-    console.log(user)
-    console.log(isAuthenticated)
-        return(
-            <Button 
-            fontSize="15px"
-            width="97px"
-            height="35px"
-            textColor="#98D035"
-            backgroundColor="#E3FFB2"
-            _hover={{ color: '#E3FFB2', backgroundColor: '#98D035' }}
-            _active={{ color: '#E3FFB2', backgroundColor: '#98D035' }}
-            onClick={() => loginWithRedirect()} >Ingresar</Button>
-        )
+  function handleLogin(e) {
+    e.preventDefault()
+    const userInfo = user
+    console.log('en el local, dentro del handle', userInfo)
+    localStorage.setItem(
+      'Usuario logeado', JSON.stringify(userInfo)
+    )
+
+    // dispatch(getInfoLoginGoogle(userFinal))
+  }
+  console.log('El estado del setuser es : ', infoUser)
+  return (
+    <Button
+      fontSize="15px"
+      width="97px"
+      height="35px"
+      textColor="#98D035"
+      backgroundColor="#E3FFB2"
+      _hover={{ color: '#E3FFB2', backgroundColor: '#98D035' }}
+      _active={{ color: '#E3FFB2', backgroundColor: '#98D035' }}
+      onClick={(e) => { loginWithRedirect(); handleLogin(e) }} >Ingresar</Button>
+  )
 }
 
 export default LoginButton

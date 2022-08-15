@@ -39,28 +39,35 @@ export function Landing() {
           _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
           _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
         >Registrarse</Button>
-            <ToggleColorMode/>
+          <ToggleColorMode/>
       </HStack>
     </Flex>
-    <Flex width='100%' h='calc(100vh - 20vh)' justifyContent='center' alignItems='center' gap='7rem'>
-      <Flex flexDirection='column' width='35%' gap='3rem'>
+    <Flex
+      flexDirection={{ base: 'column', md: 'column', xl: 'row' }}
+      width='100%'
+      height='calc(100vh - 20vh)'
+      justifyContent='center'
+      alignItems='center'
+      gap={{ xs: '1rem', base: '2rem', lg: '3rem', xl: '7rem' }}
+      margin={{ base: '4rem 0', md: '3rem 0', xl: '0' }}>
+      <Flex flexDirection='column' width={{ base: '80%', md: '80%', xl: '35%' }} gap='3rem'>
         <Center justifyContent='flex-start'>
-          <Text fontWeight='bold' fontSize='7xl'>
+          <Text fontWeight='bold' fontSize='6xl' textAlign={{ base: 'center', md: 'center', xl: 'left' }} >
             La mejor forma de <span style={{ color: '#98D035' }}>reservar</span> tu espacio
           </Text>
         </Center>
-        <Center justifyContent='flex-start'>
+        <Center justifyContent='flex-start' textAlign={{ base: 'center', md: 'center', xl: 'left' }}>
           <Text fontSize='3xl'>
             Explorá las canchas disponibles en tu ciudad y reserva una cancha sin moverte de tu casa.
           </Text>
         </Center>
       </Flex>
-      <Flex flexDirection='column' gap='2rem'>
+      <Flex flexDirection='column' gap='2rem' marginTop={{ base: '5rem 0', md: '5rem 0', xl: '0' }}>
         <Center>
         {slide === 1
           ? (
             <Flex alignItems='center' justifyContent='space-around'>
-              <Image height='sm' width='sm' src={loginImage} alt='Login' />
+              <Image height={{ sm: '16em', md: '20em', lg: '24em', xl: 'sm' }} width={{ sm: '', md: '16em', lg: '24em', xl: 'sm' }} src={loginImage} alt='Login' />
               <Stack width='30%'>
                 <Text fontSize='xl' fontWeight='bold' color='gray.500' >Registrate</Text>
                 <Text color='gray.500'>Crea una cuenta para comenzar a hacer reservas</Text>
@@ -68,27 +75,27 @@ export function Landing() {
             </Flex>
             )
           : slide === 2
-          ? (<Flex alignItems='center' justifyContent='space-around'>
-              <Image height='sm' width='sm' src={turnoImage} alt='Turno' />
+            ? (<Flex alignItems='center' justifyContent='space-around'>
+                <Image height={{ sm: '', md: '20em', lg: '24em', xl: 'sm' }} width={{ sm: '', md: '16em', lg: '24em', xl: 'sm' }} src={turnoImage} alt='Turno' />
+                <Stack width='30%'>
+                  <Text fontSize='xl' fontWeight='bold' color='gray.500' >Reserva</Text>
+                  <Text color='gray.500'>Selecciona la fecha y hora en la que deseas jugar</Text>
+                </Stack>
+              </Flex>)
+            : slide === 3
+              ? (<Flex alignItems='center' justifyContent='space-around'>
+                  <Image height={{ sm: '', md: '20em', lg: '24em', xl: 'sm' }} width={{ sm: '', md: '16em', lg: '24em', xl: 'sm' }} src={payImage} alt='Pay' />
+                  <Stack width='30%'>
+                    <Text fontSize='xl' fontWeight='bold' color='gray.500' >Paga</Text>
+                    <Text color='gray.500'>Selecciona el medio por el cual queres pagar</Text>
+                  </Stack>
+                </Flex>)
+              : (<Flex alignItems='center' justifyContent='space-around'>
+              <Image height={{ sm: '', md: '20em', lg: '24em', xl: 'sm' }} width={{ sm: '', md: '16em', lg: '24em', xl: 'sm' }} src={playImage} alt='Play' />
               <Stack width='30%'>
-                <Text fontSize='xl' fontWeight='bold' color='gray.500' >Reserva</Text>
-                <Text color='gray.500'>Selecciona la fecha y hora en la que deseas jugar</Text>
+                <Text fontSize='xl' fontWeight='bold' color='gray.500' >Juga</Text>
+                <Text color='gray.500'>¡Espera la confirmación de la pagina y listo!</Text>
               </Stack>
-            </Flex>)
-          : slide === 3
-          ? (<Flex alignItems='center' justifyContent='space-around'>
-              <Image height='sm' width='sm' src={payImage} alt='Pay' />
-              <Stack width='30%'>
-                <Text fontSize='xl' fontWeight='bold' color='gray.500' >Paga</Text>
-                <Text color='gray.500'>Selecciona el medio por el cual queres pagar</Text>
-              </Stack>
-            </Flex>)
-          : (<Flex alignItems='center' justifyContent='space-around'>
-          <Image height='sm' width='sm' src={playImage} alt='Play' />
-          <Stack width='30%'>
-            <Text fontSize='xl' fontWeight='bold' color='gray.500' >Juga</Text>
-            <Text color='gray.500'>¡Espera la confirmación de la pagina y listo!</Text>
-          </Stack>
         </Flex>)
         }
         </Center>
@@ -99,32 +106,32 @@ export function Landing() {
               width='1px'
               height='10px'
               borderRadius='full'
-              _focus={{ backgroundColor: 'brand.primary' }}
-              _hover={{ backgroundColor: 'brand.primary' }}
+              _focus={{ backgroundColor: '#98D035' }}
+              _hover={{ backgroundColor: '#98D035' }}
             />
             <Button
               onClick={() => setSlide(2)}
               width='1px'
               height='10px'
               borderRadius='full'
-              _focus={{ backgroundColor: 'brand.primary' }}
-              _hover={{ backgroundColor: 'brand.primary' }}
+              _focus={{ backgroundColor: '#98D035' }}
+              _hover={{ backgroundColor: '#98D035' }}
             />
             <Button
               onClick={() => setSlide(3)}
               width='1px'
               height='10px'
               borderRadius='full'
-              _focus={{ backgroundColor: 'brand.primary' }}
-              _hover={{ backgroundColor: 'brand.primary' }}
+              _focus={{ backgroundColor: '#98D035' }}
+              _hover={{ backgroundColor: '#98D035' }}
             />
             <Button
               onClick={() => setSlide(4)}
               width='1px'
               height='10px'
               borderRadius='full'
-              _focus={{ backgroundColor: 'brand.primary' }}
-              _hover={{ backgroundColor: 'brand.primary' }}
+              _focus={{ backgroundColor: '#98D035' }}
+              _hover={{ backgroundColor: '#98D035' }}
             />
           </HStack>
         </Center>

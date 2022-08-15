@@ -227,7 +227,7 @@ export function getPaymentPadelField(input) {
   return async function(dispatch) {
     try {
       const payment = await axios.post('http://127.0.0.1:3000/payment/createPayment', input)
-      // console.log(payment)
+      console.log(payment)
       dispatch(getPaymentPadelField(payment.data))
     } catch (error) {
       console.log(error)

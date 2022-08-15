@@ -16,7 +16,7 @@ export default function DetailPadelField() {
   const {colorMode, toggleColorMode}= useColorMode()
   const { id } = useParams()
   const padelField = useSelector((state) => state.padelFields.detailPadelField)
-  const [ countReview, setCountReview ] = useState()
+  // const [countReview, setCountReview] = useState()
   const inputPayment = {
     idField: id,
     cost: padelField.price
