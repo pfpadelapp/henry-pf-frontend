@@ -5,7 +5,9 @@ export const userSlice = createSlice({
   name: 'users',
   initialState: {
     users: [],
-    userDetail: []
+    userDetail: [],
+    userByGoogle: [],
+    userId: []
   },
   reducers: {
     setUser: (state, action) => {
@@ -14,13 +16,16 @@ export const userSlice = createSlice({
     setUsers: (state, action) => {
       state.userDetail = action.payload
     },
-    setClearUserState: (state, action) => {
+    setClearUserState: (state) => {
       state.userDetail = []
+    },
+    setUserInfoByGoogle: (state, action) => {
+      state.userByGoogle = action.payload
     }
   }
 })
 
-export const { setUsers, setUser } = userSlice.actions
+export const { setUserInfoByGoogle, setUsers, setUser } = userSlice.actions
 
 export default userSlice.reducer
 
@@ -49,5 +54,17 @@ export function getUserById(id) {
 export function clearUserDetail() {
   return function(dispatch) {
     dispatch(clearUserDetail)
+  }
+}
+
+export function getInfoLoginGoogle(infoObjGoogle) {
+  return async function(dispatch) {
+    try {
+      const infoGoogleUser = await infoObjGoogle
+      console.log('redux', infoGoogleUser)
+      dispatch(setUserInfoByGoogle(infoGoogleUser))
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
