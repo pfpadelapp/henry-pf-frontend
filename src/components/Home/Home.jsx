@@ -11,11 +11,16 @@ import { NavBar } from '../NavBar/NavBar'
 import Footer from '../Footer/Footer'
 import ScrollToTop from 'react-scroll-to-top'
 import { IoIosArrowUp } from 'react-icons/io'
+import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from 'react-router-dom'
 
 export default function Home() {
   const dispatch = useDispatch()
   const allPadelField = useSelector((state) => state.padelFields.padelField)
   const [currentPage, setCurrentPage] = useState(1)
+  const { isAuthenticated } = useAuth0()
+  const navigate = useNavigate()
+
   console.log(allPadelField)
   useEffect(() => {
     // dispatch(fetchAllOwners())
@@ -28,6 +33,7 @@ export default function Home() {
   // }
 
   return (
+   isAuthenticated?
     <>
     <NavBar setCurrentPage ={setCurrentPage}/>
     <Flex>
@@ -57,5 +63,6 @@ export default function Home() {
     <ScrollToTop smooth top='1400' component={<IoIosArrowUp/>} style={{ background: '#2C313D', paddingLeft: '11px', color: '#98D035', borderRadius: '6rem', justifyContent: 'center' }}/> {/*  2200 */}
     <Footer/>
     </>
+    : navigate("/")
   )
 }

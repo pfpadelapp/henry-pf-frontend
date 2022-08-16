@@ -4,12 +4,17 @@ import { useSelector } from 'react-redux'
 import { NavBar } from '../NavBar/NavBar'
 import Sidebar from '../Sidebar/Sidebar'
 import { useColorMode } from "@chakra-ui/color-mode"
+import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Perfil() {
-  const userData = useSelector((state) => state.users.userByGoogle)
-  console.log(userData)
+  const { user, isAuthenticated } = useAuth0()
+  console.log("user perfil",user)
+  console.log("autentificacion",isAuthenticated)
+  const navigate = useNavigate()
   const { colorMode, toggleColorMode } = useColorMode()
   return (
+    isAuthenticated?
     <>
       <NavBar />
       <Flex>
@@ -19,9 +24,9 @@ export default function Perfil() {
             <Flex flexDirection='column' gap='2.5rem' padding='2rem'>
               <Box>
                 <Flex flexDirection='row' paddingBottom='2rem' alignItems='center' gap='1rem'>
-                  <Avatar size='xl' src={userData.picture} />
+                  <Avatar size='xl' src={user.picture} />
                   <Flex flexDirection='column'>
-                    <Heading>Hola<span style={{ color: '#98D035' }}> {userData.name}</span></Heading>
+                    <Heading>Hola<span style={{ color: '#98D035' }}> {user.name}</span></Heading>
                     <Heading size='lg'>bienvenid@ de nuevo!</Heading>
                   </Flex>
                 </Flex>
@@ -35,9 +40,9 @@ export default function Perfil() {
                   <TabPanels>
                     <TabPanel>
                       <Box lineHeight='2rem'>
-                        <Text>Nombre: {userData.name} {userData.lastName}</Text>
-                        <Text>Usuario:  {userData.nickname}</Text>
-                        <Text>Email: {userData.email}</Text>
+                        <Text>Nombre: {user.name} {user.lastName}</Text>
+                        <Text>Usuario:  {user.nickname}</Text>
+                        <Text>Email: {user.email}</Text>
                         <Text>Teléfono: 1122339875</Text>
                       </Box>
                     </TabPanel>
@@ -118,5 +123,6 @@ export default function Perfil() {
         </Flex>
       </Flex>
     </>
+    : navigate("/")
   )
 }
