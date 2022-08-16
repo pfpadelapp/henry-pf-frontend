@@ -1,4 +1,4 @@
-import { Flex, Image, Text } from '@chakra-ui/react'
+import { Center, Flex, Image, Text } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { setPaymentCheckout } from '../../redux/padelField/padelFieldSlice'
@@ -27,11 +27,10 @@ export default function Success() {
         <NavBar />
         <Flex>
           <Sidebar />
-          <Flex width='100%' justifyContent='center' flexDir="column" alignSelf='center'>
-            {/* {msgStatus.status === 'COMPLETED' ? alert('La reserva se realizo') : alert('La reserva fallo')} */}
-            <Image src={successImage} />
+          <Center width='100%' marginTop="10%" flexDir="column" alignSelf='center'>
+            <Image src={successImage} maxW="500px" />
             <Text>La reserva se ha realizado con exito!</Text>
-          </Flex>
+          </Center>
         </Flex>
       </>
       : navigate('/')

@@ -18,7 +18,7 @@ export default function Home() {
   const dispatch = useDispatch()
   const allPadelField = useSelector((state) => state.padelFields.padelField)
   const [currentPage, setCurrentPage] = useState(1)
-  const { isAuthenticated } = useAuth0()
+  const { isAuthenticated, isLoading } = useAuth0()
   const navigate = useNavigate()
 
   // console.log(allPadelField)
@@ -33,7 +33,7 @@ export default function Home() {
   // }
 
   return (
-    isAuthenticated ?
+    isLoading === true ? null : isAuthenticated ?
       <>
         <NavBar setCurrentPage={setCurrentPage} />
         <Flex>

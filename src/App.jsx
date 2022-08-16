@@ -17,7 +17,7 @@ export default function App() {
       <Route exact path='/notification' element={<Home />} />
       <Route exact path='/panel' element={<Panel />} />
       <Route exact path='/perfil' element={<Perfil />} />
-      <Route exact path='/resultadoPago' element={<Success />} />
+      <Route path='/resultadoPago' element={<Success />} />
     </Routes>
   )
 }
