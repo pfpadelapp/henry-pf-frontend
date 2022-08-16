@@ -17,23 +17,23 @@ export function Landing() {
   const { isAuthenticated, loginWithPopup } = useAuth0()
 
   const login = async () => {
-    await loginWithPopup();
+    await loginWithPopup()
   }
-
 
   return (
     <>
       <Flex width='100%' height="10vh" padding='0 100px' backgroundColor={colorMode === "dark" ? "#2c313d" : "white"} borderBottomColor="#F8F1F1">
         <HStack as="nav" spacing="5">
-          {isAuthenticated?
-          <Link to="/home">
-            <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Inicio</Button>
-          </Link>
-          :
-          <Button onClick={(e) => { login() }} fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Inicio</Button>
+          {isAuthenticated
+            ? <Link to="/home">
+              <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Inicio</Button>
+            </Link>
+            : <Button onClick={(e) => { login() }} fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Inicio</Button>
           }
           <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Contacto</Button>
-          <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Acerca de Nosotros</Button>
+          <Link to='/perfil'>
+            <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Acerca de Nosotros</Button>
+          </Link>
         </HStack>
         <Spacer />
         <HStack as="nav" spacing="5">
