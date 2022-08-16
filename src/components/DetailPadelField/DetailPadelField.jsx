@@ -77,6 +77,7 @@ export default function DetailPadelField() {
     dispatch(getPadelFieldsById(id))
     return () => {
       dispatch(cleanDetailPadelField())
+      // navigate('/resultadoPago')
     }
   }, [id, dispatch])
   const [input, setInput] = useState(null)
@@ -377,6 +378,6 @@ export default function DetailPadelField() {
           </Flex>
         </Flex>
       </Flex>
-      : navigate("/")
+      : null
   )
 }

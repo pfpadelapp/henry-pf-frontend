@@ -53,11 +53,14 @@ export const padelfieldSlice = createSlice({
     },
     setPaymentPadelfield: (state, action) => {
       state.payReserve = action.payload
+    },
+    setPaymentCheck: (state, action) => {
+      state.check = action.payload
     }
   }
 })
 
-export const { setPaymentPadelfield, setPadelFieldFilter, postReservePadelField, getCountPages, setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability, cleanDetail } = padelfieldSlice.actions
+export const { setPaymentCheck, setPaymentPadelfield, setPadelFieldFilter, postReservePadelField, getCountPages, setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability, cleanDetail } = padelfieldSlice.actions
 
 export default padelfieldSlice.reducer
 
@@ -239,7 +242,7 @@ export function setPaymentCheckout(checkId) {
   return async function (dispatch) {
     try {
       const checkIdPayment = await axios.get(`http://127.0.0.1:3000/payment/executePayment?token=${checkId}`)
-      // console.log('Y en el rtk es : ', checkIdPayment.data.msg)
+      console.log('Y en el rtk es : ', checkIdPayment.data.msg)
       dispatch(setPaymentCheck(checkIdPayment.data.msg))
     } catch (error) {
       console.log(error)
