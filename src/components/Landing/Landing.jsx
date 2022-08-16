@@ -31,7 +31,7 @@ export function Landing() {
             : <Button onClick={(e) => { login() }} fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Inicio</Button>
           }
           <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Contacto</Button>
-          <Link to='/perfil'>
+          <Link to='/about'>
             <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Acerca de Nosotros</Button>
           </Link>
         </HStack>
