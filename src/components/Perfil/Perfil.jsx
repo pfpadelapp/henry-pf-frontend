@@ -3,24 +3,31 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { NavBar } from '../NavBar/NavBar'
 import Sidebar from '../Sidebar/Sidebar'
+import { useColorMode } from "@chakra-ui/color-mode"
+import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Perfil() {
-  const userData = useSelector((state) => state.users.userDetail)
-  console.log(userData)
+  const { user, isAuthenticated } = useAuth0()
+  console.log("user perfil",user)
+  console.log("autentificacion",isAuthenticated)
+  const navigate = useNavigate()
+  const { colorMode, toggleColorMode } = useColorMode()
   return (
+    isAuthenticated?
     <>
-      <NavBar/>
+      <NavBar />
       <Flex>
-        <Sidebar/>
+        <Sidebar />
         <Flex margin='12vh 10vw 0vh 10vw' width='100%' flexDir="column" alignItems='center'>
-          <Center bg='gray.700' width='60%' borderRadius='3xl' alignItems='flex-start' height='calc(100vh - 16vh)' margin='1vh 0'>
-            <Flex flexDirection='column' gap= '2.5rem' padding='3rem 2rem'>
+          <Center backgroundColor={colorMode == 'dark' ? '#2C313D' : '#F8F8F8'} width='60%' borderRadius='3xl' alignItems='flex-start' height='calc(100vh - 16vh)' margin='1vh 0'>
+            <Flex flexDirection='column' gap='2.5rem' padding='2rem'>
               <Box>
                 <Flex flexDirection='row' paddingBottom='2rem' alignItems='center' gap='1rem'>
-                  <Avatar size='xl' src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg'/>
+                  <Avatar size='xl' src={user.picture} />
                   <Flex flexDirection='column'>
-                    <Heading>Hola<span style={{ color: '#98D035' }}> {userData.name}</span></Heading>
-                    <Heading size='lg'>bienvenido de nuevo!</Heading>
+                    <Heading>Hola<span style={{ color: '#98D035' }}> {user.name}</span></Heading>
+                    <Heading size='lg'>bienvenid@ de nuevo!</Heading>
                   </Flex>
                 </Flex>
               </Box>
@@ -32,28 +39,28 @@ export default function Perfil() {
                   </TabList>
                   <TabPanels>
                     <TabPanel>
-                        <Box lineHeight='2rem'>
-                          <Text>Nombre: {userData.name} {userData.lastName}</Text>
-                          <Text>Usuario:  {userData.username}</Text>
-                          <Text>Email: {userData.email}</Text>
-                          <Text>Teléfono: no hay numero de celular :c</Text>
-                        </Box>
+                      <Box lineHeight='2rem'>
+                        <Text>Nombre: {user.name} {user.lastName}</Text>
+                        <Text>Usuario:  {user.nickname}</Text>
+                        <Text>Email: {user.email}</Text>
+                        <Text>Teléfono: 1122339875</Text>
+                      </Box>
                     </TabPanel>
                     <TabPanel>
-                        <Box lineHeight='2rem'>
-                          <HStack>
-                            <Text>Nombre</Text>
-                            <Input htmlSize={4} size='xs' width='md' placeholder='Ej: pepe'/>
-                          </HStack>
-                          <HStack>
-                            <Text>Usuario</Text>
-                            <Input htmlSize={4} size='xs' width='md' placeholder='Ej: usuario234'/>
-                          </HStack>
-                          <HStack>
-                            <Text>Telefono</Text>
-                            <Input htmlSize={4} size='xs' width='md' placeholder='Ej: 1125698744'/>
-                          </HStack>
-                        </Box>
+                      <Box lineHeight='2rem'>
+                        <HStack>
+                          <Text>Usuario: </Text>
+                          <Input htmlSize={4} size='xs' width='sm' placeholder='Ej: usuario234' />
+                        </HStack>
+                        <HStack>
+                          <Text>Contraseña: </Text>
+                          <Input htmlSize={4} size='xs' width='sm' placeholder='Ej: *' />
+                        </HStack>
+                        <HStack>
+                          <Text>Telefono: </Text>
+                          <Input htmlSize={4} size='xs' width='sm' placeholder='Ej: 1125698744' />
+                        </HStack>
+                      </Box>
                     </TabPanel>
                   </TabPanels>
                 </Tabs>
@@ -83,7 +90,7 @@ export default function Perfil() {
                       <Tr>
                         <Td>
                           <Flex gap='1rem' alignItems='center'>
-                          Reservaste la cancha Fieldtwo
+                            Reservaste la cancha Fieldtwo
                           </Flex>
                         </Td>
                         <Td>$1500</Td>
@@ -92,7 +99,7 @@ export default function Perfil() {
                       <Tr>
                         <Td>
                           <Flex gap='1rem' alignItems='center'>
-                          Reservaste la cancha FieldThree
+                            Reservaste la cancha FieldThree
                           </Flex>
                         </Td>
                         <Td>$120</Td>
@@ -101,7 +108,7 @@ export default function Perfil() {
                       <Tr>
                         <Td>
                           <Flex gap='1rem' alignItems='center'>
-                          Reservaste la cancha Prueba
+                            Reservaste la cancha Prueba
                           </Flex>
                         </Td>
                         <Td>$2000</Td>
@@ -116,5 +123,6 @@ export default function Perfil() {
         </Flex>
       </Flex>
     </>
+    : navigate("/")
   )
 }

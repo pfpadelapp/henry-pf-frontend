@@ -7,7 +7,7 @@ export default function NavItem({navSize, title, icon, active}) {
     const {colorMode, toggleColorMode}= useColorMode();
 
     return (
-        <Link to="/inicio">
+        <Link to="/inicio" style={{textDecoration:"none"}}>
             <Flex
                 mt={30}
                 flexDir="column"
@@ -16,7 +16,7 @@ export default function NavItem({navSize, title, icon, active}) {
             >
                 <Menu placement='right'>
                     <Link 
-                        backgroundColor={active && "#ffff"}
+                        backgroundColor={active && {colorMode: "dark" ? "#2c313d" : "#F8F8F8"}}
                         p={3}
                         borderRadius={8}
                         _hover={{textDecor:"none", background:(colorMode === "dark" ? "#3d414c" : "white")}}

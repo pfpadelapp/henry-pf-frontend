@@ -4,15 +4,20 @@ import { Route, Routes } from 'react-router-dom'
 import { Landing } from './components/Landing/Landing'
 import Panel from './components/Panel/Panel.jsx'
 import Perfil from './components/Perfil/Perfil.jsx'
+import About from './components/About/About'
+import Success from './components/Success/Success.jsx'
 
 export default function App() {
   return (
     <Routes>
-      <Route exact path='/' element={<Landing/>}/>
-      <Route path = '/detail/:id' element={<DetailPadelField/>} />
-      <Route exact path ='/home' element={<Home/>}/>
-      <Route exact path ='/panel' element={<Panel/>}/>
-      <Route exact path = '/perfil' element={<Perfil/>} />
+      <Route exact path='/' element={<Landing />} />
+      <Route exact path='/about' element={<About />} />
+      <Route path='/detail/:id' element={<DetailPadelField />} />
+      <Route exact path='/home' element={<Home />} />
+      <Route exact path='/notification' element={<Home />} />
+      <Route exact path='/panel' element={<Panel />} />
+      <Route exact path='/perfil' element={<Perfil />} />
+      <Route path='/resultadoPago' element={<Success />} />
     </Routes>
   )
 }
