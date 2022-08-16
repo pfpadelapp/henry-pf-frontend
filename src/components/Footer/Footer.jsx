@@ -63,7 +63,7 @@ export default function Footer() {
             <Text fontSize='medium' color='gray.500'>Instagram</Text>
           </Flex>
           <Flex flexDirection='row' alignItems='center' gap='10px'>
-            <Link to='https://twitter.com/ProyectoFinal13' isExternal>
+            <Link href='https://twitter.com/ProyectoFinal13' isExternal>
               <IconButton variant='outline' color='#98D035' icon={<FaTwitter />} />
             </Link>
             <Text fontSize='medium' color='gray.500'>Twitter</Text>
