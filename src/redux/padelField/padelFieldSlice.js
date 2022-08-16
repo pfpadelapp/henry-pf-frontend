@@ -53,11 +53,14 @@ export const padelfieldSlice = createSlice({
     },
     setPaymentPadelfield: (state, action) => {
       state.payReserve = action.payload
+    },
+    setPaymentCheck: (state, action) => {
+      state.check = action.payload
     }
   }
 })
 
-export const { setPaymentPadelfield, setPadelFieldFilter, postReservePadelField, getCountPages, setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability, cleanDetail } = padelfieldSlice.actions
+export const { setPaymentCheck, setPaymentPadelfield, setPadelFieldFilter, postReservePadelField, getCountPages, setCleanHoursByDate, setDateActual, setFilterPrice, setInfoByName, setPadelField, setPadelFieldById, setPadelFieldType, setPadelFieldOrderByPrice, setPadelFieldAvailability, cleanDetail } = padelfieldSlice.actions
 
 export default padelfieldSlice.reducer
 
@@ -183,7 +186,7 @@ export function getHoursByDate(idPadelField, date) {
   return async function (dispatch) {
     try {
       const hoursByDate = await axios.get(`http://127.0.0.1:3000/booking/hours?idField=${idPadelField}&day=${date}`)
-      console.log(hoursByDate.data)
+      // console.log(hoursByDate.data)
       // console.log(idPadelField)
       // console.log(date)
       dispatch(setDateActual(hoursByDate.data))
@@ -229,6 +232,18 @@ export function getPaymentPadelField(input) {
       const payment = await axios.post('http://127.0.0.1:3000/payment/createPayment', input)
       // console.log('Este es el pago ', payment.data)
       dispatch(setPaymentPadelfield(payment.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function setPaymentCheckout(checkId) {
+  return async function (dispatch) {
+    try {
+      const checkIdPayment = await axios.get(`http://127.0.0.1:3000/payment/executePayment?token=${checkId}`)
+      console.log('Y en el rtk es : ', checkIdPayment.data.msg)
+      dispatch(setPaymentCheck(checkIdPayment.data.msg))
     } catch (error) {
       console.log(error)
     }
