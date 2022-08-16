@@ -16,10 +16,9 @@ export default function Sidebar() {
   const [limit, setLimit] = useState([500, 9000])
   const [navSize, changeNavSize] = useState("small")
   const { colorMode, toggleColorMode } = useColorMode()
-  const { logout } = useAuth0()
+  const { logout, user } = useAuth0()
   const idUser = '62eab574cac7d39b3b7427c5'
-  const infoUserByRedux = useSelector((state) => state.users.userByGoogle)
-  console.log('la info desde el home', infoUserByRedux)
+  const userData = user
   const onChange = (val) => {
     setLimit(val)
   }
@@ -189,15 +188,18 @@ export default function Sidebar() {
         align-items={navSize == "small" ? "center" : "flex-start"}
         mb={4}
       >
-        <Flex mt={4} justifyContent={navSize == "small" ? "center" : "flex-start"} gap='10rem'>
+        <Flex mt={4} justifyContent={navSize == "small" ? "center" : "flex-start"} >
+        <Link to='/perfil'>
           <Flex>
-            <Link to='/perfil'><Avatar size="sm" src={infoUserByRedux ? infoUserByRedux.picture : null} /></Link>
+            <Avatar size="sm" src={userData ? userData.picture : null} />
             <Flex flexDir="column" ml={4} display={navSize == "small" ? "none" : "flex"}>
-              <Heading as="h3" size="sm" color="gray.500">{infoUserByRedux.name}</Heading>
+              <Heading as="h3" size="sm" color="gray.500">{userData.name}</Heading>
               <Text color="gray">Admin</Text>
             </Flex>
           </Flex>
-          <Flex>
+        </Link>
+          <Flex  justifyContent={navSize == "small" ? "center" : "flex-start"}
+                marginLeft={navSize == "small" ? "center" : "40%"}>
             <Menu>
               <MenuButton
                 as={IconButton}

@@ -6,7 +6,7 @@ export const userSlice = createSlice({
   initialState: {
     users: [],
     userDetail: [],
-    userByGoogle: []
+    //userByGoogle: []
   },
   reducers: {
     setUser: (state, action) => {
@@ -56,14 +56,14 @@ export function clearUserDetail() {
   }
 }
 
-export function getInfoLoginGoogle(infoObjGoogle) {
-  return async function (dispatch) {
-    try {
-      const infoGoogleUser = await infoObjGoogle
-      console.log('redux', infoGoogleUser)
-      dispatch(setUserInfoByGoogle(infoGoogleUser))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}
+// export function getInfoLoginGoogle(infoObjGoogle) {
+//   return async function (dispatch) {
+//     try {
+//       const infoGoogleUser = await infoObjGoogle
+//       console.log('redux', infoGoogleUser)
+//       dispatch(setUserInfoByGoogle(infoGoogleUser))
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   }
+// }

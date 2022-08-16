@@ -8,19 +8,30 @@ import playImage from '../../resources/assets/play.svg'
 import LoginButton from '../LoginButton/LoginButton'
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 import { useColorMode } from "@chakra-ui/color-mode"
+import { useAuth0 } from "@auth0/auth0-react";
 
 export function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [slide, setSlide] = useState(1)
   const { colorMode, toggleColorMode } = useColorMode();
+  const { isAuthenticated, loginWithPopup } = useAuth0()
+
+  const login = async () => {
+    await loginWithPopup();
+  }
+
 
   return (
     <>
       <Flex width='100%' height="10vh" padding='0 100px' backgroundColor={colorMode === "dark" ? "#2c313d" : "white"} borderBottomColor="#F8F1F1">
         <HStack as="nav" spacing="5">
+          {isAuthenticated?
           <Link to="/home">
             <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Inicio</Button>
           </Link>
+          :
+          <Button onClick={(e) => { login() }} fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Inicio</Button>
+          }
           <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Contacto</Button>
           <Button fontSize="15px" backgroundColor={colorMode === "dark" ? "#2c313d" : "white"}>Acerca de Nosotros</Button>
         </HStack>

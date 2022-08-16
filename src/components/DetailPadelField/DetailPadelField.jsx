@@ -10,11 +10,15 @@ import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import { MdOutlinePayments } from 'react-icons/md'
 import { NavBar } from '../NavBar/NavBar'
 import turnoImage from '../../resources/assets/turnDrawer.svg'
+import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from 'react-router-dom'
 
 export default function DetailPadelField() {
   const dispatch = useDispatch()
   const { colorMode, toggleColorMode } = useColorMode()
   const { id } = useParams()
+  const { isAuthenticated } = useAuth0()
+  const navigate = useNavigate()
   const padelField = useSelector((state) => state.padelFields.detailPadelField)
   // const [countReview, setCountReview] = useState()
   const inputPayment = {
@@ -115,6 +119,7 @@ export default function DetailPadelField() {
   }
   console.log('EL INPUT ES', input)
   return (
+    isAuthenticated?
     <Flex flexDirection='column'>
       <NavBar />
       <Flex width='100%'>
@@ -372,5 +377,6 @@ export default function DetailPadelField() {
         </Flex>
       </Flex>
     </Flex>
+    : navigate("/")
   )
 }
