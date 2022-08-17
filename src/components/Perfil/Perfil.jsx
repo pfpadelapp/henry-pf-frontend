@@ -1,32 +1,72 @@
-import { Heading, Avatar, Box, Button, Center, Flex, HStack, Stack, Tab, Table, TableCaption, TableContainer, TabList, TabPanel, Tabs, Text, Thead, Tr, Td, Th, Tbody, Badge, TabPanels, Input } from '@chakra-ui/react'
+import {
+  Heading,
+  Avatar,
+  Box,
+  Button,
+  Center,
+  Flex,
+  HStack,
+  Stack,
+  Tab,
+  Table,
+  TableCaption,
+  TableContainer,
+  TabList,
+  TabPanel,
+  Tabs,
+  Text,
+  Thead,
+  Tr,
+  Td,
+  Th,
+  Tbody,
+  Badge,
+  TabPanels,
+  Input
+} from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { NavBar } from '../NavBar/NavBar'
 import Sidebar from '../Sidebar/Sidebar'
-import { useColorMode } from "@chakra-ui/color-mode"
+import { useColorMode } from '@chakra-ui/color-mode'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Perfil() {
   const { user, isAuthenticated } = useAuth0()
-  console.log("user perfil",user)
-  console.log("autentificacion",isAuthenticated)
+  console.log('user perfil', user)
+  console.log('autentificacion', isAuthenticated)
   const navigate = useNavigate()
   const { colorMode, toggleColorMode } = useColorMode()
-  return (
-    isAuthenticated?
+  return isAuthenticated ? (
     <>
       <NavBar />
       <Flex>
         <Sidebar />
-        <Flex margin='12vh 10vw 0vh 10vw' width='100%' flexDir="column" alignItems='center'>
-          <Center backgroundColor={colorMode == 'dark' ? '#2C313D' : '#F8F8F8'} width='60%' borderRadius='3xl' alignItems='flex-start' height='calc(100vh - 16vh)' margin='1vh 0'>
+        <Flex
+          margin='12vh 10vw 0vh 10vw'
+          width='100%'
+          flexDir='column'
+          alignItems='center'>
+          <Center
+            backgroundColor={colorMode == 'dark' ? '#2C313D' : '#F8F8F8'}
+            width='60%'
+            borderRadius='3xl'
+            alignItems='flex-start'
+            height='calc(100vh - 16vh)'
+            margin='1vh 0'>
             <Flex flexDirection='column' gap='2.5rem' padding='2rem'>
               <Box>
-                <Flex flexDirection='row' paddingBottom='2rem' alignItems='center' gap='1rem'>
+                <Flex
+                  flexDirection='row'
+                  paddingBottom='2rem'
+                  alignItems='center'
+                  gap='1rem'>
                   <Avatar size='xl' src={user.picture} />
                   <Flex flexDirection='column'>
-                    <Heading>Hola<span style={{ color: '#98D035' }}> {user.name}</span></Heading>
+                    <Heading>
+                      Hola<span style={{ color: '#98D035' }}> {user.name}</span>
+                    </Heading>
                     <Heading size='lg'>bienvenid@ de nuevo!</Heading>
                   </Flex>
                 </Flex>
@@ -40,8 +80,10 @@ export default function Perfil() {
                   <TabPanels>
                     <TabPanel>
                       <Box lineHeight='2rem'>
-                        <Text>Nombre: {user.name} {user.lastName}</Text>
-                        <Text>Usuario:  {user.nickname}</Text>
+                        <Text>
+                          Nombre: {user.name} {user.lastName}
+                        </Text>
+                        <Text>Usuario: {user.nickname}</Text>
                         <Text>Email: {user.email}</Text>
                         <Text>Teléfono: 1122339875</Text>
                       </Box>
@@ -50,15 +92,30 @@ export default function Perfil() {
                       <Box lineHeight='2rem'>
                         <HStack>
                           <Text>Usuario: </Text>
-                          <Input htmlSize={4} size='xs' width='sm' placeholder='Ej: usuario234' />
+                          <Input
+                            htmlSize={4}
+                            size='xs'
+                            width='sm'
+                            placeholder='Ej: usuario234'
+                          />
                         </HStack>
                         <HStack>
                           <Text>Contraseña: </Text>
-                          <Input htmlSize={4} size='xs' width='sm' placeholder='Ej: *' />
+                          <Input
+                            htmlSize={4}
+                            size='xs'
+                            width='sm'
+                            placeholder='Ej: *'
+                          />
                         </HStack>
                         <HStack>
                           <Text>Telefono: </Text>
-                          <Input htmlSize={4} size='xs' width='sm' placeholder='Ej: 1125698744' />
+                          <Input
+                            htmlSize={4}
+                            size='xs'
+                            width='sm'
+                            placeholder='Ej: 1125698744'
+                          />
                         </HStack>
                       </Box>
                     </TabPanel>
@@ -123,6 +180,7 @@ export default function Perfil() {
         </Flex>
       </Flex>
     </>
-    : navigate("/")
+  ) : (
+    navigate('/')
   )
 }

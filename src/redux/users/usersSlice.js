@@ -5,7 +5,7 @@ export const userSlice = createSlice({
   name: 'users',
   initialState: {
     users: [],
-    userDetail: [],
+    userDetail: []
     //userByGoogle: []
   },
   reducers: {
@@ -31,7 +31,9 @@ export default userSlice.reducer
 export function fetchAllUsers() {
   return async function (dispatch) {
     try {
-      const allUsers = await axios.get('https://api-rest-server-padel.herokuapp.com/users')
+      const allUsers = await axios.get(
+        'https://api-rest-server-padel.herokuapp.com/users'
+      )
       dispatch(setUsers(allUsers.data))
     } catch (error) {
       console.log(error)

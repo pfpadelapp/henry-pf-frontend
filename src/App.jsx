@@ -6,6 +6,8 @@ import Panel from './components/Panel/Panel.jsx'
 import Perfil from './components/Perfil/Perfil.jsx'
 import About from './components/About/About'
 import Success from './components/Success/Success.jsx'
+import Admin from './components/Admin/Admin'
+import AdminInterfaz from './components/Admin/AdminInterfaz'
 
 export default function App() {
   return (
@@ -18,6 +20,8 @@ export default function App() {
       <Route exact path='/panel' element={<Panel />} />
       <Route exact path='/perfil' element={<Perfil />} />
       <Route path='/resultadoPago' element={<Success />} />
+      <Route exact path='/admin' element={<Admin />} />
+      <Route exact path='/adminInterfaz' element={<AdminInterfaz />} />
     </Routes>
   )
 }
