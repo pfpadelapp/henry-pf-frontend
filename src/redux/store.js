@@ -4,9 +4,9 @@ import users from './users/usersSlice'
 import padelFields from './padelField/padelFieldSlice'
 
 export default configureStore({
-    reducer: {
-        owners,
-        users,
-        padelFields
-    }
+  reducer: {
+    owners,
+    users,
+    padelFields
+  }
 })
