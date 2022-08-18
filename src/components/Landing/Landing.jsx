@@ -74,7 +74,7 @@ export function Landing() {
             backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}>
             Contacto
           </Button>
-          <Link to='/perfil'>
+          <Link to='/nosotros'>
             <Button
               fontSize='15px'
               backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}>
