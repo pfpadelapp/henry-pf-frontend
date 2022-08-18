@@ -203,15 +203,15 @@ export default function DetailPadelField() {
                 <Text>{padelField.location}</Text>
               </HStack>
               <HStack m='1rem 0'>
-                <Text color='brand.primary' fontWeight='bolder' fontSize='lg'>
+                <Text color='#98D035' fontWeight='bolder' fontSize='lg'>
                   ${padelField.price}
                 </Text>
                 <Badge
-                  backgroundColor='brand.backgroundBox'
+                  backgroundColor={colorMode == 'dark' ? 'gray.500' : '#FFEBF0'}
                   textAlign='center'
                   borderRadius='lg'>
                   <Text
-                    color='brand.textSecundary'
+                    color={colorMode == 'dark' ? null : '#9E45BD'}
                     p='0 10px'
                     fontWeight='medium'>
                     1 hora
@@ -234,7 +234,7 @@ export default function DetailPadelField() {
                 Puntaje:
               </Text>
               {padelField.ratingsAverage === 1 ? (
-                <HStack color='brand.primary'>
+                <HStack>
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
@@ -387,14 +387,17 @@ export default function DetailPadelField() {
                                 <Link href={linkPaymentPaypal} isExternal>
                                   <Button
                                     isLoading={
-                                      linkPaymentPaypal.length ? false : true
+                                      linkPaymentPaypal.length
+                                        ? false
+                                        : true
                                     }
                                     leftIcon={<MdOutlinePayments />}
                                     color='white'
                                     bg='#98D035'
                                     _hover={{
                                       color: '#98D035',
-                                      backgroundColor: '#E3FFB2'
+                                      backgroundColor: '#E3FFB2',
+                                      textDecor: 'none',
                                     }}
                                     _active={{
                                       color: '#98D035',

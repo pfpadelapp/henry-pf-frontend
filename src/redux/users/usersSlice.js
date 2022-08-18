@@ -20,11 +20,14 @@ export const userSlice = createSlice({
     },
     setUserInfoByGoogle: (state, action) => {
       state.userByGoogle = action.payload
+    },
+    setUpdate: (state, action) => {
+      state.userDetail = action.payload
     }
   }
 })
 
-export const { setUserInfoByGoogle, setUsers, setUser } = userSlice.actions
+export const { setUpdate, setUserInfoByGoogle, setUsers, setUser } = userSlice.actions
 
 export default userSlice.reducer
 
@@ -69,3 +72,15 @@ export function clearUserDetail() {
 //     }
 //   }
 // }
+
+export function getUpdateUser(userId, dataUser) {
+  return async function (dispatch) {
+    try {
+      const userUpdate = await axios.put(`http://127.0.0.1:3000/user/${userId}`, dataUser)
+      console.log('actalizar usuario', userUpdate.data)
+      dispatch(setUpdate(userUpdate))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
