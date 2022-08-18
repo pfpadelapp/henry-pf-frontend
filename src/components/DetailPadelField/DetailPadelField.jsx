@@ -50,6 +50,7 @@ import turnoImage from '../../resources/assets/turnDrawer.svg'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
 
+
 export default function DetailPadelField() {
   const dispatch = useDispatch()
   const { colorMode, toggleColorMode } = useColorMode()
@@ -240,7 +241,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>117 reseñas</Text>
+                  <Text>{padelField.review.length} Reseñas</Text>
                 </HStack>
               ) : padelField.ratingsAverage === 2 ? (
                 <HStack color='brand.primary'>
@@ -249,7 +250,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>117 reseñas</Text>
+                  <Text>{padelField.review.length} Reseñas</Text>
                 </HStack>
               ) : padelField.ratingsAverage === 3 ? (
                 <HStack color='brand.primary'>
@@ -258,7 +259,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>117 reseñas</Text>
+                  <Text>{padelField.review.length} Reseñas</Text>
                 </HStack>
               ) : padelField.ratingsAverage === 4 ? (
                 <HStack color='brand.primary'>
@@ -267,7 +268,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>117 reseñas</Text>
+                  <Text>{padelField.review.length} Reseñas</Text>
                 </HStack>
               ) : (
                 <HStack color='brand.primary'>
@@ -276,7 +277,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Text>117 reseñas</Text>
+                  <Text>{padelField.review.length} Reseñas</Text>
                 </HStack>
               )}
               <>
@@ -487,7 +488,7 @@ export default function DetailPadelField() {
                   />
                   <Stack>
                     <Text fontWeight='medium' fontSize='xl'>
-                      Nombre de usuario
+                    Nombre de usuario
                     </Text>
                     {review.rating === 1 ? (
                       <HStack color='brand.primary'>
@@ -541,10 +542,17 @@ export default function DetailPadelField() {
                   </Stack>
                 </HStack>
               )
-            })}
+            })}   
           </Box>
         </Flex>
       </Flex>
+    
     </Flex>
   ) : null
+
+
+
+
+
+  
 }

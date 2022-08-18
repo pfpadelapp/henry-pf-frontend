@@ -13,7 +13,7 @@ export default function App() {
   return (
     <Routes>
       <Route exact path='/' element={<Landing />} />
-      <Route exact path='/about' element={<About />} />
+      <Route exact path='/nosotros' element={<About />} />
       <Route path='/detail/:id' element={<DetailPadelField />} />
       <Route exact path='/home' element={<Home />} />
       <Route exact path='/notification' element={<Home />} />
