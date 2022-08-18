@@ -54,13 +54,14 @@ export const padelfieldSlice = createSlice({
     setPaymentPadelfield: (state, action) => {
       state.payReserve = action.payload
     },
-    setPaymentCheck: (state, action) => {
-      state.check = action.payload
+    setCreatePAdelField: (state, action) => {
+      state.padelField = action.payload
     }
   }
 })
 
 export const {
+  setCreatePAdelField,
   setPaymentCheck,
   setPaymentPadelfield,
   setPadelFieldFilter,
@@ -280,6 +281,19 @@ export function setPaymentCheckout(checkId) {
       )
       console.log('Y en el rtk es : ', checkIdPayment.data.msg)
       dispatch(setPaymentCheck(checkIdPayment.data.msg))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function createPadelField(input) {
+  return async function (dispatch) {
+    try {
+      // console.log('input que recibo', input)
+      const newPadelfield = await axios.post('http://127.0.0.1:3000/field', input)
+      // console.log('input que muestro', newPadelfield.data)
+      dispatch(setCreatePAdelField(newPadelfield.data))
     } catch (error) {
       console.log(error)
     }

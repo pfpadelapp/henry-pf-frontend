@@ -55,11 +55,14 @@ export default function Sidebar() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [limit, setLimit] = useState([500, 9000])
+  const [limit, setLimit] = useState([500, 3500])
   const [navSize, changeNavSize] = useState('small')
   const { colorMode, toggleColorMode } = useColorMode()
   const { logout, user, isAuthenticated } = useAuth0()
   const idUser = '62eab574cac7d39b3b7427c5'
+  const userData = {
+    role: 'owner'
+  }
   const onChange = (val) => {
     setLimit(val)
   }
@@ -95,10 +98,6 @@ export default function Sidebar() {
   function handleGetDetailPerfil() {
     dispatch(getUserById(idUser))
   }
-  function handleLogout(e) {
-    e.preventDefault()
-    localStorage.removeItem('Usuario logeado')
-  }
   return isAuthenticated ? (
     <Flex
       zIndex='2'
@@ -126,7 +125,7 @@ export default function Sidebar() {
         />
         <Link to='/home'>
           {window.location.href.replace('http://127.0.0.1:5173', '') ===
-          '/home' ? (
+            '/home' ? (
             <NavItem
               navSize={navSize}
               icon={FiHome}
@@ -177,7 +176,7 @@ export default function Sidebar() {
         </Flex>
         <Link to='/notification'>
           {window.location.href.replace('http://127.0.0.1:5173', '') ===
-          '/notification' ? (
+            '/notification' ? (
             <NavItem
               navSize={navSize}
               icon={FiClipboard}
@@ -200,7 +199,6 @@ export default function Sidebar() {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Filtros</ModalHeader>
-          <ModalCloseButton />
           <ModalBody>
             <Stack spacing={5}>
               <Select
@@ -230,7 +228,7 @@ export default function Sidebar() {
               <Text>Precio</Text>
               <RangeSlider
                 onChange={onChange}
-                defaultValue={[500, 9000]}
+                defaultValue={[500, 3500]}
                 min={0}
                 max={10000}
                 step={500}>
@@ -278,10 +276,11 @@ export default function Sidebar() {
 
           <ModalFooter>
             <Button
-              colorScheme='blue'
-              mr={3}
-              onClick={onClose}
-              bgColor='#98D035'>
+              textColor='#ffff'
+              backgroundColor='#98D035'
+              _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+              _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
+              onClick={onClose}>
               Cerrar
             </Button>
           </ModalFooter>
@@ -322,16 +321,13 @@ export default function Sidebar() {
                 icon={<IoMdArrowDropdown />}
                 variant='outline'></MenuButton>
               <MenuList>
-                <Link to='/perfil'>
+                <Link to={userData.role === 'owner' ? '/panel' : '/perfil'}>
                   <MenuItem onClick={() => handleGetDetailPerfil()}>
                     Mi perfil
                   </MenuItem>
                 </Link>
                 <MenuItem
-                  onClick={(e) => {
-                    logout()
-                    handleLogout(e)
-                  }}>
+                  onClick={logout}>
                   Desconectarse
                 </MenuItem>
               </MenuList>

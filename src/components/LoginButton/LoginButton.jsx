@@ -42,10 +42,10 @@ const LoginButton = () => {
       fontSize='15px'
       width='97px'
       height='35px'
-      textColor='#98D035'
-      backgroundColor='#E3FFB2'
-      _hover={{ color: '#E3FFB2', backgroundColor: '#98D035' }}
-      _active={{ color: '#E3FFB2', backgroundColor: '#98D035' }}
+      textColor="#fff"
+      backgroundColor="#98D035"
+      _hover={{ color: '#fff', backgroundColor: '#E3FFB2' }}
+      _active={{ color: '#fff', backgroundColor: '#E3FFB2' }}
       onClick={(e) => {
         login()
       }}>
