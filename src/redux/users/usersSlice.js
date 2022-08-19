@@ -1,11 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+const urlDeploy = 'https://pf-padel-app.herokuapp.com'
+const urlLocal = 'http://127.0.0.1:3000'
+
 export const userSlice = createSlice({
   name: 'users',
   initialState: {
     users: [],
-    userDetail: [],
+    userDetail: []
     //userByGoogle: []
   },
   reducers: {
@@ -20,18 +23,23 @@ export const userSlice = createSlice({
     },
     setUserInfoByGoogle: (state, action) => {
       state.userByGoogle = action.payload
+    },
+    setUpdate: (state, action) => {
+      state.userDetail = action.payload
     }
   }
 })
 
-export const { setUserInfoByGoogle, setUsers, setUser } = userSlice.actions
+export const { setUpdate, setUserInfoByGoogle, setUsers, setUser } = userSlice.actions
 
 export default userSlice.reducer
 
 export function fetchAllUsers() {
   return async function (dispatch) {
     try {
-      const allUsers = await axios.get('https://api-rest-server-padel.herokuapp.com/users')
+      const allUsers = await axios.get(
+        `${urlDeploy}/users`
+      )
       dispatch(setUsers(allUsers.data))
     } catch (error) {
       console.log(error)
@@ -42,7 +50,7 @@ export function fetchAllUsers() {
 export function getUserById(id) {
   return async function (dispatch) {
     try {
-      const userId = await axios.get(`http://127.0.0.1:3000/user/${id}`)
+      const userId = await axios.get(`${urlDeploy}/user/${id}`)
       dispatch(setUsers(userId.data))
     } catch (error) {
       console.log(error)
@@ -67,3 +75,15 @@ export function clearUserDetail() {
 //     }
 //   }
 // }
+
+export function getUpdateUser(userId, dataUser) {
+  return async function (dispatch) {
+    try {
+      const userUpdate = await axios.put(`${urlDeploy}/user/${userId}`, dataUser)
+      console.log('actalizar usuario', userUpdate.data)
+      dispatch(setUpdate(userUpdate))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}

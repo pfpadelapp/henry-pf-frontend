@@ -1,123 +1,350 @@
-import { Heading, Avatar, Box, Button, Center, Flex, HStack, Stack, Tab, Table, TableCaption, TableContainer, TabList, TabPanel, Tabs, Text, Thead, Tr, Td, Th, Tbody, Badge } from '@chakra-ui/react'
+import { Heading, Avatar, Box, Button, Center, Flex, HStack, Stack, Tab, Table, TableCaption, TableContainer, TabList, TabPanel, Tabs, Text, Thead, Tr, Td, Th, Tbody, Badge, IconButton, FormControl, FormLabel, Input, InputGroup, InputRightElement, TabPanels, FormHelperText, Divider } from '@chakra-ui/react'
 import { NavBar } from '../NavBar/NavBar'
 import Sidebar from '../Sidebar/Sidebar'
-import iconT1 from '../../resources/assets/T1.png'
-import iconT2 from '../../resources/assets/T2.png'
-import iconT3 from '../../resources/assets/T3.png'
+import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate, Link } from 'react-router-dom'
+import { BiUpload } from 'react-icons/bi'
+import { AiFillDelete } from 'react-icons/ai'
+import Swal from 'sweetalert2'
+import { useState } from 'react'
+import { useColorMode } from '@chakra-ui/color-mode'
+import { getUpdateOwner } from '../../redux/owner/ownerSlice.js'
+import { useDispatch } from 'react-redux'
 
 export default function Panel() {
+  const dispatch = useDispatch()
+  const { user, isAuthenticated } = useAuth0()
+  console.log(user)
+  console.log(isAuthenticated)
+  const navigate = useNavigate()
+  const { colorMode } = useColorMode()
+  const [input, setInput] = useState({
+    password: '',
+    contact: '',
+    username: ''
+  })
+  const [errors, setErrors] = useState({})
+  const [show, setShow] = useState(false)
+  const handleShowPassword = () => setShow(!show)
+  const validateName = /^[a-zA-Z\s]+$/
+  const validatePass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/
+  const idOwner = '62fd201fdfa5c35016ff8165'
+  function validate(input) {
+    const errors = {}
+    if (!input.username) {
+      errors.username = 'Debes ingresar el nuevo username'
+    } else if (input.username.length < 7) {
+      errors.username = 'Debe tener al menos 7 caracteres'
+    } else if (input.username.length > 20) {
+      errors.username = 'Debe tener menos de 20 caracteres'
+    } else if (!validateName.test(input.username)) {
+      errors.username = 'Los caracteres especiales no estan permitidos'
+    }
+    if (!input.contact) {
+      errors.contact = 'El celular es necesario'
+    } else if (input.contact.length > 10) {
+      errors.contact = 'El numero de celular no puede tener mas de 10 digitos'
+    } else if (input.contact < 0) {
+      errors.contact = 'El numero de celular no puede ser negativo'
+    } else if (input.contact.toString().includes('.') || input.contact.toString().includes(',')) {
+      errors.contact = 'Los valores decimales no estan permitidos'
+    }
+    if (!input.password) {
+      errors.password = 'La contraseña es necesaria'
+    } else if (!validatePass.test(input.password)) {
+      errors.password = 'Debe tener entre 8 y 16 caracteres, un digito, una minuscula, una mayuscula y un caracter especial'
+    }
+    return errors
+  }
+  function handleChange(e) {
+    e.preventDefault()
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value
+    })
+    setErrors(
+      validate({
+        ...input,
+        [e.target.name]: e.target.value
+      })
+    )
+  }
+  function handleSubmit(e) {
+    e.preventDefault()
+    if (!input.contact && !input.password && !input.username) {
+      return Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No puedes dejar los campos vacios',
+        confirmButtonColor: '#F27474'
+      })
+    } else {
+      setErrors(validate(input))
+      dispatch(getUpdateOwner(idOwner, input))
+      Swal.fire({
+        icon: 'success',
+        title: 'Operación exitosa!',
+        text: 'Actualizaste los datos',
+        confirmButtonColor: '#98D035'
+      })
+      setInput({
+        password: '',
+        contact: '',
+        username: ''
+      })
+    }
+  }
   return (
-    <>
-      <NavBar/>
-      <Flex>
-        <Sidebar/>
-        <Flex margin='12vh 10vw 0vh 10vw' width='100%' justifyContent='center' flexDir="column" alignSelf='flex-start'>
-          <Center gap='3rem' bg='gray.700' borderRadius='3xl' alignItems='flex-start' height='calc(100vh - 12vh)' margin='2vh 0'>
-            <Flex flexDirection='column' width='50%' gap= '3rem'>
-              <Box bg= 'blue.500'>
+    isAuthenticated
+      ? <>
+        <NavBar />
+        <Flex>
+          <Sidebar />
+          <Flex marginTop='12vh' marginLeft='75px' width='100%' flexDir="column" alignItems='center' padding={{ base: '', lg: '0 5rem', xl: '0 15rem' }}>
+            <Center backgroundColor={colorMode == 'dark' ? '#2C313D' : '#F8F8F8'} width='80%' borderRadius='3xl' alignItems='flex-start' margin='2vh 0'>
+              <Flex flexDirection='column' gap='2.5rem' padding='5rem 0' width='70%'>
                 <Box>
-                  <Flex flexDirection='column' paddingBottom='2rem'>
-                    <Heading>Hola <span style={{ color: '#98D035' }}>NombreUsuario</span></Heading>
-                    <Heading size='lg'>bienvenido de nuevo!</Heading>
+                  <Flex flexDirection='row' paddingBottom='2rem' alignItems='center' gap='1rem'>
+                    <Avatar size='xl' src={user.picture} />
+                    <Flex flexDirection='column'>
+                      <Heading>Hola<span style={{ color: '#98D035' }}> {user.name}</span></Heading>
+                      <Heading size='lg'>bienvenid@ de nuevo!</Heading>
+                    </Flex>
                   </Flex>
-                  <Text>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae explicabo ab labore laborum neque voluptas placeat minima non.</Text>
                 </Box>
-              </Box>
-              <Box bg= 'blue.500'>
-                <Text>
-                  Aca los filtros
-                </Text>
-                <Button>Agregar cancha</Button>
-                <Button>Quitar cancha</Button>
-                <Button>Actualizar cancha</Button> {/* para actualizar horario */}
-                <Button>Ver reservas de canchas</Button>
-                <Button>Organizar torneo</Button>
-              </Box>
-            </Flex>
-            <Flex flexDirection='column' width='50%' gap= '3rem'>
-              <Box>
-                <Heading>Proximos torneos</Heading>
                 <Box>
-                  <HStack gap='1rem' marginTop='2rem' bg='gray.300'>
-                    <Avatar src={iconT1}/>
-                    <Text>Torneo 1 Lorem ipsum dolor sit amet consectetur adipisicing elit.</Text>
+                  <Tabs isFitted variant='enclosed'>
+                    <TabList mb='1em'>
+                      <Tab>Datos de la cuenta</Tab>
+                      <Tab>Modificar datos</Tab>
+                    </TabList>
+                    <TabPanels>
+                      <TabPanel>
+                        <Box lineHeight='2rem'>
+                          <Text padding='1rem 0'>Nombre: {user.name} {user.lastName}</Text>
+                          <Text padding='1rem 0'>Usuario:  {user.nickname}</Text>
+                          <Text padding='1rem 0'>Email: {user.email}</Text>
+                          <Text padding='1rem 0'>Teléfono: 1122339875</Text>
+                        </Box>
+                      </TabPanel>
+                      <TabPanel>
+                        <Box lineHeight='2rem' marginBottom='3rem'>
+                          <Stack>
+                            <FormControl isRequired>
+                              <FormLabel>Nombre de usuario</FormLabel>
+                              <Input
+                                focusBorderColor='#98D035'
+                                name='username'
+                                value={input.username}
+                                variant='flushed'
+                                htmlSize={4}
+                                size='md'
+                                placeholder='Ingrese el nuevo nombre de usuario'
+                                onChange={(e) => handleChange(e)}
+                                type='text' />
+                              {errors.username && <FormHelperText color='red.400'>{errors.username}</FormHelperText>}
+                            </FormControl>
+                            <FormControl isRequired>
+                              <FormLabel>Contraseña</FormLabel>
+                              <InputGroup size='md'>
+                                <Input
+                                  focusBorderColor='#98D035'
+                                  type={show ? 'text' : 'password'}
+                                  name='password'
+                                  value={input.password}
+                                  variant='flushed'
+                                  htmlSize={4}
+                                  onChange={(e) => handleChange(e)}
+                                  placeholder='Ingrese la nueva contraseña'
+                                />
+                                <InputRightElement width='4.5rem'>
+                                  <Button height='1.75rem' onClick={handleShowPassword}>
+                                    {show ? 'Ocultar' : 'Mostrar'}
+                                  </Button>
+                                </InputRightElement>
+                              </InputGroup>
+                              {errors.password && <FormHelperText width='70%' color='red.400'>{errors.password}</FormHelperText>}
+                            </FormControl>
+                            <FormControl isRequired>
+                              <FormLabel>Telefono</FormLabel>
+                              <Input
+                                focusBorderColor='#98D035'
+                                name='contact'
+                                value={input.contact}
+                                variant='flushed'
+                                htmlSize={4}
+                                size='md'
+                                placeholder='Ingrese el nuevo numero de celular'
+                                onChange={(e) => handleChange(e)}
+                                type='number' />
+                              {errors.contact && <FormHelperText color='red.400'>{errors.contact}</FormHelperText>}
+                            </FormControl>
+                          </Stack>
+                        </Box>
+                        <Button
+                          leftIcon={<BiUpload />}
+                          color='#ffffff'
+                          bg='#98D035'
+                          onClick={(e) => handleSubmit(e)}
+                          _hover={{
+                            color: '#98D035',
+                            transition: 'all .5s ease',
+                            backgroundColor: '#E3FFB2'
+                          }}
+                          _active={{
+                            color: '#98D035',
+                            transition: 'all .5s ease',
+                            backgroundColor: '#E3FFB2'
+                          }}
+                          backgroundColor='#98D035'
+                          isDisabled={Object.keys(errors).length === 0 && (input.username && input.contact && input.password) ? false : true}
+                        >
+                          Actualizar datos
+                        </Button>
+                      </TabPanel>
+                    </TabPanels>
+                  </Tabs>
+                </Box>
+                <Divider />
+                <Box>
+                  <Heading margin='1rem 0'>Tus canchas</Heading>
+                  <TableContainer>
+                    <Table variant='striped' colorScheme='#98D035'>
+                      <Thead>
+                        <Tr>
+                          <Th>Nombre</Th>
+                          <Th textAlign='center'>Actualizar datos</Th>
+                          <Th textAlign='center'>Eliminar cancha</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        <Tr>
+                          <Td>
+                            <Flex gap='1rem' alignItems='center'>
+                              <Avatar size='sm' src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg' />
+                              Super cancha de padel
+                            </Flex>
+                          </Td>
+                          <Td textAlign='center'><IconButton icon={<BiUpload />} bg='#98D035' /></Td>
+                          <Td textAlign='center'><IconButton icon={<AiFillDelete />} bg='red.500' /></Td>
+                        </Tr>
+                        <Tr>
+                          <Td>
+                            <Flex gap='1rem' alignItems='center'>
+                              <Avatar size='sm' src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg' />
+                              Padel Xtreme
+                            </Flex>
+                          </Td>
+                          <Td textAlign='center'><IconButton icon={<BiUpload />} bg='#98D035' /></Td>
+                          <Td textAlign='center'><IconButton icon={<AiFillDelete />} bg='red.500' /></Td>
+                        </Tr>
+                        <Tr>
+                          <Td>
+                            <Flex gap='1rem' alignItems='center'>
+                              <Avatar size='sm' src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg' />
+                              Me quedo sin ideas
+                            </Flex>
+                          </Td>
+                          <Td textAlign='center'><IconButton icon={<BiUpload />} bg='#98D035' /></Td>
+                          <Td textAlign='center'><IconButton icon={<AiFillDelete />} bg='red.500' /></Td>
+                        </Tr>
+                        <Tr>
+                          <Td>
+                            <Flex gap='1rem' alignItems='center'>
+                              <Avatar size='sm' src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg' />
+                              Ayuda
+                            </Flex>
+                          </Td>
+                          <Td textAlign='center'><IconButton icon={<BiUpload />} bg='#98D035' /></Td>
+                          <Td textAlign='center'><IconButton icon={<AiFillDelete />} bg='red.500' /></Td>
+                        </Tr>
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                  <Divider />
+                  <HStack width='100%' justifyContent='space-between' paddingTop='3rem' margin='2rem 0'>
+                    <Link to='/crearCancha'>
+                      <Button
+                        color='#ffffff'
+                        _hover={{
+                          color: '#98D035',
+                          transition: 'all .5s ease',
+                          backgroundColor: '#E3FFB2'
+                        }}
+                        _active={{
+                          color: '#98D035',
+                          transition: 'all .5s ease',
+                          backgroundColor: '#E3FFB2'
+                        }}
+                        backgroundColor='#98D035'
+                        bg='#98D035'>
+                        Crear cancha
+                      </Button>
+                    </Link>
+                    <Button
+                      color='#ffffff'
+                      _hover={{
+                        color: '#98D035',
+                        transition: 'all .5s ease',
+                        backgroundColor: '#E3FFB2'
+                      }}
+                      _active={{
+                        color: '#98D035',
+                        transition: 'all .5s ease',
+                        backgroundColor: '#E3FFB2'
+                      }}
+                      backgroundColor='#98D035'
+                      bg='#98D035'>
+                      Organizar torneo
+                    </Button>
+                    <Button
+                      _hover={{
+                        color: '#98D035',
+                        transition: 'all .5s ease',
+                        backgroundColor: '#E3FFB2'
+                      }}
+                      _active={{
+                        color: '#98D035',
+                        transition: 'all .5s ease',
+                        backgroundColor: '#E3FFB2'
+                      }}
+                      backgroundColor='#98D035'>
+                      Ver todas las canchas
+                    </Button>
+                  </HStack>
+                </Box>
+              </Flex>
+              {/* <Box width='90%'>
+                  <HStack justifyContent='space-between'>
+                    <Heading>Torneos</Heading>
+                    <Button bg='#98D035' color='#fff'>Crear torneo</Button>
+                  </HStack>
+                  <HStack gap='1rem' marginTop='2rem' justifyContent='space-between'>
+                    <HStack>
+                      <Avatar src={iconT1} />
+                      <Text>Torneo 1 Lorem ipsum dolor sit amet</Text>
+                    </HStack>
                     <Badge variant='solid' color='#98D035' > 12 miembros</Badge>
                   </HStack>
-                  <HStack gap='1rem' marginTop='2rem'>
-                    <Avatar src={iconT2}/>
-                    <Text>Torneo 2 Lorem ipsum dolor sit amet consectetur adipisicing elit.</Text>
+                  <HStack gap='1rem' marginTop='2rem' justifyContent='space-between'>
+                    <HStack>
+                      <Avatar src={iconT2} />
+                      <Text>Torneo 2 Lorem ipsum dolor sit amet</Text>
+                    </HStack>
                     <Badge variant='solid' color='#98D035' > 8 miembros</Badge>
                   </HStack>
-                  <HStack gap='1rem' margin='2rem 0'>
-                    <Avatar src={iconT3}/>
-                    <Text>Torneo 3 Lorem ipsum dolor sit amet consectetur adipisicing elit.</Text>
+                  <HStack gap='1rem' margin='2rem 0' justifyContent='space-between'>
+                    <HStack>
+                      <Avatar src={iconT3} />
+                      <Text>Torneo 3 Lorem ipsum dolor sit amet</Text>
+                    </HStack>
                     <Badge variant='solid' color='#98D035' > 7 miembros</Badge>
                   </HStack>
-                </Box>
-              </Box>
-              <Box>
-                <Text>
-                  Ultimas actividades
-                </Text>
-                <TableContainer>
-                  <Table variant='striped' colorScheme='#98D035'>
-                    <TableCaption>Ver todos</TableCaption>
-                    <Thead>
-                      <Tr>
-                        <Th>Usuario</Th>
-                        <Th>Contacto</Th>
-                        <Th>Detalle</Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      <Tr>
-                        <Td>
-                          <Flex gap='1rem' alignItems='center'>
-                            <Avatar size='sm' src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg'/>
-                            HomeroJsimpson@gmail.com
-                          </Flex>
-                        </Td>
-                        <Td>01166223377</Td>
-                        <Td>17hs a 18hs el 22/08/2022</Td>
-                      </Tr>
-                      <Tr>
-                        <Td>
-                          <Flex gap='1rem' alignItems='center'>
-                            <Avatar size='sm' src='https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/styles/1200/public/media/image/2022/05/simpson-krusty-payaso-2699729.jpg?itok=leRSayV5'/>
-                            HerschelKrustofsky@gmail.com
-                          </Flex>
-                        </Td>
-                        <Td>01112345678</Td>
-                        <Td>9hs a 10hs el 25/08/2022</Td>
-                      </Tr>
-                      <Tr>
-                        <Td>
-                          <Flex gap='1rem' alignItems='center'>
-                            <Avatar size='sm' src='https://pbs.twimg.com/media/ES3cH4QU8AALr8q.jpg'/>
-                            TroyMcClure@gmail.com
-                          </Flex>
-                        </Td>
-                        <Td>01198475214</Td>
-                        <Td>15hs a 16hs el 22/08/2022</Td>
-                      </Tr>
-                      <Tr>
-                        <Td>
-                          <Flex gap='1rem' alignItems='center'>
-                            <Avatar size='sm' src='https://uploads.candelaestereo.com/1/2022/06/12-frases-de-Rafa-Gorgory-muy-graciosas-y-extranas.01.jpg'/>
-                            rafaGorgory@gmail.com
-                          </Flex>
-                        </Td>
-                        <Td>01168478814</Td>
-                        <Td>10hs a 11hs el 24/08/2022</Td>
-                      </Tr>
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-              </Box>
-            </Flex>
-          </Center>
-        </Flex>
-      </Flex>
-    </>
+                </Box> */}
+            </Center>
+          </Flex>
+        </Flex >
+      </>
+      : navigate('/')
   )
 }

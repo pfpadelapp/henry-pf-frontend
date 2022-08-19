@@ -5,7 +5,7 @@ import { setPaymentCheckout } from '../../redux/padelField/padelFieldSlice'
 import { NavBar } from '../NavBar/NavBar'
 import Sidebar from '../Sidebar/Sidebar'
 import successImage from '../../resources/assets/success.svg'
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
 
 export default function Success() {
@@ -21,18 +21,22 @@ export default function Success() {
     dispatch(setPaymentCheckout(tokenFinal))
   }, [])
 
-  return (
-    isAuthenticated
-      ? <>
-        <NavBar />
-        <Flex>
-          <Sidebar />
-          <Center width='100%' marginTop="10%" flexDir="column" alignSelf='center'>
-            <Image src={successImage} maxW="500px" />
-            <Text>La reserva se ha realizado con exito!</Text>
-          </Center>
-        </Flex>
-      </>
-      : navigate('/')
+  return isAuthenticated ? (
+    <>
+      <NavBar />
+      <Flex>
+        <Sidebar />
+        <Center
+          width='100%'
+          marginTop='10%'
+          flexDir='column'
+          alignSelf='center'>
+          <Image src={successImage} maxW='500px' />
+          <Text>La reserva se ha realizado con exito!</Text>
+        </Center>
+      </Flex>
+    </>
+  ) : (
+    navigate('/')
   )
 }
