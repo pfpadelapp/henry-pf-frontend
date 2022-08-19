@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
+const urlDeploy = 'https://pf-padel-app.herokuapp.com'
+const urlLocal = 'http://127.0.0.1:3000'
+
 export const adminSlice = createSlice({
   name: 'admins',
   initialState: {
@@ -20,7 +23,7 @@ export function getAdmins() {
   return async function (dispatch) {
     try {
       const alladmins = await axios.get(
-        'https://pf-padel-app.herokuapp.com/admin/'
+        `${urlDeploy}/admin/`
       )
       dispatch(setAdmins(alladmins.data))
       console.log('redux', alladmins)
