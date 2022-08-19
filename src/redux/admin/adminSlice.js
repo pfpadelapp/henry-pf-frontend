@@ -4,26 +4,26 @@ import axios from 'axios'
 export const adminSlice = createSlice({
   name: 'admins',
   initialState: {
-    users: []
+    admins: []
   },
   reducers: {
-    setUsers: (state, action) => {
-      state.users = action.payload
+    setAdmins: (state, action) => {
+      state.admins = action.payload
     }
   }
 })
 
-export const { setUsers } = adminSlice.actions
+export const { setAdmins } = adminSlice.actions
 export default adminSlice.reducer
 
-export function getUsers(username) {
+export function getAdmins() {
   return async function (dispatch) {
     try {
-      const allusers = await axios.get(
-        `http://127.0.0.1:3000/admin/searchU?username=${username}`
+      const alladmins = await axios.get(
+        'http://127.0.0.1:3000/admin/'
       )
-      dispatch(setUsers(allusers.data))
-      // console.log('redux', allPadelFields)
+      dispatch(setAdmins(alladmins.data))
+      console.log('redux', alladmins)
     } catch (error) {
       console.log(error)
     }

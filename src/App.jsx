@@ -8,6 +8,7 @@ import About from './components/About/About'
 import Success from './components/Success/Success.jsx'
 import Admin from './components/Admin/Admin'
 import AdminInterfaz from './components/Admin/AdminInterfaz'
+import Banner from './components/Admin/Banner'
 import CreatePadelfield from './components/CreatePadelfield/CreatePadelfield.jsx'
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
       <Route path='/resultadoPago' element={<Success />} />
       <Route exact path='/admin' element={<Admin />} />
       <Route exact path='/adminInterfaz' element={<AdminInterfaz />} />
+      <Route exact path='/banner' element={<Banner />} />
       <Route path='/crearCancha' element={<CreatePadelfield />} />
     </Routes>
   )

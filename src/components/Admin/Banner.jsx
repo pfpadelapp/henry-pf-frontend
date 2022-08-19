@@ -2,23 +2,20 @@ import {
   FormControl, FormLabel, Input, InputGroup, Flex, HStack, Spacer, Button, Text,
   useDisclosure, Modal, ModalCloseButton, ModalFooter, ModalBody, ModalOverlay,
   ModalContent, ModalHeader, Center, Thead, Tbody, Tr, Th, Td, Divider, TableContainer,
-  Table
+  Table, TableCaption
 } from '@chakra-ui/react'
+import { useState } from 'react'
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 import { useColorMode } from '@chakra-ui/color-mode'
 import SideBarAdmin from './SideBarAdmin'
+import { FiSearch } from 'react-icons/fi'
 import axios from 'axios'
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { getAdmins } from '../../redux/admin/adminSlice'
 
-export default function AdminInterfaz() {
-  const dispatch = useDispatch()
+export default function Banner() {
   const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [username, setName] = useState('')
-  const allAdmins = useSelector((state) => state.admins.admins)
-  // const [adminToDelete, setadminToDelete] = useState([])
+  const [userToDelete, setUserToDelete] = useState([])
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,20 +23,46 @@ export default function AdminInterfaz() {
     username: ''
   })
 
-  console.log(allAdmins)
-  useEffect(() => {
-    dispatch(getAdmins())
-  }, [])
+  const handleInput = (e) => {
+    e.preventDefault()
+    console.log(e.target.value)
+    setName(e.target.value)
+  }
 
-  async function handleDelete(id) {
-    await axios.delete(`http://127.0.0.1:3000/admin/${id}`)
-    console.log('ADMIN BANEADO')
+  async function handleSubmit() {
+    const resU = await axios.get(
+        `http://127.0.0.1:3000/admin/searchU?username=${username}`
+    )
+    const resO = await axios.get(
+        `http://127.0.0.1:3000/admin/searchO?username=${username}`
+    )
+    const resT = [...resU.data, ...resO.data]
+    console.log(resT)
+    setUserToDelete(resT)
+    // setName('')
+  }
+
+  async function handleDelete(id, role) {
+    console.log(id)
+    if (role === 'user') {
+      await axios.delete(`http://127.0.0.1:3000/user/${id}`)
+    } else {
+      await axios.delete(`http://127.0.0.1:3000/owner/${id}`)
+    }
+    console.log('USUARIO BANEADO')
+    handleSubmit()
     setName('')
   }
 
-  async function disableBanned(id) {
-    await axios.put(`http://127.0.0.1:3000/admin/able/${id}`)
-    console.log('ADMIN DESBANEADO')
+  async function disableBanned(id, role) {
+    console.log(id)
+    if (role === 'user') {
+      await axios.put(`http://127.0.0.1:3000/user/able/${id}`)
+    } else {
+      await axios.put(`http://127.0.0.1:3000/owner/able/${id}`)
+    }
+    console.log('USUARIO DESBANEADO')
+    handleSubmit()
     setName('')
   }
 
@@ -79,7 +102,7 @@ export default function AdminInterfaz() {
 
   return (
     <>
-     <Flex
+      <Flex
         zIndex='1'
         width='100%'
         position='fixed'
@@ -122,12 +145,33 @@ export default function AdminInterfaz() {
             margin='2vh 0'>
       <Flex>
       </Flex>
-
+        <Flex>
+        </Flex>
       <TableContainer>
-        <Flex justifyContent='center' height='50px' padding='2%'>
-          <Text >LISTA DE ADMINISTRADORES</Text>
+        <Flex padding='2%' justifyContent='center'>
+                <Flex justifyContent='center'>
+                    <InputGroup height='40px' backgroundColor={colorMode === 'dark' ? '#3d414c' : 'white'} borderRadius='10px' >
+                    <Input
+                        padding='0 0.5rem'
+                        variant='unstyled'
+                        backgroundColor={colorMode === 'dark' ? '#3d414c' : 'white'}
+                        type='text'
+                        placeholder='Buscar por username'
+                        value={username}
+                        onChange={(e) => handleInput(e)}
+                    />
+                    <Button
+                        color='gray.500'
+                        bg='none'
+                        children={<FiSearch />}
+                        onClick={() => handleSubmit()}
+                        >
+                    </Button>
+                    </InputGroup>
+                </Flex>
         </Flex>
         <Table>
+            <TableCaption>BANEAR USUARIOS Y PROPIETARIOS</TableCaption>
               <Thead>
               <Tr>
               <Th>Id</Th>
@@ -139,11 +183,11 @@ export default function AdminInterfaz() {
               </Thead>
 
             <Tbody>
-            { allAdmins &&
-          allAdmins.map((e) => (
+            { userToDelete &&
+          userToDelete.map((e) => (
                 // eslint-disable-next-line react/jsx-key
                 <Tr>
-              <Td>{e.id}</Td>
+              <Td>{e._id}</Td>
                 <Td>{e.email}</Td>
                 <Td>{e.username}</Td>
                 <Td>{e.role}</Td>
@@ -156,8 +200,8 @@ export default function AdminInterfaz() {
                       bg='none'
                       height='30px'
                       width='150px'
-                      onClick={() => handleDelete(e.id)}>
-                      Banear admin
+                      onClick={() => handleDelete(e._id, e.role)}>
+                      Banear usuario
                     </Button>
                     </Td>)
                   : (<Td>
@@ -167,8 +211,8 @@ export default function AdminInterfaz() {
                       bg='none'
                       height='30px'
                       width='150px'
-                      onClick={() => disableBanned(e.id)}>
-                      Desbanear admin
+                      onClick={() => disableBanned(e._id, e.role)}>
+                      Desbanear usuario
                     </Button>
                     </Td>)}
               </Tr>
@@ -177,7 +221,7 @@ export default function AdminInterfaz() {
         </Table>
       </TableContainer>
       </Center>
-        </Flex>
+    </Flex>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
