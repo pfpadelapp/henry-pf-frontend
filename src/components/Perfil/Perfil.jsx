@@ -16,7 +16,7 @@ export default function Perfil() {
   console.log(isAuthenticated)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
   const [input, setInput] = useState({
     password: '',
     contact: '',

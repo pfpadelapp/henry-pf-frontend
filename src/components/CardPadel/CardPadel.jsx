@@ -7,7 +7,7 @@ export default function CardPadel({ id, location, image, name, price }) {
     <Box
       margin='0 10px'
       width='20em'
-      height='370'
+      height='380'
       borderWidth='1px'
       borderRadius='lg'
       overflow='hidden'
@@ -24,9 +24,16 @@ export default function CardPadel({ id, location, image, name, price }) {
           src={image}
           alt={id}
         />
-        <HStack justifyContent='space-between'>
+        <HStack justifyContent='space-between' maxH='7rem'>
           <Box>
-            <Text fontWeight='bold' fontSize='2xl' textTransform='capitalize'>
+            <Text
+              width='220px'
+              fontWeight='bold'
+              fontSize='2xl'
+              textTransform='capitalize'
+              overflow='hidden'
+              textOverflow='ellipsis'
+              whiteSpace='nowrap'>
               {name}
             </Text>
             <HStack

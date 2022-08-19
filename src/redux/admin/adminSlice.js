@@ -20,7 +20,7 @@ export function getAdmins() {
   return async function (dispatch) {
     try {
       const alladmins = await axios.get(
-        'http://127.0.0.1:3000/admin/'
+        'https://pf-padel-app.herokuapp.com/admin/'
       )
       dispatch(setAdmins(alladmins.data))
       console.log('redux', alladmins)

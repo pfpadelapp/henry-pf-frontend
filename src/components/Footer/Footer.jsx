@@ -33,7 +33,7 @@ export default function Footer() {
       <SimpleGrid
         columns={{ base: 1, lg: 2, xl: 3 }}
         justifyItems='center'
-        margin={{ base: '0 0 0 8vw', lg: '0 0 0 6vw', xl: '0 0 0 6vw' }}
+        margin={{ base: '0 0 0 75px', lg: '0 0 0 75px', xl: '0 0 0 75px' }}
         padding='3rem 0'>
         <Stack
           width={{ base: 'xs', lg: 'sm', xl: 'base' }}

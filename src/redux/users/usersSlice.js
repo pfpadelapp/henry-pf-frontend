@@ -35,7 +35,7 @@ export function fetchAllUsers() {
   return async function (dispatch) {
     try {
       const allUsers = await axios.get(
-        'https://api-rest-server-padel.herokuapp.com/users'
+        'https://pf-padel-app.herokuapp.com/users'
       )
       dispatch(setUsers(allUsers.data))
     } catch (error) {
@@ -47,7 +47,7 @@ export function fetchAllUsers() {
 export function getUserById(id) {
   return async function (dispatch) {
     try {
-      const userId = await axios.get(`http://127.0.0.1:3000/user/${id}`)
+      const userId = await axios.get(`https://pf-padel-app.herokuapp.com/user/${id}`)
       dispatch(setUsers(userId.data))
     } catch (error) {
       console.log(error)
@@ -76,7 +76,7 @@ export function clearUserDetail() {
 export function getUpdateUser(userId, dataUser) {
   return async function (dispatch) {
     try {
-      const userUpdate = await axios.put(`http://127.0.0.1:3000/user/${userId}`, dataUser)
+      const userUpdate = await axios.put(`https://pf-padel-app.herokuapp.com/user/${userId}`, dataUser)
       console.log('actalizar usuario', userUpdate.data)
       dispatch(setUpdate(userUpdate))
     } catch (error) {
