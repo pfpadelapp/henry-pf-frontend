@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { FiMenu, FiHome, FiBell, FiFilter, FiClipboard, FiInfo, FiDelete } from 'react-icons/fi'
+import {  GrUserAdmin } from 'react-icons/gr'
+import {  RiAdminLine, RiChatDeleteLine } from 'react-icons/ri'
 import { Link as Link2, Flex, Menu, MenuButton, useDisclosure, Button, Icon, Avatar, ModalCloseButton, ModalFooter, ModalBody, Heading, Text, Modal, IconButton, ModalOverlay, ModalContent, Stack, Select, ModalHeader, RangeSlider, RangeSliderTrack, RangeSliderFilledTrack, RangeSliderThumb, Tooltip, MenuList, MenuItem } from '@chakra-ui/react'
 import NavItem from '../NavItem/NavItem'
 import { useColorMode } from '@chakra-ui/color-mode'
@@ -41,9 +43,12 @@ export default function Sidebar() {
             }}
           />
           <Link to='/adminInterfaz'>
-            {window.location.href.replace('http://127.0.0.1:5173', '') === '/home' ? <NavItem navSize={navSize} icon={FiHome} title="Inicio" link="/" active /> : <NavItem navSize={navSize} icon={FiHome} link="/" title="Inicio" />}
+            {window.location.href.replace('http://127.0.0.1:5173', '') === '/home' ? <NavItem navSize={navSize} icon={ GrUserAdmin } title="Inicio" link="/" active /> : <NavItem navSize={navSize} icon={ GrUserAdmin } link="/" title="Inicio" />}
           </Link>
-          <NavItem navSize={navSize} icon={ FiDelete } title="Bannear" />
+          <Link to='/banner'>
+            <NavItem navSize={navSize} icon={ RiAdminLine } title="Bannear usuarios/propietarios" />
+          </Link>
+          <NavItem navSize={navSize} icon={RiChatDeleteLine} title="Eliminar reseñas" />
           <NavItem navSize={navSize} icon={FiBell} title="Notificaciones" />
           <Flex
             onClick={onOpen}
