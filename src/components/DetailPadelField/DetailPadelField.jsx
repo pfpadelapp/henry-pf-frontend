@@ -49,6 +49,8 @@ import { NavBar } from '../NavBar/NavBar'
 import turnoImage from '../../resources/assets/turnDrawer.svg'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
+import PostReview from './PostReview'
+import Review from './Review.jsx' 
 
 
 export default function DetailPadelField() {
@@ -204,15 +206,15 @@ export default function DetailPadelField() {
                 <Text>{padelField.location}</Text>
               </HStack>
               <HStack m='1rem 0'>
-                <Text color='#98D035' fontWeight='bolder' fontSize='lg'>
+                <Text color='brand.primary' fontWeight='bolder' fontSize='lg'>
                   ${padelField.price}
                 </Text>
                 <Badge
-                  backgroundColor={colorMode == 'dark' ? 'gray.500' : '#FFEBF0'}
+                  backgroundColor='brand.backgroundBox'
                   textAlign='center'
                   borderRadius='lg'>
                   <Text
-                    color={colorMode == 'dark' ? null : '#9E45BD'}
+                    color='brand.textSecundary'
                     p='0 10px'
                     fontWeight='medium'>
                     1 hora
@@ -235,7 +237,7 @@ export default function DetailPadelField() {
                 Puntaje:
               </Text>
               {padelField.ratingsAverage === 1 ? (
-                <HStack>
+                <HStack color='brand.primary'>
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
@@ -388,17 +390,14 @@ export default function DetailPadelField() {
                                 <Link href={linkPaymentPaypal} isExternal>
                                   <Button
                                     isLoading={
-                                      linkPaymentPaypal.length
-                                        ? false
-                                        : true
+                                      linkPaymentPaypal.length ? false : true
                                     }
                                     leftIcon={<MdOutlinePayments />}
                                     color='white'
                                     bg='#98D035'
                                     _hover={{
                                       color: '#98D035',
-                                      backgroundColor: '#E3FFB2',
-                                      textDecor: 'none',
+                                      backgroundColor: '#E3FFB2'
                                     }}
                                     _active={{
                                       color: '#98D035',
@@ -546,6 +545,8 @@ export default function DetailPadelField() {
                 </HStack>
               )
             })}   
+             <Review></Review>
+             <PostReview></PostReview>  
           </Box>
         </Flex>
       </Flex>
