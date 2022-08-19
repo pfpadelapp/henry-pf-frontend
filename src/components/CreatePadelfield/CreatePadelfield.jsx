@@ -4,7 +4,23 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { Link, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { useState } from 'react'
-import { Button, Center, Flex, FormControl, FormHelperText, FormLabel, Heading, HStack, Input, InputGroup, InputLeftElement, InputRightElement, Radio, RadioGroup, Stack } from '@chakra-ui/react'
+import {
+  Button,
+  Center,
+  Flex,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Heading,
+  HStack,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
+  Radio,
+  RadioGroup,
+  Stack
+} from '@chakra-ui/react'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { createPadelField } from '../../redux/padelField/padelFieldSlice'
 import { useDispatch } from 'react-redux'
@@ -13,7 +29,7 @@ import axios from 'axios'
 export default function CreatePadelfield() {
   const dispatch = useDispatch()
   const { user, isAuthenticated } = useAuth0()
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
   const navigate = useNavigate()
   const [input, setInput] = useState({
     name: '',
@@ -28,14 +44,16 @@ export default function CreatePadelfield() {
   const validateName = /^[a-zA-Z\s]+$/
 
   const [image, setImage] = useState(null)
-  const [loading, setLoading] = useState(false)
 
   const uploadImage = async (files) => {
     const formData = new FormData()
     formData.append('file', files[0])
     formData.append('upload_preset', 'wtm3pwuj')
     try {
-      const aux = await axios.post('https://api.cloudinary.com/v1_1/dbhb8sohh/image/upload', formData)
+      const aux = await axios.post(
+        'https://api.cloudinary.com/v1_1/dbhb8sohh/image/upload',
+        formData
+      )
       const imageUpload = aux.data
       console.log(imageUpload)
       setImage(imageUpload)
@@ -56,8 +74,8 @@ export default function CreatePadelfield() {
     }
     if (!input.location) {
       errors.location = 'La dirección es necesaria'
-    } else if (input.location.length > 30) {
-      errors.location = 'Debe tener menos de 30 caracteres'
+    } else if (input.location.length > 20) {
+      errors.location = 'Debe tener menos de 20 caracteres'
     } else if (input.location < 7) {
       errors.location = 'Debe tener al menos 7 caracteres'
     }
@@ -120,105 +138,174 @@ export default function CreatePadelfield() {
         ownerId: '62fe4fff901e1c026fd0d474',
         availability: ''
       })
+      navigate('/panel')
     }
   }
   console.log(input)
-  return (
-    isAuthenticated
-      ? <>
-        <NavBar />
-        <Flex>
-          <Sidebar />
-          <Flex marginTop='12vh' marginLeft='75px' width='100%' flexDir="column" alignItems='center' padding={{ base: '', lg: '0 5rem', xl: '0 15rem' }}>
-            <Center backgroundColor={colorMode == 'dark' ? '#2C313D' : '#F8F8F8'} width='80%' borderRadius='3xl' alignItems='flex-start' height='calc(100vh - 16vh)' margin='1vh 0'>
-              <Flex flexDirection='column' gap='2.5rem' padding='5rem 0' width='70%'>
-                <FormControl isRequired>
-                  <FormLabel>Nombre</FormLabel>
+  return isAuthenticated
+    ? (<>
+      <NavBar />
+      <Flex>
+        <Sidebar />
+        <Flex
+          marginTop='12vh'
+          marginLeft='75px'
+          width='100%'
+          flexDir='column'
+          alignItems='center'
+          padding={{ base: '', lg: '0 5rem', xl: '0 15rem' }}>
+          <Center
+            backgroundColor={colorMode == 'dark' ? '#2C313D' : '#F8F8F8'}
+            width='80%'
+            borderRadius='3xl'
+            alignItems='flex-start'
+            height='calc(100vh - 16vh)'
+            margin='1vh 0'>
+            <Flex
+              flexDirection='column'
+              gap='2.5rem'
+              padding='5rem 0'
+              width='70%'>
+              <FormControl isRequired>
+                <FormLabel>Nombre</FormLabel>
+                <Input
+                  focusBorderColor='#98D035'
+                  name='name'
+                  value={input.name}
+                  variant='flushed'
+                  htmlSize={4}
+                  size='md'
+                  placeholder='Ingrese el nombre de la cancha'
+                  onChange={(e) => handleChange(e)}
+                  type='text'
+                />
+                {errors.name && (
+                  <FormHelperText color='red.400'>{errors.name}</FormHelperText>
+                )}
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Dirección</FormLabel>
+                <InputGroup size='md'>
                   <Input
                     focusBorderColor='#98D035'
-                    name='name'
-                    value={input.name}
+                    type='text'
+                    name='location'
+                    value={input.location}
+                    variant='flushed'
+                    htmlSize={4}
+                    onChange={(e) => handleChange(e)}
+                    placeholder='Ingrese la localidad en la que se encuentra'
+                  />
+                </InputGroup>
+                {errors.location && (
+                  <FormHelperText width='70%' color='red.400'>
+                    {errors.location}
+                  </FormHelperText>
+                )}
+              </FormControl>
+              <FormControl>
+                <FormLabel>Imagen</FormLabel>
+                <InputGroup>
+                  <Input
+                    focusBorderColor='#98D035'
+                    name='image'
+                    value={input.image}
                     variant='flushed'
                     htmlSize={4}
                     size='md'
-                    placeholder='Ingrese el nombre de la cancha'
+                    onChange={(e) => uploadImage(e.target.files)}
+                    type='file'
+                  />
+                </InputGroup>
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Tipo de cancha</FormLabel>
+                <RadioGroup>
+                  <HStack>
+                    <Radio
+                      value='covered'
+                      onChange={(e) => {
+                        handleCheckbox(e)
+                      }}>
+                      Cubierta
+                    </Radio>
+                    <Radio
+                      value='uncovered'
+                      onChange={(e) => {
+                        handleCheckbox(e)
+                      }}>
+                      Descubierta
+                    </Radio>
+                  </HStack>
+                </RadioGroup>
+                {errors.type && (
+                  <FormHelperText color='red.400'>{errors.type}</FormHelperText>
+                )}
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Precio</FormLabel>
+                <InputGroup>
+                  <InputLeftElement
+                    pointerEvents='none'
+                    color='gray.300'
+                    fontSize='1.2em'
+                    children='$'
+                  />
+                  <Input
+                    focusBorderColor='#98D035'
+                    name='price'
+                    value={input.price}
+                    variant='flushed'
+                    htmlSize={4}
+                    size='md'
                     onChange={(e) => handleChange(e)}
-                    type='text' />
-                  {errors.name && <FormHelperText color='red.400'>{errors.name}</FormHelperText>}
-                </FormControl>
-                <FormControl isRequired>
-                  <FormLabel>Locación</FormLabel>
-                  <InputGroup size='md'>
-                    <Input
-                      focusBorderColor='#98D035'
-                      type='text'
-                      name='location'
-                      value={input.location}
-                      variant='flushed'
-                      htmlSize={4}
-                      onChange={(e) => handleChange(e)}
-                      placeholder='Ingrese la localidad en la que se encuentra'
-                    />
-                  </InputGroup>
-                  {errors.location && <FormHelperText width='70%' color='red.400'>{errors.location}</FormHelperText>}
-                </FormControl>
-                <FormControl>
-                  <FormLabel>Imagen</FormLabel>
-                  <InputGroup>
-                    <Input
-                      focusBorderColor='#98D035'
-                      name='image'
-                      value={input.image}
-                      variant='flushed'
-                      htmlSize={4}
-                      size='md'
-                      onChange={(e) => uploadImage(e.target.files)}
-                      type='file' />
-                  </InputGroup>
-                </FormControl>
-                <FormControl isRequired>
-                  <FormLabel>Tipo de cancha</FormLabel>
-                  <RadioGroup>
-                    <HStack>
-                      <Radio value='covered' onChange={(e) => { handleCheckbox(e) }}>Cubierta</Radio>
-                      <Radio value='uncovered' onChange={(e) => { handleCheckbox(e) }}>Descubierta</Radio>
-                    </HStack>
-                  </RadioGroup>
-                  {errors.type && <FormHelperText color='red.400'>{errors.type}</FormHelperText>}
-                </FormControl>
-                <FormControl isRequired>
-                  <FormLabel>Precio</FormLabel>
-                  <InputGroup>
-                    <InputLeftElement
-                      pointerEvents='none'
-                      color='gray.300'
-                      fontSize='1.2em'
-                      children='$'
-                    />
-                    <Input
-                      focusBorderColor='#98D035'
-                      name='price'
-                      value={input.price}
-                      variant='flushed'
-                      htmlSize={4}
-                      size='md'
-                      onChange={(e) => handleChange(e)}
-                      placeholder='Ingrese el precio de la cancha'
-                      type='number' />
-                  </InputGroup>
-                  {errors.price && <FormHelperText color='red.400'>{errors.price}</FormHelperText>}
-                </FormControl>
-                <HStack>
-                  <Button onClick={(e) => handleSubmit(e)}>Agregar</Button>
-                  <Link to='/panel'>
-                    <Button>Cancelar</Button>
-                  </Link>
-                </HStack>
-              </Flex>
-            </Center>
-          </Flex>
+                    placeholder='Ingrese el precio de la cancha'
+                    type='number'
+                  />
+                </InputGroup>
+                {errors.price && (
+                  <FormHelperText color='red.400'>
+                    {errors.price}
+                  </FormHelperText>
+                )}
+              </FormControl>
+              <HStack>
+                <Button
+                  _hover={{
+                    color: '#98D035',
+                    transition: 'all .5s ease',
+                    backgroundColor: '#E3FFB2'
+                  }}
+                  _active={{
+                    color: '#98D035',
+                    transition: 'all .5s ease',
+                    backgroundColor: '#E3FFB2'
+                  }}
+                  backgroundColor='#98D035'
+                  onClick={(e) => handleSubmit(e)}>
+                  Agregar
+                </Button>
+                <Link to='/panel'>
+                  <Button
+                    _hover={{
+                      color: '#98D035',
+                      transition: 'all .5s ease',
+                      backgroundColor: '#E3FFB2'
+                    }}
+                    _active={{
+                      color: '#98D035',
+                      transition: 'all .5s ease',
+                      backgroundColor: '#E3FFB2'
+                    }}
+                    backgroundColor='#98D035'>
+                    Cancelar
+                  </Button>
+                </Link>
+              </HStack>
+            </Flex>
+          </Center>
         </Flex>
-      </>
-      : navigate('/')
-  )
+      </Flex>
+    </>)
+    : (navigate('/'))
 }

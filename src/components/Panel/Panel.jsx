@@ -1,9 +1,6 @@
 import { Heading, Avatar, Box, Button, Center, Flex, HStack, Stack, Tab, Table, TableCaption, TableContainer, TabList, TabPanel, Tabs, Text, Thead, Tr, Td, Th, Tbody, Badge, IconButton, FormControl, FormLabel, Input, InputGroup, InputRightElement, TabPanels, FormHelperText, Divider } from '@chakra-ui/react'
 import { NavBar } from '../NavBar/NavBar'
 import Sidebar from '../Sidebar/Sidebar'
-import iconT1 from '../../resources/assets/T1.png'
-import iconT2 from '../../resources/assets/T2.png'
-import iconT3 from '../../resources/assets/T3.png'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate, Link } from 'react-router-dom'
 import { BiUpload } from 'react-icons/bi'
@@ -11,13 +8,16 @@ import { AiFillDelete } from 'react-icons/ai'
 import Swal from 'sweetalert2'
 import { useState } from 'react'
 import { useColorMode } from '@chakra-ui/color-mode'
+import { getUpdateOwner } from '../../redux/owner/ownerSlice.js'
+import { useDispatch } from 'react-redux'
 
 export default function Panel() {
+  const dispatch = useDispatch()
   const { user, isAuthenticated } = useAuth0()
   console.log(user)
   console.log(isAuthenticated)
   const navigate = useNavigate()
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
   const [input, setInput] = useState({
     password: '',
     contact: '',
@@ -28,7 +28,7 @@ export default function Panel() {
   const handleShowPassword = () => setShow(!show)
   const validateName = /^[a-zA-Z\s]+$/
   const validatePass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/
-  const idUser = '62fd201fdfa5c35016ff8165'
+  const idOwner = '62fd201fdfa5c35016ff8165'
   function validate(input) {
     const errors = {}
     if (!input.username) {
@@ -80,7 +80,7 @@ export default function Panel() {
       })
     } else {
       setErrors(validate(input))
-      // dispatch(getUpdateUser(idUser, input))
+      dispatch(getUpdateOwner(idOwner, input))
       Swal.fire({
         icon: 'success',
         title: 'Operación exitosa!',

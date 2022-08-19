@@ -33,7 +33,6 @@ import {
   DrawerBody,
   DrawerFooter,
   AlertDialog,
-  AlertDialogOverlay,
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogCloseButton,
@@ -50,10 +49,9 @@ import turnoImage from '../../resources/assets/turnDrawer.svg'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
 
-
 export default function DetailPadelField() {
   const dispatch = useDispatch()
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
   const { id } = useParams()
   const { isAuthenticated } = useAuth0()
   const navigate = useNavigate()
@@ -160,8 +158,8 @@ export default function DetailPadelField() {
     dispatch(getPaymentPadelField(inputPayment))
   }
   // console.log('EL INPUT ES', input)
-  return isAuthenticated ? (
-    <Flex flexDirection='column'>
+  return isAuthenticated
+    ? (<Flex flexDirection='column'>
       <NavBar />
       <Flex width='100%'>
         <Sidebar />
@@ -234,52 +232,50 @@ export default function DetailPadelField() {
                 m='1rem 0'>
                 Puntaje:
               </Text>
-              {padelField.ratingsAverage === 1 ? (
-                <HStack>
+              {padelField.ratingsAverage === 1
+                ? (<HStack>
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Text>{padelField.review.length} Reseñas</Text>
-                </HStack>
-              ) : padelField.ratingsAverage === 2 ? (
-                <HStack color='brand.primary'>
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
-                </HStack>
-              ) : padelField.ratingsAverage === 3 ? (
-                <HStack color='brand.primary'>
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
-                </HStack>
-              ) : padelField.ratingsAverage === 4 ? (
-                <HStack color='brand.primary'>
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
-                </HStack>
-              ) : (
-                <HStack color='brand.primary'>
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
-                </HStack>
-              )}
+                </HStack>)
+                : padelField.ratingsAverage === 2
+                  ? (<HStack color='brand.primary'>
+                    <Icon h='2rem' w='2rem' as={AiFillStar} />
+                    <Icon h='2rem' w='2rem' as={AiFillStar} />
+                    <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                    <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                    <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                    <Text>{padelField.review.length} Reseñas</Text>
+                  </HStack>)
+                  : padelField.ratingsAverage === 3
+                    ? (<HStack color='brand.primary'>
+                      <Icon h='2rem' w='2rem' as={AiFillStar} />
+                      <Icon h='2rem' w='2rem' as={AiFillStar} />
+                      <Icon h='2rem' w='2rem' as={AiFillStar} />
+                      <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                      <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                      <Text>{padelField.review.length} Reseñas</Text>
+                    </HStack>)
+                    : padelField.ratingsAverage === 4
+                      ? (<HStack color='brand.primary'>
+                        <Icon h='2rem' w='2rem' as={AiFillStar} />
+                        <Icon h='2rem' w='2rem' as={AiFillStar} />
+                        <Icon h='2rem' w='2rem' as={AiFillStar} />
+                        <Icon h='2rem' w='2rem' as={AiFillStar} />
+                        <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                        <Text>{padelField.review.length} Reseñas</Text>
+                      </HStack>)
+                      : (<HStack color='brand.primary'>
+                        <Icon h='2rem' w='2rem' as={AiFillStar} />
+                        <Icon h='2rem' w='2rem' as={AiFillStar} />
+                        <Icon h='2rem' w='2rem' as={AiFillStar} />
+                        <Icon h='2rem' w='2rem' as={AiFillStar} />
+                        <Icon h='2rem' w='2rem' as={AiFillStar} />
+                        <Text>{padelField.review.length} Reseñas</Text>
+                      </HStack>)}
               <>
                 <Button
                   marginTop='2rem'
@@ -337,25 +333,22 @@ export default function DetailPadelField() {
                       />
                       <Center>
                         <Stack w='100%'>
-                          {hourByDatePadelFiels.length > 0 ? (
-                            hourByDatePadelFiels?.map((element, i) => {
-                              return (
-                                <div key={i}>
-                                  <Button
-                                    width='100%'
-                                    value={element}
-                                    onClick={(e) => {
-                                      handleHour(e)
-                                      setRenderMsg(2)
-                                      handleDateToPostBtn(e)
-                                    }}>
-                                    {element} hs
-                                  </Button>
-                                </div>
-                              )
-                            })
-                          ) : (
-                            <Stack gap='2rem'>
+                          {hourByDatePadelFiels.length > 0
+                            ? (hourByDatePadelFiels?.map((element, i) => {
+                              return (<div key={i}>
+                                <Button
+                                  width='100%'
+                                  value={element}
+                                  onClick={(e) => {
+                                    handleHour(e)
+                                    setRenderMsg(2)
+                                    handleDateToPostBtn(e)
+                                  }}>
+                                  {element} hs
+                                </Button>
+                              </div>)
+                            }))
+                            : (<Stack gap='2rem'>
                               <Image
                                 height='sx'
                                 width='sx'
@@ -367,8 +360,7 @@ export default function DetailPadelField() {
                                 Para poder visualizar los horarios disponibles
                                 primero debes seleccionar una fecha
                               </Text>
-                            </Stack>
-                          )}
+                            </Stack>)}
                           <AlertDialog
                             motionPreset='slideInBottom'
                             leastDestructiveRef={cancelRef}
@@ -388,9 +380,7 @@ export default function DetailPadelField() {
                                 <Link href={linkPaymentPaypal} isExternal>
                                   <Button
                                     isLoading={
-                                      linkPaymentPaypal.length
-                                        ? false
-                                        : true
+                                      linkPaymentPaypal.length ? false : true
                                     }
                                     leftIcon={<MdOutlinePayments />}
                                     color='white'
@@ -398,7 +388,7 @@ export default function DetailPadelField() {
                                     _hover={{
                                       color: '#98D035',
                                       backgroundColor: '#E3FFB2',
-                                      textDecor: 'none',
+                                      textDecor: 'none'
                                     }}
                                     _active={{
                                       color: '#98D035',
@@ -414,8 +404,8 @@ export default function DetailPadelField() {
                               </AlertDialogFooter>
                             </AlertDialogContent>
                           </AlertDialog>
-                          {renderMsg === 2 ? (
-                            <Text
+                          {renderMsg === 2
+                            ? (<Text
                               fontWeight='medium'
                               color='gray.500'
                               paddingTop='3rem'>
@@ -423,8 +413,8 @@ export default function DetailPadelField() {
                               {msgRenderHourInDrawer}hs a{' '}
                               {msgRenderHourInDrawer + 1}hs el dia{' '}
                               {date.split('-').reverse().join('/')}
-                            </Text>
-                          ) : null}
+                            </Text>)
+                            : null}
                         </Stack>
                       </Center>
                     </DrawerBody>
@@ -491,49 +481,47 @@ export default function DetailPadelField() {
                   />
                   <Stack>
                     <Text fontWeight='medium' fontSize='xl'>
-                    Nombre de usuario
+                      Nombre de usuario
                     </Text>
-                    {review.rating === 1 ? (
-                      <HStack color='brand.primary'>
+                    {review.rating === 1
+                      ? (<HStack color='brand.primary'>
                         <Icon h='2rem' w='2rem' as={AiFillStar} />
                         <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                         <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                         <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                         <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                      </HStack>
-                    ) : review.rating === 2 ? (
-                      <HStack color='brand.primary'>
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                        <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                        <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                      </HStack>
-                    ) : review.rating === 3 ? (
-                      <HStack color='brand.primary'>
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                        <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                      </HStack>
-                    ) : review.rating === 4 ? (
-                      <HStack color='brand.primary'>
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                      </HStack>
-                    ) : (
-                      <HStack color='brand.primary'>
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                        <Icon h='2rem' w='2rem' as={AiFillStar} />
-                      </HStack>
-                    )}
+                      </HStack>)
+                      : review.rating === 2
+                        ? (<HStack color='brand.primary'>
+                          <Icon h='2rem' w='2rem' as={AiFillStar} />
+                          <Icon h='2rem' w='2rem' as={AiFillStar} />
+                          <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                          <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                          <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                        </HStack>)
+                        : review.rating === 3
+                          ? (<HStack color='brand.primary'>
+                            <Icon h='2rem' w='2rem' as={AiFillStar} />
+                            <Icon h='2rem' w='2rem' as={AiFillStar} />
+                            <Icon h='2rem' w='2rem' as={AiFillStar} />
+                            <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                            <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                          </HStack>)
+                          : review.rating === 4
+                            ? (<HStack color='brand.primary'>
+                              <Icon h='2rem' w='2rem' as={AiFillStar} />
+                              <Icon h='2rem' w='2rem' as={AiFillStar} />
+                              <Icon h='2rem' w='2rem' as={AiFillStar} />
+                              <Icon h='2rem' w='2rem' as={AiFillStar} />
+                              <Icon h='2rem' w='2rem' as={AiOutlineStar} />
+                            </HStack>)
+                            : (<HStack color='brand.primary'>
+                              <Icon h='2rem' w='2rem' as={AiFillStar} />
+                              <Icon h='2rem' w='2rem' as={AiFillStar} />
+                              <Icon h='2rem' w='2rem' as={AiFillStar} />
+                              <Icon h='2rem' w='2rem' as={AiFillStar} />
+                              <Icon h='2rem' w='2rem' as={AiFillStar} />
+                            </HStack>)}
                     <Text
                       style={{ hyphens: 'auto' }}
                       color='gray.500'
@@ -545,17 +533,10 @@ export default function DetailPadelField() {
                   </Stack>
                 </HStack>
               )
-            })}   
+            })}
           </Box>
         </Flex>
       </Flex>
-    
-    </Flex>
-  ) : null
-
-
-
-
-
-  
+    </Flex>)
+    : navigate('/')
 }
