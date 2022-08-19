@@ -29,6 +29,7 @@ export function NavBar() {
         align='center'
         justifyContent='space.between'>
         <Spacer />
+
         <Box>
           <SearchBar />
         </Box>

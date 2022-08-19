@@ -148,6 +148,7 @@ export default function Footer() {
                 color='#98D035'
                 icon={<FaTwitter />}
               />
+
             </Link>
             <Text fontSize='medium' color='gray.500'>
               Twitter

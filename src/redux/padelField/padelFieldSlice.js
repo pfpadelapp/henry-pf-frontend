@@ -87,6 +87,7 @@ export default padelfieldSlice.reducer
 export function fetchAllPadelFields() {
   return async function (dispatch) {
     try {
+
       const allPadelFields = await axios.get(`${urlDeploy}/field`)
       // console.log('REDUX desde fetchall', allPadelFields.data)
       dispatch(setPadelField(allPadelFields.data))
@@ -100,9 +101,12 @@ export function fetchAllPadelFields() {
 export function getPadelFieldsById(idPadelField) {
   return async function (dispatch) {
     try {
+
       const padelFieldById = await axios.get(
         `${urlDeploy}/field/${idPadelField}`
       )
+
+
       dispatch(setPadelFieldById(padelFieldById.data))
       // console.log('REDUX', padelFieldById.data)
     } catch (error) {
@@ -114,9 +118,11 @@ export function getPadelFieldsById(idPadelField) {
 export function filterByType(type) {
   return async function (dispatch) {
     try {
+
       const padelFieldType = await axios.get(
         `${urlDeploy}/field/typeField?typeField=${type}`
       )
+
       dispatch(setPadelFieldType(padelFieldType.data))
       // console.log('REDUX', padelFieldType.data)
     } catch (error) {
@@ -142,6 +148,7 @@ export function orderByPrice(price) {
 export function orderByAvailability(availability) {
   return async function (dispatch) {
     try {
+
       const padelFieldType = await axios.get(
         `${urlDeploy}/field/able?active=${availability}`
       )
@@ -165,6 +172,7 @@ export function getInfoByName(padelName) {
       const padelFieldSearch = await axios.get(
         `${urlDeploy}/field/search?name=${padelName}`
       )
+
       // console.log('REdux', padelFieldSearch.data.results)
       console.log('REDUX desde el searchBar', padelFieldSearch.data)
       if (padelName === '') {
@@ -194,9 +202,11 @@ export function getInfoByName(padelName) {
 export function getFilterPrice(minPrice, maxPrice) {
   return async function (dispatch) {
     try {
+
       const filterPrice = await axios.get(
         `${urlDeploy}/field/rangePrice?minPrice=${minPrice}&maxPrice=${maxPrice}`
       )
+
       // console.log(filterPrice.data.results)
       if (filterPrice.data.length === 0) {
         Swal.fire({
@@ -220,6 +230,7 @@ export function getHoursByDate(idPadelField, date) {
       const hoursByDate = await axios.get(
         `${urlDeploy}/booking/hours?idField=${idPadelField}&day=${date}`
       )
+
       // console.log(hoursByDate.data)
       // console.log(idPadelField)
       // console.log(date)
@@ -239,7 +250,7 @@ export function cleanHoursByDate() {
 // export function getAllPagesPadelField() {
 //   return async function(dispatch) {
 //     try {
-//       const countPages = await axios.get('http://127.0.0.1:3000/field?page=1&limit=6')
+//       const countPages = await axios.get('https://pf-padel-app.herokuapp.com/field?page=1&limit=6')
 //       // console.log('aca', countPages.data)
 //       dispatch(getCountPages(countPages.data))
 //     } catch (error) {
@@ -253,6 +264,7 @@ export function postReserveHourPadelField(input) {
   return async function (dispatch) {
     try {
       const post = await axios.post(`${urlDeploy}/booking/`, input)
+
       // console.log('rtk, el id que devuelve es: ', post.data)
       dispatch(postReservePadelField(post.data))
     } catch (error) {
