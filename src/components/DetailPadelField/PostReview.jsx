@@ -15,7 +15,6 @@ import {FormControl,Flex, Button, Textarea } from '@chakra-ui/react'
     rating: '',
     review: '',
   })
-
   function handleChange(e) {
     e.preventDefault()
     setInput({
@@ -56,7 +55,7 @@ import {FormControl,Flex, Button, Textarea } from '@chakra-ui/react'
            
              <Textarea placeholder='Escribe un comentario' name='review' value={input.review} onChange={(e) => handleChange(e)}></Textarea>
                 </FormControl>
-            
+               
                   <Link to='/'>
                     <Button bgColor='#98D035' textColor='#ffff' mr={3}  onClick={(e) => handleSubmit(e)}>
                       Enviar
