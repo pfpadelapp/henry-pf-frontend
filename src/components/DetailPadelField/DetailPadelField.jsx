@@ -1,44 +1,11 @@
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState, useRef } from 'react'
-import {
-  getPaymentPadelField,
-  postReserveHourPadelField,
-  cleanHoursByDate,
-  getHoursByDate,
-  getPadelFieldsById,
-  cleanDetailPadelField
+import {getPaymentPadelField, postReserveHourPadelField,cleanHoursByDate,getHoursByDate,getPadelFieldsById,cleanDetailPadelField
 } from '../../redux/padelField/padelFieldSlice'
-import {
-  Link,
-  Input,
-  Flex,
-  Image,
-  Box,
-  Divider,
-  Text,
-  Badge,
-  HStack,
-  Icon,
-  Button,
-  Center,
-  Stack,
-  Avatar,
-  useDisclosure,
-  Drawer,
-  DrawerOverlay,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerHeader,
-  DrawerBody,
-  DrawerFooter,
-  AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogCloseButton,
-  AlertDialogBody,
-  AlertDialogFooter
+import {Link,Input,Flex,Image,Box,Divider,Text,Badge,HStack,Icon,Button,Center,Stack,Avatar,useDisclosure,Drawer,DrawerOverlay,DrawerCloseButton,
+  DrawerContent,DrawerHeader,DrawerBody,DrawerFooter,AlertDialog,AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogCloseButton,
+  AlertDialogBody,AlertDialogFooter
 } from '@chakra-ui/react'
 import Sidebar from '../Sidebar/Sidebar.jsx'
 import { useColorMode } from '@chakra-ui/color-mode'
@@ -49,6 +16,7 @@ import { NavBar } from '../NavBar/NavBar'
 import turnoImage from '../../resources/assets/turnDrawer.svg'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
+import PostReview from './PostReview'
 
 
 
@@ -490,7 +458,7 @@ export default function DetailPadelField() {
                   />
                   <Stack>
                     <Text fontWeight='medium' fontSize='xl'>
-                    Angelina Jolie
+                   {review.username}
                     </Text>
                     {review.rating === 1 ? (
                       <HStack color='brand.primary'>
@@ -546,7 +514,7 @@ export default function DetailPadelField() {
               )
             })}   
            
-
+            <PostReview/>
           </Box>
         </Flex>
       </Flex>
