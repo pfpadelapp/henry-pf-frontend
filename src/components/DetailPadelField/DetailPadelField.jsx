@@ -19,8 +19,6 @@ import { useNavigate } from 'react-router-dom'
 import PostReview from './PostReview'
 
 
-
-
 export default function DetailPadelField() {
   const dispatch = useDispatch()
   const { colorMode, toggleColorMode } = useColorMode()

@@ -15,7 +15,6 @@ import {FormControl,Flex, Button, Textarea } from '@chakra-ui/react'
     rating: '',
     review: '',
   })
-
   function handleChange(e) {
     e.preventDefault()
     setInput({
