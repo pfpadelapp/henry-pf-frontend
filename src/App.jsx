@@ -10,6 +10,8 @@ import Admin from './components/Admin/Admin'
 import AdminInterfaz from './components/Admin/AdminInterfaz'
 import Banner from './components/Admin/Banner'
 import CreatePadelfield from './components/CreatePadelfield/CreatePadelfield.jsx'
+import BanneReviews from './components/Admin/BanneReviews'
+import Reviews from './components/Admin/Reviews.jsx'
 
 export default function App() {
   return (
@@ -24,6 +26,8 @@ export default function App() {
       <Route path='/resultadoPago' element={<Success />} />
       <Route exact path='/admin' element={<Admin />} />
       <Route exact path='/adminInterfaz' element={<AdminInterfaz />} />
+      <Route exact path='/banneReviews' element={<BanneReviews />} />
+      <Route exact path='/deleteReviews/:idField' element={<Reviews />} />
       <Route exact path='/banner' element={<Banner />} />
       <Route path='/crearCancha' element={<CreatePadelfield />} />
     </Routes>
