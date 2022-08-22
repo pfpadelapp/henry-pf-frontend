@@ -177,7 +177,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text> {padelField.review.length} Reseñas</Text>
+                  <Text> {padelField.review?.length} Reseñas</Text>
                 </HStack>
               ) : padelField.ratingsAverage === 2 ? (
                 <HStack color='brand.primary'>
@@ -186,7 +186,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
+                  <Text>{padelField.review?.length} Reseñas</Text>
                 </HStack>
               ) : padelField.ratingsAverage === 3 ? (
                 <HStack color='brand.primary'>
@@ -195,7 +195,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
+                  <Text>{padelField.review?.length} Reseñas</Text>
                 </HStack>
               ) : padelField.ratingsAverage === 4 ? (
                 <HStack color='brand.primary'>
@@ -204,7 +204,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
+                  <Text>{padelField.review?.length} Reseñas</Text>
                 </HStack>
               ) : (
                 <HStack color='brand.primary'>
@@ -213,7 +213,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
+                  <Text>{padelField.review?.length} Reseñas</Text>
                 </HStack>
               )}
               <>
