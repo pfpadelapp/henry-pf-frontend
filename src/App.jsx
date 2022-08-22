@@ -12,6 +12,7 @@ import Banner from './components/Admin/Banner'
 import CreatePadelfield from './components/CreatePadelfield/CreatePadelfield.jsx'
 import BanneReviews from './components/Admin/BanneReviews'
 import Reviews from './components/Admin/Reviews.jsx'
+import Contact from './components/Contact/Contact.jsx'
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
       <Route exact path='/banneReviews' element={<BanneReviews />} />
       <Route exact path='/deleteReviews/:idField' element={<Reviews />} />
       <Route exact path='/banner' element={<Banner />} />
+      <Route exact path='/contact' element={<Contact />} />
       <Route path='/crearCancha' element={<CreatePadelfield />} />
     </Routes>
   )
