@@ -6,7 +6,7 @@ import {
 } from '../../redux/padelField/padelFieldSlice'
 import {
   Link, Input, Flex, Image, Box, Divider, Text, Badge, HStack, Icon, Button, Center, Stack, Avatar, useDisclosure, Drawer, DrawerOverlay, DrawerCloseButton,
-  DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogCloseButton,
+  DrawerContent, DrawerBody, DrawerFooter, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogCloseButton,
   AlertDialogBody, AlertDialogFooter
 } from '@chakra-ui/react'
 import Sidebar from '../Sidebar/Sidebar.jsx'
