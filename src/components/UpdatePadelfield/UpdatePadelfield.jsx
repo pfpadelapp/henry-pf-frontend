@@ -16,17 +16,15 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  InputRightElement,
   Radio,
   RadioGroup,
-  Stack
 } from '@chakra-ui/react'
 import { useColorMode } from '@chakra-ui/color-mode'
-import { createPadelField } from '../../redux/padelField/padelFieldSlice'
+import { updatePadelfieldOwner } from '../../redux/padelField/padelFieldSlice'
 import { useDispatch } from 'react-redux'
 import axios from 'axios'
 
-export default function CreatePadelfield() {
+export default function UpdatePadelfield() {
   const dispatch = useDispatch()
   const { user, isAuthenticated } = useAuth0()
   const { colorMode } = useColorMode()
@@ -37,9 +35,10 @@ export default function CreatePadelfield() {
     image: '',
     type: '',
     price: '',
-    ownerId: '63018ad1c45278f664a93819',
-    availability: ''
+    ownerId: '62fe4fff901e1c026fd0d474',
+    horario: ''
   })
+  const idActualizar = '63036bc56d3652e5fc78c50a'
   const [errors, setErrors] = useState({})
   const validateName = /^[a-zA-Z\s]+$/
 
@@ -122,7 +121,7 @@ export default function CreatePadelfield() {
         input.image = image.url
       }
       setErrors(validate(input))
-      dispatch(createPadelField(input))
+      dispatch(updatePadelfieldOwner(idActualizar, input))
       Swal.fire({
         icon: 'success',
         title: 'Operación exitosa!',
@@ -167,7 +166,7 @@ export default function CreatePadelfield() {
               padding='5rem 0'
               width='70%'>
               <Heading>
-                Añadi tu cancha!
+                Actualiza tu cancha!
               </Heading>
               <FormControl isRequired>
                 <FormLabel>Nombre</FormLabel>

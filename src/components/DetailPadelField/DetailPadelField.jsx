@@ -1,11 +1,13 @@
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState, useRef } from 'react'
-import {getPaymentPadelField, postReserveHourPadelField,cleanHoursByDate,getHoursByDate,getPadelFieldsById,cleanDetailPadelField
+import {
+  getPaymentPadelField, postReserveHourPadelField, cleanHoursByDate, getHoursByDate, getPadelFieldsById, cleanDetailPadelField
 } from '../../redux/padelField/padelFieldSlice'
-import {Link,Input,Flex,Image,Box,Divider,Text,Badge,HStack,Icon,Button,Center,Stack,Avatar,useDisclosure,Drawer,DrawerOverlay,DrawerCloseButton,
-  DrawerContent,DrawerHeader,DrawerBody,DrawerFooter,AlertDialog,AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogCloseButton,
-  AlertDialogBody,AlertDialogFooter
+import {
+  Link, Input, Flex, Image, Box, Divider, Text, Badge, HStack, Icon, Button, Center, Stack, Avatar, useDisclosure, Drawer, DrawerOverlay, DrawerCloseButton,
+  DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogCloseButton,
+  AlertDialogBody, AlertDialogFooter
 } from '@chakra-ui/react'
 import Sidebar from '../Sidebar/Sidebar.jsx'
 import { useColorMode } from '@chakra-ui/color-mode'
@@ -21,22 +23,19 @@ import PostReview from './PostReview'
 
 export default function DetailPadelField() {
   const dispatch = useDispatch()
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
   const { id } = useParams()
   const { isAuthenticated } = useAuth0()
   const navigate = useNavigate()
   const padelField = useSelector((state) => state.padelFields.detailPadelField)
-  // const [countReview, setCountReview] = useState()
   const inputPayment = {
     idField: id,
     cost: padelField.price
   }
-  // console.log(inputPayment)
   const hourByDatePadelFiels = useSelector(
     (state) => state.padelFields.hoursByDatePadelField
   )
   const linkPaymentPaypal = useSelector((state) => state.padelFields.payReserve)
-  // console.log('Link de pago desde el detail', linkPaymentPaypal)
   const menuRightModal = useDisclosure()
   const alertModal = useDisclosure()
   const cancelRef = useRef()
@@ -44,43 +43,6 @@ export default function DetailPadelField() {
   const [getHour, setGetHour] = useState()
   const [renderMsg, setRenderMsg] = useState(1)
   const msgRenderHourInDrawer = Number(getHour)
-  // console.log('horas disponibles', hourByDatePadelFiels)
-  // const date = new Date()
-  // const output = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear()
-  // const output2 = new Date()
-  // // const diaNumActual = date.getDate()
-  // const diaStringActual = date.getDay()
-  // const arrayDatesByWeek = []
-  // // console.log(output)
-  // function sumarDias(fecha, dias) {
-  //   fecha.setDate(fecha.getDate() + dias)
-  //   fecha = String(fecha.getDate()).padStart(2, '0') + '/' + String(fecha.getMonth() + 1).padStart(2, '0') + '/' + fecha.getFullYear()
-  //   return fecha
-  // }
-  // const [dias, setDias] = useState({
-  //   output,
-  //   output2: sumarDias(output2, 1),
-  //   output3: sumarDias(output2, 1),
-  //   output4: sumarDias(output2, 1),
-  //   output5: sumarDias(output2, 1),
-  //   output6: sumarDias(output2, 2)
-  // })
-  // console.log(dias)
-  // diaStringActual === 1
-  // ? arrayDatesByWeek.push('Hoy', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado')
-  //   : diaStringActual === 2
-  //   ? arrayDatesByWeek.push('Hoy', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Lunes')
-  //     : diaStringActual === 3
-  //     ? arrayDatesByWeek.push('Hoy', 'Jueves', 'Viernes', 'Sabado', 'Lunes', 'Martes')
-  //     : diaStringActual === 4
-  //         ? arrayDatesByWeek.push('Hoy', 'Viernes', 'Sabado', 'Lunes', 'Martes', 'Miercoles')
-  //         : diaStringActual === 5
-  //         ? arrayDatesByWeek.push('Hoy', 'Sabado', 'Lunes', 'Martes', 'Miercoles', 'Jueves')
-  //         : arrayDatesByWeek.push('Hoy', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes')
-  // console.log(arrayDatesByWeek)
-  // console.log(output) => 09/08/2022
-  // console.log(diaNumActual) //fecha '9' / 08 / 2022
-  // console.log(diaStringActual) //0 dom - 1 lun - 2 mar - 3 mie - 4 jue - 5 vie - 6 sab
   useEffect(() => {
     dispatch(getPadelFieldsById(id))
     return () => {
@@ -172,7 +134,7 @@ export default function DetailPadelField() {
                 <Text>{padelField.location}</Text>
               </HStack>
               <HStack m='1rem 0'>
-                <Text color='brand.primary' fontWeight='bolder' fontSize='lg'>
+                <Text color='#98D035' fontWeight='bolder' fontSize='lg'>
                   ${padelField.price}
                 </Text>
                 <Badge
@@ -180,7 +142,12 @@ export default function DetailPadelField() {
                   textAlign='center'
                   borderRadius='lg'>
                   <Text
-                    color='brand.textSecundary'
+                    bg={
+                      colorMode === 'dark' ? '#3d414c' : '#FFEBF0'
+                    }
+                    color={
+                      colorMode === 'dark' ? null : '#9E45BD'
+                    }
                     p='0 10px'
                     fontWeight='medium'>
                     1 hora
@@ -202,6 +169,7 @@ export default function DetailPadelField() {
                 m='1rem 0'>
                 Puntaje:
               </Text>
+              {/* ERROR */}
               {padelField.ratingsAverage === 1 ? (
                 <HStack color='brand.primary'>
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
@@ -209,7 +177,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
+                  <Text> 11 Reseñas</Text>
                 </HStack>
               ) : padelField.ratingsAverage === 2 ? (
                 <HStack color='brand.primary'>
@@ -218,7 +186,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
+                  <Text>56 Reseñas</Text>
                 </HStack>
               ) : padelField.ratingsAverage === 3 ? (
                 <HStack color='brand.primary'>
@@ -227,7 +195,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
+                  <Text>56 Reseñas</Text>
                 </HStack>
               ) : padelField.ratingsAverage === 4 ? (
                 <HStack color='brand.primary'>
@@ -236,7 +204,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
+                  <Text>56 Reseñas</Text>
                 </HStack>
               ) : (
                 <HStack color='brand.primary'>
@@ -245,7 +213,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
                   <Icon h='2rem' w='2rem' as={AiFillStar} />
-                  <Text>{padelField.review.length} Reseñas</Text>
+                  <Text>56 Reseñas</Text>
                 </HStack>
               )}
               <>
@@ -287,14 +255,6 @@ export default function DetailPadelField() {
                       <Text fontWeight='medium' margin='1rem 0'>
                         Selecciona el dia:
                       </Text>
-                      {/* <Stack>
-                        <Button onClick={() => handleDate(output)} >{arrayDatesByWeek[0]}</Button>
-                        <Button>{arrayDatesByWeek[1]}</Button>
-                        <Button>{arrayDatesByWeek[2]}</Button>
-                        <Button>{arrayDatesByWeek[3]}</Button>
-                        <Button>{arrayDatesByWeek[4]}</Button>
-                        <Button>{arrayDatesByWeek[5]}</Button>
-                      </Stack> */}
                       <Input
                         backgroundColor={
                           colorMode === 'dark' ? '#3d414c' : 'white'
@@ -456,7 +416,7 @@ export default function DetailPadelField() {
                   />
                   <Stack>
                     <Text fontWeight='medium' fontSize='xl'>
-                   {review.username}
+                      {review.username}
                     </Text>
                     {review.rating === 1 ? (
                       <HStack color='brand.primary'>
@@ -503,20 +463,20 @@ export default function DetailPadelField() {
                       style={{ hyphens: 'auto' }}
                       color='gray.500'
                       fontSize='lg'>
-                      {review.review
+                      {review.review.length > 1
                         ? review.review
-                        : 'El usuario no dejo un comentario'}
+                        : 'El usuario no dejo un comentario.'}
                     </Text>
                   </Stack>
                 </HStack>
               )
-            })}   
-           
-            <PostReview/>
+            })}
+
+            <PostReview />
           </Box>
         </Flex>
       </Flex>
-    
+
     </Flex>
   ) : null
 
@@ -524,5 +484,5 @@ export default function DetailPadelField() {
 
 
 
-  
+
 }

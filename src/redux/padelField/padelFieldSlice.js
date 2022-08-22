@@ -59,11 +59,19 @@ export const padelfieldSlice = createSlice({
     },
     setCreatePAdelField: (state, action) => {
       state.padelField = action.payload
+    },
+    setUpdatePadelfiled: (state, action) => {
+      state.padelField = action.payload
+    },
+    setHidePadelfiled: (state, action) => {
+      state.padelField = action.payload
     }
   }
 })
 
 export const {
+  setUpdatePadelfiled,
+  setHidePadelfiled,
   setCreatePAdelField,
   setPaymentCheck,
   setPaymentPadelfield,
@@ -309,6 +317,28 @@ export function createPadelField(input) {
       const newPadelfield = await axios.post(`${urlDeploy}/field`, input)
       // console.log('input que muestro', newPadelfield.data)
       dispatch(setCreatePAdelField(newPadelfield.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export function removePadelfieldOwner(idPadelfield) {
+  return async function (dispatch) {
+    try {
+      const padelFieldHide = axios.post(`${urlDeploy}/field/${idPadelfield}`)
+      dispatch(setHidePadelfiled(padelFieldHide))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function updatePadelfieldOwner(idPadelfield, inputUpdate) {
+  return async function (dispatch) {
+    try {
+      const padelFieldUpdate = await axios.put(`${urlDeploy}/field/${idPadelfield}`, inputUpdate)
+      console.log(padelFieldUpdate.data)
+      dispatch(setUpdatePadelfiled(padelFieldUpdate.data))
     } catch (error) {
       console.log(error)
     }

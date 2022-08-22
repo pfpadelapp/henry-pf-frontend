@@ -1,4 +1,4 @@
-import { Heading, Avatar, Box, Button, Center, Flex, HStack, Stack, Tab, Table, TableCaption, TableContainer, TabList, TabPanel, Tabs, Text, Thead, Tr, Td, Th, Tbody, Badge, IconButton, FormControl, FormLabel, Input, InputGroup, InputRightElement, TabPanels, FormHelperText, Divider } from '@chakra-ui/react'
+import { Heading, Avatar, Box, Button, Center, Flex, HStack, Stack, Tab, Table, TableCaption, TableContainer, TabList, TabPanel, Tabs, Text, Thead, Tr, Td, Th, Tbody, Badge, IconButton, FormControl, FormLabel, Input, InputGroup, InputRightElement, TabPanels, FormHelperText, Divider, useDisclosure, Modal, ModalContent, ModalOverlay, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, RadioGroup, Radio, InputLeftElement, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogHeader, AlertDialogBody, AlertDialogFooter } from '@chakra-ui/react'
 import { NavBar } from '../NavBar/NavBar'
 import Sidebar from '../Sidebar/Sidebar'
 import { useAuth0 } from '@auth0/auth0-react'
@@ -6,16 +6,15 @@ import { useNavigate, Link } from 'react-router-dom'
 import { BiUpload } from 'react-icons/bi'
 import { AiFillDelete } from 'react-icons/ai'
 import Swal from 'sweetalert2'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { getUpdateOwner } from '../../redux/owner/ownerSlice.js'
 import { useDispatch } from 'react-redux'
+import { removePadelfieldOwner } from '../../redux/padelField/padelFieldSlice'
 
 export default function Panel() {
   const dispatch = useDispatch()
   const { user, isAuthenticated } = useAuth0()
-  console.log(user)
-  console.log(isAuthenticated)
   const navigate = useNavigate()
   const { colorMode } = useColorMode()
   const [input, setInput] = useState({
@@ -26,9 +25,10 @@ export default function Panel() {
   const [errors, setErrors] = useState({})
   const [show, setShow] = useState(false)
   const handleShowPassword = () => setShow(!show)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const cancelRef = useRef()
   const validateName = /^[a-zA-Z\s]+$/
   const validatePass = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/
-  const idOwner = '62fd201fdfa5c35016ff8165'
   function validate(input) {
     const errors = {}
     if (!input.username) {
@@ -93,6 +93,10 @@ export default function Panel() {
         username: ''
       })
     }
+  }
+  function handleRemove(e) {
+    e.preventDefault()
+    dispatch(removePadelfieldOwner(idPadelfield))
   }
   return (
     isAuthenticated
@@ -225,8 +229,12 @@ export default function Panel() {
                               Super cancha de padel
                             </Flex>
                           </Td>
-                          <Td textAlign='center'><IconButton icon={<BiUpload />} bg='#98D035' /></Td>
-                          <Td textAlign='center'><IconButton icon={<AiFillDelete />} bg='red.500' /></Td>
+                          <Td textAlign='center'>
+                            <Link to='/actualizarCancha'>
+                              <IconButton icon={<BiUpload />} bg='#98D035' />
+                            </Link>
+                          </Td>
+                          <Td onClick={onOpen} textAlign='center'><IconButton icon={<AiFillDelete />} bg='red.500' /></Td>
                         </Tr>
                         <Tr>
                           <Td>
@@ -314,34 +322,26 @@ export default function Panel() {
                   </HStack>
                 </Box>
               </Flex>
-              {/* <Box width='90%'>
-                  <HStack justifyContent='space-between'>
-                    <Heading>Torneos</Heading>
-                    <Button bg='#98D035' color='#fff'>Crear torneo</Button>
-                  </HStack>
-                  <HStack gap='1rem' marginTop='2rem' justifyContent='space-between'>
-                    <HStack>
-                      <Avatar src={iconT1} />
-                      <Text>Torneo 1 Lorem ipsum dolor sit amet</Text>
-                    </HStack>
-                    <Badge variant='solid' color='#98D035' > 12 miembros</Badge>
-                  </HStack>
-                  <HStack gap='1rem' marginTop='2rem' justifyContent='space-between'>
-                    <HStack>
-                      <Avatar src={iconT2} />
-                      <Text>Torneo 2 Lorem ipsum dolor sit amet</Text>
-                    </HStack>
-                    <Badge variant='solid' color='#98D035' > 8 miembros</Badge>
-                  </HStack>
-                  <HStack gap='1rem' margin='2rem 0' justifyContent='space-between'>
-                    <HStack>
-                      <Avatar src={iconT3} />
-                      <Text>Torneo 3 Lorem ipsum dolor sit amet</Text>
-                    </HStack>
-                    <Badge variant='solid' color='#98D035' > 7 miembros</Badge>
-                  </HStack>
-                </Box> */}
             </Center>
+            <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose} isCentered>
+              <AlertDialogOverlay />
+              <AlertDialogContent>
+                <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                  Eliminar cancha
+                </AlertDialogHeader>
+                <AlertDialogBody>
+                  Estas seguro de que quieres eliminar esta cancha?
+                </AlertDialogBody>
+                <AlertDialogFooter>
+                  <Button ref={cancelRef} onClick={onClose}>
+                    Cancelar
+                  </Button>
+                  <Button bg='red.500' color='white' ml={3} onClick={(e) => { onClose(); handleRemove(e) }} >
+                    Eliminar
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </Flex>
         </Flex >
       </>
