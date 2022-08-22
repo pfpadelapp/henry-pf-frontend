@@ -28,7 +28,7 @@ export default function SearchBar() {
       <InputGroup
         maxWidth='26.5vw'
         borderColor='transparent'
-        backgroundColor='white'>
+        backgroundColor={colorMode === 'dark' ? '#3d414c' : 'white'}>
         <Input
           padding='0 0.5rem'
           variant='unstyled'
