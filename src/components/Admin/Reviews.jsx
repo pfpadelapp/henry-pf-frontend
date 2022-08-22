@@ -21,13 +21,17 @@ export default function Reviews() {
     setReviews(res.data.review)
   }
 
+  console.log(reviews)
+
   useEffect(() => {
     getReviews()
   }, [])
 
-  async function handleDelete(id) {
-    await axios.delete(`${urlDeploy}/reviews/${id}`)
+  async function handleDelete(reviewId, fieldId, userId) {
+    await axios.delete(`${urlDeploy}/reviews/${reviewId}/${fieldId}/${userId}`)
     console.log('REVIEW BANEADA')
+    // alert('review eliminada exitosamente')
+    window.location.reload()
   }
 
   return (
@@ -50,7 +54,7 @@ export default function Reviews() {
                         <VStack justifyContent='center' w='100%' padding='3%'>
                             <HStack spacing='24px'>
                                 <Center w='225px' h='40px'>
-                                    Publisher Id
+                                    Review Id
                                 </Center>
                                 <Center w='600px' h='40px'>
                                     Review
@@ -62,9 +66,11 @@ export default function Reviews() {
                                 {reviews && reviews.map(e => (
                             // eslint-disable-next-line react/jsx-key
                             <HStack w='100%' justifyContent='center'>
-                                  <Box w='225px'>{e.idUser}</Box>
+                                  <Box w='225px'>{e.reviewId}</Box>
                                   <Box w='600px' >{e.review}</Box>
-                                  <Box w='120px' paddingLeft='3%'><Button>Eliminar</Button></Box>
+                                  <Box w='120px' paddingLeft='3%'>
+                                    <Button bg='#95302f' onClick={() => handleDelete(e.reviewId, idField, e.idUser)}>Eliminar</Button>
+                                  </Box>
                             </HStack>
                                 ))}
 

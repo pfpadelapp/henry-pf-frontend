@@ -17,7 +17,7 @@ const urlDeploy = 'https://pf-padel-app.herokuapp.com'
 export default function Banner() {
   const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [username, setName] = useState('')
+  const [name, setName] = useState('')
   const [userToDelete, setUserToDelete] = useState([])
 
   const handleInput = (e) => {
@@ -28,12 +28,15 @@ export default function Banner() {
 
   async function handleSubmit() {
     const resU = await axios.get(
-        `${urlDeploy}/admin/searchU?username=${username}`
+        `${urlDeploy}/admin/searchU?name=${name}`
     )
-    const resO = await axios.get(
-        `${urlDeploy}/admin/searchO?username=${username}`
-    )
-    const resT = [...resU.data, ...resO.data]
+    console.log('u', resU)
+    // const resO = await axios.get(
+    //   `${urlDeploy}/admin/searchO?name=${name}`
+    // )
+    // const resT = [...resU.data, ...resO.data]
+    const resT = resU.data
+    // console.log('u', resO)
     console.log(resT)
     setUserToDelete(resT)
     // setName('')
@@ -41,26 +44,26 @@ export default function Banner() {
 
   async function handleDelete(id, role) {
     console.log(id)
-    if (role === 'user') {
+    if (role === 'jugador' || role === 'player' || role === 'owner') {
       await axios.delete(`${urlDeploy}/user/${id}`)
     } else {
       await axios.delete(`${urlDeploy}/owner/${id}`)
     }
     console.log('USUARIO BANEADO')
     handleSubmit()
-    setName('')
+    // setName('')
   }
 
   async function disableBanned(id, role) {
     console.log(id)
-    if (role === 'user') {
+    if (role === 'jugador' || role === 'player' || role === 'owner') {
       await axios.put(`${urlDeploy}/user/able/${id}`)
     } else {
       await axios.put(`${urlDeploy}/owner/able/${id}`)
     }
     console.log('USUARIO DESBANEADO')
     handleSubmit()
-    setName('')
+    // setName('')
   }
 
   return (
@@ -92,8 +95,8 @@ export default function Banner() {
                         variant='unstyled'
                         backgroundColor={colorMode === 'dark' ? '#3d414c' : 'white'}
                         type='text'
-                        placeholder='Buscar por username'
-                        value={username}
+                        placeholder='Buscar por name'
+                        value={name}
                         onChange={(e) => handleInput(e)}
                     />
                     <Button
@@ -125,9 +128,9 @@ export default function Banner() {
                 <Tr>
               <Td>{e._id}</Td>
                 <Td>{e.email}</Td>
-                <Td>{e.username}</Td>
+                <Td>{e.name}</Td>
                 <Td>{e.role}</Td>
-                {e.user_metadata.isActive === true
+                {e.isActive === true
                   ? (
                     <Td>
                     <Button

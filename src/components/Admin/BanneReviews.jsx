@@ -29,8 +29,8 @@ export default function BanneReviews() {
   console.log(fieldName)
 
   async function handleSubmit() {
-    const resF = await axios.get(`http://localhost:3000/field/panel/search?name=${fieldName}`)
-    // const resF = await axios.get(`${urlDeploy}/field/panel/search?name=${fieldName}`)
+    // const resF = await axios.get(`http://localhost:3000/field/panel/search?name=${fieldName}`)
+    const resF = await axios.get(`${urlDeploy}/field/panel/search?name=${fieldName}`)
     console.log('OKEY', resF.data)
     setField(resF.data)
     // setName('')
@@ -46,8 +46,8 @@ export default function BanneReviews() {
   console.log('now', field)
 
   async function enableField(id) {
-    await axios.put(`http://localhost:3000/field//enable/${id}`)
-    // await axios.put(`${urlDeploy}/field/enable/${id}`)
+    // await axios.put(`http://localhost:3000/field//enable/${id}`)
+    await axios.put(`${urlDeploy}/field/enable/${id}`)
     console.log('CANCHA INHABILITADA')
     console.log('hab', field)
     handleSubmit()
