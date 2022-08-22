@@ -41,6 +41,7 @@ export default function ModalAdmin({ isOpen, onClose }) {
           if (res.data.msg) alert(res.data.msg)
           else alert('Un nuevo administrador fue creado')
         })
+      window.location.reload()
     }
     setFormData({
       name: '',
