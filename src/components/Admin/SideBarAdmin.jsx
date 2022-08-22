@@ -49,7 +49,7 @@ export default function Sidebar() {
             <NavItem navSize={navSize} icon={ RiAdminLine } title="Bannear usuarios/propietarios" />
           </Link>
           <Link to='/banneReviews'>
-            <NavItem navSize={navSize} icon={RiChatDeleteLine} title="Eliminar reseñas" />
+            <NavItem navSize={navSize} icon={RiChatDeleteLine} title="Eliminar canchas/reseñas" />
           </Link>
           <NavItem navSize={navSize} icon={FiBell} title="Notificaciones" />
           <Flex

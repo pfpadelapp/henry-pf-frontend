@@ -19,12 +19,6 @@ export default function Banner() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [username, setName] = useState('')
   const [userToDelete, setUserToDelete] = useState([])
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    username: ''
-  })
 
   const handleInput = (e) => {
     e.preventDefault()
@@ -88,8 +82,7 @@ export default function Banner() {
             margin='2vh 0'>
       <Flex>
       </Flex>
-        <Flex>
-        </Flex>
+
       <TableContainer>
         <Flex padding='2%' justifyContent='center'>
                 <Flex justifyContent='center'>
@@ -134,7 +127,7 @@ export default function Banner() {
                 <Td>{e.email}</Td>
                 <Td>{e.username}</Td>
                 <Td>{e.role}</Td>
-                {e.isActive === true
+                {e.user_metadata.isActive === true
                   ? (
                     <Td>
                     <Button

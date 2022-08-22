@@ -21,7 +21,6 @@ export default function BanneReviews() {
   const [fieldName, setFieldName] = useState('')
   const [field, setField] = useState([])
 
-
   const handleInput = (e) => {
     e.preventDefault()
     console.log(e.target.value)
@@ -30,12 +29,29 @@ export default function BanneReviews() {
   console.log(fieldName)
 
   async function handleSubmit() {
-    const resF = await axios.get(`${urlDeploy}/field/search?name=${fieldName}`)
-    console.log(resF.data)
+    const resF = await axios.get(`http://localhost:3000/field/panel/search?name=${fieldName}`)
+    // const resF = await axios.get(`${urlDeploy}/field/panel/search?name=${fieldName}`)
+    console.log('OKEY', resF.data)
     setField(resF.data)
     // setName('')
   }
-  console.log(field)
+
+  async function disableField(id) {
+    await axios.delete(`${urlDeploy}/field/${id}`)
+    console.log('CANCHA INHABILITADA')
+    console.log('des', field)
+    handleSubmit()
+  }
+
+  console.log('now', field)
+
+  async function enableField(id) {
+    await axios.put(`http://localhost:3000/field//enable/${id}`)
+    // await axios.put(`${urlDeploy}/field/enable/${id}`)
+    console.log('CANCHA INHABILITADA')
+    console.log('hab', field)
+    handleSubmit()
+  }
 
   return (
         <>
@@ -81,7 +97,7 @@ export default function BanneReviews() {
                       margin='1vh 1vw 0vh 1vw'
                       paddingLeft='0px'
                       spacing={8}
-                      columns={{ base: 1, lg: 2, xl: 5 }}>
+                      columns={{ base: 1, lg: 2, xl: 4 }}>
                         {field && field.map(e => (
                           // eslint-disable-next-line react/jsx-key
                           <Box>
@@ -96,7 +112,7 @@ export default function BanneReviews() {
                               transition='all 1s'
                               _hover={{ filter: 'brightness(0.7)', transition: 'all .5s ease' }}
                               borderRadius='xl'
-                              width='150px'
+                              width='200px'
                               height='100px'
                               fallbackSrc='https://via.placeholder.com/150'
                               src={e.image}
@@ -104,8 +120,16 @@ export default function BanneReviews() {
                             />
                             <HStack justifyContent='center' paddingTop='3%' >
                               <Link to= {`/deleteReviews/${e.id}`}>
-                                  <Button height='30px' color='white' bg='#98D035'>Ver reviews</Button>
+                                  <Button width='170px' height='30px' color='white' bg='#98D035'>Ver reviews</Button>
                               </Link>
+                            </HStack>
+                            <HStack justifyContent='center' paddingTop='3%' >
+                              { e.isActive === true
+                                ? (<Button bg='#98D035' alignContent='center' alignItems='center' width='170px' height='30px'
+                               onClick={() => disableField(e.id) } >Deshabilitar cancha</Button>)
+                                : (<Button bg='#95302f' alignContent='center' alignItems='center' width='170px' height='30px'
+                               onClick={() => enableField(e.id) } >Habilitar cancha</Button>)
+                            }
                             </HStack>
                           </Box>
                         ))}
