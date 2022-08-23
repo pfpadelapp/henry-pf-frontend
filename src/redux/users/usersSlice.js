@@ -9,7 +9,6 @@ export const userSlice = createSlice({
   initialState: {
     users: [],
     userDetail: []
-    //userByGoogle: []
   },
   reducers: {
     setUser: (state, action) => {
@@ -21,16 +20,16 @@ export const userSlice = createSlice({
     setClearUserState: (state) => {
       state.userDetail = []
     },
-    setUserInfoByGoogle: (state, action) => {
-      state.userByGoogle = action.payload
-    },
     setUpdate: (state, action) => {
+      state.userDetail = action.payload
+    },
+    setDetail: (state, action) => {
       state.userDetail = action.payload
     }
   }
 })
 
-export const { setUpdate, setUserInfoByGoogle, setUsers, setUser } =
+export const { setUpdate, setDetail, setUsers, setUser, setClearUserState } =
   userSlice.actions
 
 export default userSlice.reducer
@@ -59,7 +58,7 @@ export function getUserById(id) {
 
 export function clearUserDetail() {
   return function (dispatch) {
-    dispatch(clearUserDetail)
+    dispatch(clearUserDetail())
   }
 }
 
@@ -83,9 +82,23 @@ export function getUpdateUser(userId, dataUser) {
         dataUser
       )
       console.log('actalizar usuario', userUpdate.data)
-      dispatch(setUpdate(userUpdate))
+      dispatch(setUpdate(userUpdate.data))
     } catch (error) {
       console.log(error)
     }
   }
 }
+
+export function getDataDetail(email) {
+  return async function (dispatch) {
+    try {
+      const allData = await axios.get(`${urlDeploy}/user`)
+      const find = allData.data.find((user) => { return user.email === email })
+      console.log('en el rtk el find es  ', find)
+      dispatch(setDetail(find))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+

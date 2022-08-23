@@ -47,7 +47,7 @@ import {
 } from '../../redux/padelField/padelFieldSlice'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { IoMdArrowDropdown } from 'react-icons/io'
-import { getUserById } from '../../redux/users/usersSlice.js'
+import { getDataDetail, getUserById } from '../../redux/users/usersSlice.js'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 
@@ -59,10 +59,11 @@ export default function Sidebar() {
   const [navSize, changeNavSize] = useState('small')
   const { colorMode, toggleColorMode } = useColorMode()
   const { logout, user, isAuthenticated } = useAuth0()
-  const idUser = '62eab574cac7d39b3b7427c5'
-  const userData = {
-    role: 'owner'
-  }
+  useEffect(() => {
+    dispatch(getDataDetail(user.email))
+  }, [])
+  const dataRender = useSelector((state) => state.users.userDetail)
+  console.log(dataRender)
   const onChange = (val) => {
     setLimit(val)
   }
@@ -96,7 +97,7 @@ export default function Sidebar() {
     dispatch(getFilterPrice(limit[0], limit[1]))
   }
   function handleGetDetailPerfil() {
-    dispatch(getUserById(idUser))
+    dispatch(getUserById())
   }
   return isAuthenticated ? (
     <Flex
@@ -125,19 +126,19 @@ export default function Sidebar() {
         />
         <Link to='/home'>
           {window.location.href.replace('http://127.0.0.1:5173', '') ===
-          '/home'
+            '/home'
             ? (
-            <NavItem
-              navSize={navSize}
-              icon={FiHome}
-              title='Inicio'
-              link='/'
-              active
-            />
-              )
+              <NavItem
+                navSize={navSize}
+                icon={FiHome}
+                title='Inicio'
+                link='/'
+                active
+              />
+            )
             : (
-            <NavItem navSize={navSize} icon={FiHome} link='/' title='Inicio' />
-              )}
+              <NavItem navSize={navSize} icon={FiHome} link='/' title='Inicio' />
+            )}
         </Link>
         <NavItem navSize={navSize} icon={FiBell} title='Notificaciones' />
         <Flex
@@ -178,24 +179,24 @@ export default function Sidebar() {
         </Flex>
         <Link to='/notification'>
           {window.location.href.replace('http://127.0.0.1:5173', '') ===
-          '/notification'
+            '/notification'
             ? (
-            <NavItem
-              navSize={navSize}
-              icon={FiClipboard}
-              title='Turnos'
-              link='/'
-              active
-            />
-              )
+              <NavItem
+                navSize={navSize}
+                icon={FiClipboard}
+                title='Turnos'
+                link='/'
+                active
+              />
+            )
             : (
-            <NavItem
-              navSize={navSize}
-              icon={FiClipboard}
-              link='/'
-              title='Turnos'
-            />
-              )}
+              <NavItem
+                navSize={navSize}
+                icon={FiClipboard}
+                link='/'
+                title='Turnos'
+              />
+            )}
         </Link>
       </Flex>
 
@@ -300,7 +301,7 @@ export default function Sidebar() {
         <Flex
           mt={4}
           justifyContent={navSize == 'small' ? 'center' : 'flex-start'}>
-          <Link to='/perfil'>
+          <Link to={dataRender?.user_metadata?.rol === 'player' ? '/perfil' : '/panel'}>
             <Flex>
               <Avatar size='sm' src={user ? user.picture : null} />
               <Flex
@@ -308,9 +309,9 @@ export default function Sidebar() {
                 ml={4}
                 display={navSize == 'small' ? 'none' : 'flex'}>
                 <Heading as='h3' size='sm' color='gray.500'>
-                  {user.name}
+                  {dataRender?.name}
                 </Heading>
-                <Text color='gray'>Admin</Text>
+                <Text color='gray'>{dataRender?.user_metadata?.rol === 'player' ? 'Jugador' : dataRender?.user_metadata?.rol === 'owner' ? 'Propietario' : 'Admin'}</Text>
               </Flex>
             </Flex>
           </Link>
@@ -325,7 +326,7 @@ export default function Sidebar() {
                 icon={<IoMdArrowDropdown />}
                 variant='outline'></MenuButton>
               <MenuList>
-                <Link to={userData.role === 'owner' ? '/panel' : '/perfil'}>
+                <Link to={dataRender?.user_metadata?.rol === 'player' ? '/perfil' : '/panel'}>
                   <MenuItem onClick={() => handleGetDetailPerfil()}>
                     Mi perfil
                   </MenuItem>
