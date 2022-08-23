@@ -40,6 +40,7 @@ export const padelfieldSlice = createSlice({
     setInfoByName: (state, action) => {
       state.padelField = action.payload
     },
+    
     setFilterPrice: (state, action) => {
       state.padelField = action.payload
     },
