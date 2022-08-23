@@ -1,0 +1,3 @@
+[build]
+  base="henry-pf-frontend"
+  command = "CI= npm run build"
