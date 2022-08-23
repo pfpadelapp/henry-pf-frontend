@@ -3,7 +3,8 @@ import {
   Flex,
   Button,
   Textarea,
-  HStack
+  HStack,
+  IconButton
 } from '@chakra-ui/react'
 import { Link, useParams } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -52,44 +53,32 @@ export default function PostReview() {
 
   return isAuthenticated
     ? (
-    <>
-      <Flex alignItems='center' justifyContent='center'>
-        <FormControl maxWidth='50%' margin='5'>
-          <Textarea
-            placeholder='Escribe un comentario'
-            name='review'
-            value={input.review}
-            onChange={(e) => handleChange(e)}></Textarea>
-          <HStack color='brand.primary'>
-            <Button onClick={handleClickStarValue} name='rating' value={1}>
-              <AiFillStar />
+      <>
+        <Flex alignItems='center' justifyContent='center'>
+          <FormControl maxWidth='50%' margin='5'>
+            <Textarea
+              placeholder='Escribe un comentario'
+              name='review'
+              value={input.review}
+              onChange={(e) => handleChange(e)}></Textarea>
+            <HStack color='brand.primary'>
+              <IconButton onClick={handleClickStarValue} value={1} icon={<AiFillStar />} />
+              <IconButton onClick={handleClickStarValue} value={2} icon={<AiFillStar />} />
+              <IconButton onClick={handleClickStarValue} value={3} icon={<AiFillStar />} />
+              <IconButton onClick={handleClickStarValue} value={4} icon={<AiFillStar />} />
+              <IconButton onClick={handleClickStarValue} value={5} icon={<AiFillStar />} />
+            </HStack>
+          </FormControl>
+          <Link to='/'>
+            <Button
+              bgColor='#98D035'
+              textColor='#ffff'
+              mr={3}
+              onClick={(e) => handleSubmit(e)}>
+              Enviar
             </Button>
-            <Button onClick={handleClickStarValue} name='rating' value={2}>
-              <AiFillStar />
-            </Button>
-            <Button onClick={handleClickStarValue} name='rating' value={3}>
-              <AiFillStar />
-            </Button>
-            <Button onClick={handleClickStarValue} name='rating' value={4}>
-              <AiFillStar />
-            </Button>
-            <Button onClick={handleClickStarValue} name='rating' value={5}>
-              <AiFillStar />
-            </Button>
-          </HStack>
-        </FormControl>
-
-        <Link to='/'>
-          <Button
-            bgColor='#98D035'
-            textColor='#ffff'
-            mr={3}
-            onClick={(e) => handleSubmit(e)}>
-            Enviar
-          </Button>
-        </Link>
-      </Flex>
-    </>
-      )
+          </Link>
+        </Flex>
+      </>)
     : null
 }

@@ -44,6 +44,7 @@ export default function Perfil() {
   const { user, isAuthenticated } = useAuth0()
   console.log(user)
   console.log(isAuthenticated)
+  const dataRender = useSelector((state) => state.users.userDetail)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { colorMode } = useColorMode()
@@ -114,7 +115,7 @@ export default function Perfil() {
       })
     } else {
       setErrors(validate(input))
-      dispatch(getUpdateUser(idUser, input))
+      dispatch(getUpdateUser(dataRender.id, input))
       Swal.fire({
         icon: 'success',
         title: 'Operación exitosa!',
@@ -160,9 +161,7 @@ export default function Perfil() {
                   gap='1rem'>
                   <Avatar size='xl' src={user.picture} />
                   <Flex flexDirection='column'>
-                    <Heading>
-                      Hola<span style={{ color: '#98D035' }}> {user.name}</span>
-                    </Heading>
+                    <Heading>Hola<span style={{ color: '#98D035' }}> {dataRender.given_name}</span></Heading>
                     <Heading size='lg'>bienvenid@ de nuevo!</Heading>
                   </Flex>
                 </Flex>
@@ -176,12 +175,9 @@ export default function Perfil() {
                   <TabPanels>
                     <TabPanel>
                       <Box lineHeight='2rem'>
-                        <Text padding='1rem 0'>
-                          Nombre: {user.name} {user.lastName}
-                        </Text>
-                        <Text padding='1rem 0'>Usuario: {user.nickname}</Text>
-                        <Text padding='1rem 0'>Email: {user.email}</Text>
-                        <Text padding='1rem 0'>Teléfono: 1122339875</Text>
+                        <Text padding='1rem 0'>Nombre: {dataRender.given_name}</Text>
+                        <Text padding='1rem 0'>Usuario: {dataRender.name}</Text>
+                        <Text padding='1rem 0'>Email: {dataRender.email}</Text>
                       </Box>
                     </TabPanel>
                     <TabPanel>
@@ -261,9 +257,9 @@ export default function Perfil() {
                         onClick={(e) => handleSubmit(e)}
                         isDisabled={
                           !(Object.keys(errors).length === 0 &&
-                          input.username &&
-                          input.contact &&
-                          input.password)
+                            input.username &&
+                            input.contact &&
+                            input.password)
                         }>
                         Actualizar datos
                       </Button>

@@ -58,8 +58,9 @@ import Swal from 'sweetalert2'
 import { useRef, useState } from 'react'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { getUpdateOwner } from '../../redux/owner/ownerSlice.js'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { removePadelfieldOwner } from '../../redux/padelField/padelFieldSlice'
+import { getUpdateUser } from '../../redux/users/usersSlice'
 
 export default function Panel() {
   const dispatch = useDispatch()
@@ -71,6 +72,7 @@ export default function Panel() {
     contact: '',
     username: ''
   })
+  const dataRender = useSelector((state) => state.users.userDetail)
   const [errors, setErrors] = useState({})
   const [show, setShow] = useState(false)
   const handleShowPassword = () => setShow(!show)
@@ -134,7 +136,7 @@ export default function Panel() {
       })
     } else {
       setErrors(validate(input))
-      dispatch(getUpdateOwner(idOwner, input))
+      dispatch(getUpdateOwner(dataRender.id, input))
       Swal.fire({
         icon: 'success',
         title: 'Operación exitosa!',
@@ -154,135 +156,210 @@ export default function Panel() {
   }
   return isAuthenticated
     ? (
-    <>
-      <NavBar />
-      <Flex>
-        <Sidebar />
-        <Flex
-          marginTop='12vh'
-          marginLeft='75px'
-          width='100%'
-          flexDir='column'
-          alignItems='center'
-          padding={{ base: '', lg: '0 5rem', xl: '0 15rem' }}>
-          <Center
-            backgroundColor={colorMode == 'dark' ? '#2C313D' : '#F8F8F8'}
-            width='80%'
-            borderRadius='3xl'
-            alignItems='flex-start'
-            margin='2vh 0'>
-            <Flex
-              flexDirection='column'
-              gap='2.5rem'
-              padding='5rem 0'
-              width='70%'>
-              <Box>
-                <Flex
-                  flexDirection='row'
-                  paddingBottom='2rem'
-                  alignItems='center'
-                  gap='1rem'>
-                  <Avatar size='xl' src={user.picture} />
-                  <Flex flexDirection='column'>
-                    <Heading>
-                      Hola<span style={{ color: '#98D035' }}> {user.name}</span>
-                    </Heading>
-                    <Heading size='lg'>bienvenid@ de nuevo!</Heading>
+      <>
+        <NavBar />
+        <Flex>
+          <Sidebar />
+          <Flex
+            marginTop='12vh'
+            marginLeft='75px'
+            width='100%'
+            flexDir='column'
+            alignItems='center'
+            padding={{ base: '', lg: '0 5rem', xl: '0 15rem' }}>
+            <Center
+              backgroundColor={colorMode == 'dark' ? '#2C313D' : '#F8F8F8'}
+              width='80%'
+              borderRadius='3xl'
+              alignItems='flex-start'
+              margin='2vh 0'>
+              <Flex
+                flexDirection='column'
+                gap='2.5rem'
+                padding='5rem 0'
+                width='70%'>
+                <Box>
+                  <Flex
+                    flexDirection='row'
+                    paddingBottom='2rem'
+                    alignItems='center'
+                    gap='1rem'>
+                    <Avatar size='xl' src={user.picture} />
+                    <Flex flexDirection='column'>
+                      <Heading>Hola<span style={{ color: '#98D035' }}> {dataRender.given_name}</span></Heading>
+                      <Heading size='lg'>bienvenid@ de nuevo!</Heading>
+                    </Flex>
                   </Flex>
-                </Flex>
-              </Box>
-              <Box>
-                <Tabs isFitted variant='enclosed'>
-                  <TabList mb='1em'>
-                    <Tab>Datos de la cuenta</Tab>
-                    <Tab>Modificar datos</Tab>
-                  </TabList>
-                  <TabPanels>
-                    <TabPanel>
-                      <Box lineHeight='2rem'>
-                        <Text padding='1rem 0'>
-                          Nombre: {user.name} {user.lastName}
-                        </Text>
-                        <Text padding='1rem 0'>Usuario: {user.nickname}</Text>
-                        <Text padding='1rem 0'>Email: {user.email}</Text>
-                        <Text padding='1rem 0'>Teléfono: 1122339875</Text>
-                      </Box>
-                    </TabPanel>
-                    <TabPanel>
-                      <Box lineHeight='2rem' marginBottom='3rem'>
-                        <Stack>
-                          <FormControl isRequired>
-                            <FormLabel>Nombre de usuario</FormLabel>
-                            <Input
-                              focusBorderColor='#98D035'
-                              name='username'
-                              value={input.username}
-                              variant='flushed'
-                              htmlSize={4}
-                              size='md'
-                              placeholder='Ingrese el nuevo nombre de usuario'
-                              onChange={(e) => handleChange(e)}
-                              type='text'
-                            />
-                            {errors.username && (
-                              <FormHelperText color='red.400'>
-                                {errors.username}
-                              </FormHelperText>
-                            )}
-                          </FormControl>
-                          <FormControl isRequired>
-                            <FormLabel>Contraseña</FormLabel>
-                            <InputGroup size='md'>
+                </Box>
+                <Box>
+                  <Tabs isFitted variant='enclosed'>
+                    <TabList mb='1em'>
+                      <Tab>Datos de la cuenta</Tab>
+                      <Tab>Modificar datos</Tab>
+                    </TabList>
+                    <TabPanels>
+                      <TabPanel>
+                        <Box lineHeight='2rem'>
+                          <Text padding='1rem 0'>Nombre: {dataRender.given_name}</Text>
+                          <Text padding='1rem 0'>Usuario: {dataRender.name}</Text>
+                          <Text padding='1rem 0'>Email: {dataRender.email}</Text>
+                        </Box>
+                      </TabPanel>
+                      <TabPanel>
+                        <Box lineHeight='2rem' marginBottom='3rem'>
+                          <Stack>
+                            <FormControl isRequired>
+                              <FormLabel>Nombre de usuario</FormLabel>
                               <Input
                                 focusBorderColor='#98D035'
-                                type={show ? 'text' : 'password'}
-                                name='password'
-                                value={input.password}
+                                name='username'
+                                value={input.username}
                                 variant='flushed'
                                 htmlSize={4}
+                                size='md'
+                                placeholder='Ingrese el nuevo nombre de usuario'
                                 onChange={(e) => handleChange(e)}
-                                placeholder='Ingrese la nueva contraseña'
+                                type='text'
                               />
-                              <InputRightElement width='4.5rem'>
-                                <Button
-                                  height='1.75rem'
-                                  onClick={handleShowPassword}>
-                                  {show ? 'Ocultar' : 'Mostrar'}
-                                </Button>
-                              </InputRightElement>
-                            </InputGroup>
-                            {errors.password && (
-                              <FormHelperText width='70%' color='red.400'>
-                                {errors.password}
-                              </FormHelperText>
-                            )}
-                          </FormControl>
-                          <FormControl isRequired>
-                            <FormLabel>Telefono</FormLabel>
-                            <Input
-                              focusBorderColor='#98D035'
-                              name='contact'
-                              value={input.contact}
-                              variant='flushed'
-                              htmlSize={4}
-                              size='md'
-                              placeholder='Ingrese el nuevo numero de celular'
-                              onChange={(e) => handleChange(e)}
-                              type='number'
-                            />
-                            {errors.contact && (
-                              <FormHelperText color='red.400'>
-                                {errors.contact}
-                              </FormHelperText>
-                            )}
-                          </FormControl>
-                        </Stack>
-                      </Box>
+                              {errors.username && (
+                                <FormHelperText color='red.400'>
+                                  {errors.username}
+                                </FormHelperText>
+                              )}
+                            </FormControl>
+                            <FormControl isRequired>
+                              <FormLabel>Contraseña</FormLabel>
+                              <InputGroup size='md'>
+                                <Input
+                                  focusBorderColor='#98D035'
+                                  type={show ? 'text' : 'password'}
+                                  name='password'
+                                  value={input.password}
+                                  variant='flushed'
+                                  htmlSize={4}
+                                  onChange={(e) => handleChange(e)}
+                                  placeholder='Ingrese la nueva contraseña'
+                                />
+                                <InputRightElement width='4.5rem'>
+                                  <Button
+                                    height='1.75rem'
+                                    onClick={handleShowPassword}>
+                                    {show ? 'Ocultar' : 'Mostrar'}
+                                  </Button>
+                                </InputRightElement>
+                              </InputGroup>
+                              {errors.password && (
+                                <FormHelperText width='70%' color='red.400'>
+                                  {errors.password}
+                                </FormHelperText>
+                              )}
+                            </FormControl>
+                            <FormControl isRequired>
+                              <FormLabel>Telefono</FormLabel>
+                              <Input
+                                focusBorderColor='#98D035'
+                                name='contact'
+                                value={input.contact}
+                                variant='flushed'
+                                htmlSize={4}
+                                size='md'
+                                placeholder='Ingrese el nuevo numero de celular'
+                                onChange={(e) => handleChange(e)}
+                                type='number'
+                              />
+                              {errors.contact && (
+                                <FormHelperText color='red.400'>
+                                  {errors.contact}
+                                </FormHelperText>
+                              )}
+                            </FormControl>
+                          </Stack>
+                        </Box>
+                        <Button
+                          leftIcon={<BiUpload />}
+                          color='#ffffff'
+                          bg='#98D035'
+                          onClick={(e) => handleSubmit(e)}
+                          _hover={{
+                            color: '#98D035',
+                            transition: 'all .5s ease',
+                            backgroundColor: '#E3FFB2'
+                          }}
+                          _active={{
+                            color: '#98D035',
+                            transition: 'all .5s ease',
+                            backgroundColor: '#E3FFB2'
+                          }}
+                          backgroundColor='#98D035'
+                          isDisabled={
+                            !(Object.keys(errors).length === 0 &&
+                              input.username &&
+                              input.contact &&
+                              input.password)
+                          }>
+                          Actualizar datos
+                        </Button>
+                      </TabPanel>
+                    </TabPanels>
+                  </Tabs>
+                </Box>
+                <Divider />
+                <Box>
+                  <Heading margin='1rem 0'>Tus canchas</Heading>
+                  <TableContainer>
+                    <Table variant='striped' colorScheme='#98D035'>
+                      <Thead>
+                        <Tr>
+                          <Th>Nombre</Th>
+                          <Th textAlign='center'>Actualizar datos</Th>
+                          <Th textAlign='center'>Eliminar cancha</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {dataRender.padelFields.length > 0
+                          ? dataRender.padelFields?.map((padelfield) => {
+                            return (
+                              <>
+                                <Tr>
+                                  <Td>
+                                    <Flex gap='1rem' alignItems='center'>
+                                      <Avatar size='sm' src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg' />
+                                      Super cancha de padel
+                                    </Flex>
+                                  </Td>
+                                  <Td textAlign='center'>
+                                    <Link to='/actualizarCancha'>
+                                      <IconButton icon={<BiUpload />} bg='#98D035' />
+                                    </Link>
+                                  </Td>
+                                  <Td onClick={onOpen} textAlign='center'><IconButton icon={<AiFillDelete />} bg='red.500' /></Td>
+                                </Tr>
+                              </>
+                            )
+                          })
+                          : (<Tr>
+                            <Td>
+                              No hay info
+                            </Td>
+                            <Td>
+                              No hay info
+                            </Td>
+                            <Td>
+                              No hay info
+                            </Td>
+                          </Tr>)}
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                  <Divider />
+                  <HStack
+                    width='100%'
+                    justifyContent='space-between'
+                    paddingTop='3rem'
+                    margin='2rem 0'>
+                    <Link to='/crearCancha'>
                       <Button
-                        leftIcon={<BiUpload />}
                         color='#ffffff'
-                        bg='#98D035'
-                        onClick={(e) => handleSubmit(e)}
                         _hover={{
                           color: '#98D035',
                           transition: 'all .5s ease',
@@ -294,111 +371,10 @@ export default function Panel() {
                           backgroundColor: '#E3FFB2'
                         }}
                         backgroundColor='#98D035'
-                        isDisabled={
-                          !(Object.keys(errors).length === 0 &&
-                          input.username &&
-                          input.contact &&
-                          input.password)
-                        }>
-                        Actualizar datos
+                        bg='#98D035'>
+                        Crear cancha
                       </Button>
-                    </TabPanel>
-                  </TabPanels>
-                </Tabs>
-              </Box>
-              <Divider />
-              <Box>
-                <Heading margin='1rem 0'>Tus canchas</Heading>
-                <TableContainer>
-                  <Table variant='striped' colorScheme='#98D035'>
-                    <Thead>
-                      <Tr>
-                        <Th>Nombre</Th>
-                        <Th textAlign='center'>Actualizar datos</Th>
-                        <Th textAlign='center'>Eliminar cancha</Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      <Tr>
-                        <Td>
-                          <Flex gap='1rem' alignItems='center'>
-                            <Avatar
-                              size='sm'
-                              src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg'
-                            />
-                            Super cancha de padel
-                          </Flex>
-                        </Td>
-                        <Td textAlign='center'>
-                          <Link to='/actualizarCancha'>
-                            <IconButton icon={<BiUpload />} bg='#98D035' />
-                          </Link>
-                        </Td>
-                        <Td onClick={onOpen} textAlign='center'>
-                          <IconButton icon={<AiFillDelete />} bg='red.500' />
-                        </Td>
-                      </Tr>
-                      <Tr>
-                        <Td>
-                          <Flex gap='1rem' alignItems='center'>
-                            <Avatar
-                              size='sm'
-                              src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg'
-                            />
-                            Padel Xtreme
-                          </Flex>
-                        </Td>
-                        <Td textAlign='center'>
-                          <IconButton icon={<BiUpload />} bg='#98D035' />
-                        </Td>
-                        <Td textAlign='center'>
-                          <IconButton icon={<AiFillDelete />} bg='red.500' />
-                        </Td>
-                      </Tr>
-                      <Tr>
-                        <Td>
-                          <Flex gap='1rem' alignItems='center'>
-                            <Avatar
-                              size='sm'
-                              src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg'
-                            />
-                            Me quedo sin ideas
-                          </Flex>
-                        </Td>
-                        <Td textAlign='center'>
-                          <IconButton icon={<BiUpload />} bg='#98D035' />
-                        </Td>
-                        <Td textAlign='center'>
-                          <IconButton icon={<AiFillDelete />} bg='red.500' />
-                        </Td>
-                      </Tr>
-                      <Tr>
-                        <Td>
-                          <Flex gap='1rem' alignItems='center'>
-                            <Avatar
-                              size='sm'
-                              src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg'
-                            />
-                            Ayuda
-                          </Flex>
-                        </Td>
-                        <Td textAlign='center'>
-                          <IconButton icon={<BiUpload />} bg='#98D035' />
-                        </Td>
-                        <Td textAlign='center'>
-                          <IconButton icon={<AiFillDelete />} bg='red.500' />
-                        </Td>
-                      </Tr>
-                    </Tbody>
-                  </Table>
-                </TableContainer>
-                <Divider />
-                <HStack
-                  width='100%'
-                  justifyContent='space-between'
-                  paddingTop='3rem'
-                  margin='2rem 0'>
-                  <Link to='/crearCancha'>
+                    </Link>
                     <Button
                       color='#ffffff'
                       _hover={{
@@ -413,78 +389,61 @@ export default function Panel() {
                       }}
                       backgroundColor='#98D035'
                       bg='#98D035'>
-                      Crear cancha
+                      Organizar torneo
                     </Button>
-                  </Link>
-                  <Button
-                    color='#ffffff'
-                    _hover={{
-                      color: '#98D035',
-                      transition: 'all .5s ease',
-                      backgroundColor: '#E3FFB2'
-                    }}
-                    _active={{
-                      color: '#98D035',
-                      transition: 'all .5s ease',
-                      backgroundColor: '#E3FFB2'
-                    }}
-                    backgroundColor='#98D035'
-                    bg='#98D035'>
-                    Organizar torneo
+                    <Button
+                      _hover={{
+                        color: '#98D035',
+                        transition: 'all .5s ease',
+                        backgroundColor: '#E3FFB2'
+                      }}
+                      _active={{
+                        color: '#98D035',
+                        transition: 'all .5s ease',
+                        backgroundColor: '#E3FFB2'
+                      }}
+                      backgroundColor='#98D035'>
+                      Ver todas las canchas
+                    </Button>
+                  </HStack>
+                </Box>
+              </Flex>
+            </Center>
+            <AlertDialog
+              isOpen={isOpen}
+              leastDestructiveRef={cancelRef}
+              onClose={onClose}
+              isCentered>
+              <AlertDialogOverlay />
+              <AlertDialogContent>
+                <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                  Eliminar cancha
+                </AlertDialogHeader>
+                <AlertDialogBody>
+                  Estas seguro de que quieres eliminar esta cancha?
+                </AlertDialogBody>
+                <AlertDialogFooter>
+                  <Button ref={cancelRef} onClick={onClose}>
+                    Cancelar
                   </Button>
                   <Button
-                    _hover={{
-                      color: '#98D035',
-                      transition: 'all .5s ease',
-                      backgroundColor: '#E3FFB2'
-                    }}
-                    _active={{
-                      color: '#98D035',
-                      transition: 'all .5s ease',
-                      backgroundColor: '#E3FFB2'
-                    }}
-                    backgroundColor='#98D035'>
-                    Ver todas las canchas
+                    bg='red.500'
+                    color='white'
+                    ml={3}
+                    onClick={(e) => {
+                      onClose()
+                      handleRemove(e)
+                    }}>
+                    Eliminar
                   </Button>
-                </HStack>
-              </Box>
-            </Flex>
-          </Center>
-          <AlertDialog
-            isOpen={isOpen}
-            leastDestructiveRef={cancelRef}
-            onClose={onClose}
-            isCentered>
-            <AlertDialogOverlay />
-            <AlertDialogContent>
-              <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                Eliminar cancha
-              </AlertDialogHeader>
-              <AlertDialogBody>
-                Estas seguro de que quieres eliminar esta cancha?
-              </AlertDialogBody>
-              <AlertDialogFooter>
-                <Button ref={cancelRef} onClick={onClose}>
-                  Cancelar
-                </Button>
-                <Button
-                  bg='red.500'
-                  color='white'
-                  ml={3}
-                  onClick={(e) => {
-                    onClose()
-                    handleRemove(e)
-                  }}>
-                  Eliminar
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </Flex>
         </Flex>
-      </Flex>
-    </>
-      )
+      </>
+    )
     : (
-        navigate('/')
-      )
+      navigate('/')
+    )
 }
