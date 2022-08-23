@@ -24,12 +24,12 @@ import PostReview from './PostReview'
 export default function DetailPadelField() {
   const dispatch = useDispatch()
   const { colorMode } = useColorMode()
-  const { id } = useParams()
+  const { idPadelField } = useParams()
   const { isAuthenticated } = useAuth0()
   const navigate = useNavigate()
   const padelField = useSelector((state) => state.padelFields.detailPadelField)
   const inputPayment = {
-    idField: id,
+    idField: idPadelField,
     cost: padelField.price
   }
   const hourByDatePadelFiels = useSelector(
@@ -44,18 +44,18 @@ export default function DetailPadelField() {
   const [renderMsg, setRenderMsg] = useState(1)
   const msgRenderHourInDrawer = Number(getHour)
   useEffect(() => {
-    dispatch(getPadelFieldsById(id))
+    dispatch(getPadelFieldsById(idPadelField))
     return () => {
       dispatch(cleanDetailPadelField())
       // navigate('/resultadoPago')
     }
-  }, [id, dispatch])
+  }, [idPadelField, dispatch])
   const [input, setInput] = useState(null)
   function handleDate(e) {
     e.preventDefault()
     setDate(e.target.value)
     const dateFormat = e.target.value.split('-').reverse().join('/')
-    dispatch(getHoursByDate(id, dateFormat))
+    dispatch(getHoursByDate(idPadelField, dateFormat))
   }
   function handleHour(e) {
     e.preventDefault()
