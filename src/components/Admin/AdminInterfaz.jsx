@@ -71,7 +71,7 @@ export default function AdminInterfaz() {
 
             <TableContainer>
               <Flex justifyContent='center' height='50px' padding='2%'>
-                <Text>LISTA DE ADMINISTRADORES</Text>
+                <Text fontWeight='bold' >LISTA DE ADMINISTRADORES</Text>
               </Flex>
               <Table>
                 <Thead>
