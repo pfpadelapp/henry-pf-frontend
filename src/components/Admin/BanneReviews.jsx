@@ -85,8 +85,9 @@ export default function BanneReviews() {
             alignItems='flex-start'
             height='calc(100vh - 12vh)'
             margin='2vh 0'>
-            <VStack justifyContent='center' width='100%'>
-              <HStack paddingTop='4%' paddingBottom='2%'>
+            <VStack justifyContent='center' width='100%' >
+               <Text paddingTop='3%' fontWeight='bold' >LISTA DE CANCHAS</Text>
+              <HStack paddingTop='2%' paddingBottom='2%'>
                 <InputGroup
                   height='40px'
                   backgroundColor={colorMode === 'dark' ? '#3d414c' : 'white'}
