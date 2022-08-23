@@ -12,7 +12,8 @@ export const padelfieldSlice = createSlice({
     detailPadelField: [],
     hoursByDatePadelField: [],
     postReserve: [],
-    payReserve: []
+    payReserve: [],
+    postReview: []
   },
   reducers: {
     setPadelField: (state, action) => {
@@ -54,6 +55,9 @@ export const padelfieldSlice = createSlice({
     postReservePadelField: (state, action) => {
       state.postReserve = action.payload
     },
+        postRevieww: (state, action) => { /////////////
+      state.postReview = action.payload
+    },
     setPaymentPadelfield: (state, action) => {
       state.payReserve = action.payload
     },
@@ -87,7 +91,8 @@ export const {
   setPadelFieldType,
   setPadelFieldOrderByPrice,
   setPadelFieldAvailability,
-  cleanDetail
+  cleanDetail,
+  postRevieww
 } = padelfieldSlice.actions
 
 export default padelfieldSlice.reducer
@@ -281,6 +286,8 @@ export function postReserveHourPadelField(input) {
   }
 }
 
+
+
 export function getPaymentPadelField(input) {
   return async function (dispatch) {
     try {
@@ -340,6 +347,18 @@ export function updatePadelfieldOwner(idPadelfield, inputUpdate) {
       console.log(padelFieldUpdate.data)
       dispatch(setUpdatePadelfiled(padelFieldUpdate.data))
     } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function postReviewss(idPadelField, input){
+  return async function (dispatch){
+    try{
+      const postReview = await axios.post(`${urlDeploy}/field/${idPadelField}/reviews`, input)
+      console.log("postReview redux: ", postReview)
+      dispatch(postRevieww(postReview.data))
+    } catch(error){
       console.log(error)
     }
   }
