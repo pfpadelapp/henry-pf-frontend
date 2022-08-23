@@ -52,7 +52,10 @@ export function getOwnerById(idOwner) {
 export function getUpdateOwner(ownerId, dataOwner) {
   return async function (dispatch) {
     try {
-      const ownerUpdate = await axios.put(`${urlDeploy}/owner/${ownerId}`, dataOwner)
+      const ownerUpdate = await axios.put(
+        `${urlDeploy}/owner/${ownerId}`,
+        dataOwner
+      )
       console.log('actalizar owner', ownerUpdate.data)
       dispatch(setUpdate(ownerUpdate))
     } catch (error) {

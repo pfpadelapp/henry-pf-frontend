@@ -23,18 +23,18 @@ export function NavBar() {
       <Text fontWeight='bold' fontSize='2xl'>
         PadelApp
       </Text>
-          <Flex
-            padding='30px 15px'
-            height='45px'
-            align='center'
-            justifyContent='space.between'>
-            <Spacer />
+      <Flex
+        padding='30px 15px'
+        height='45px'
+        align='center'
+        justifyContent='space.between'>
+        <Spacer />
 
-            <Box>
-              <SearchBar />
-            </Box>
-              <ToggleColorMode />
-          </Flex>
+        <Box>
+          <SearchBar />
+        </Box>
+        <ToggleColorMode />
+      </Flex>
     </Flex>
   )
 }

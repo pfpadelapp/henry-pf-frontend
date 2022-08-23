@@ -21,9 +21,8 @@ import {
   Select,
   Divider
 } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
-import { useNavigate } from 'react-router-dom'
 
 export default function Admin() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -33,9 +32,9 @@ export default function Admin() {
   setTimeout(onOpen, 500)
 
   return isLoading === true
-  ? null
-  : isAuthenticated
-  ?(
+    ? null
+    : isAuthenticated
+      ? (
     <>
       <Flex>
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -71,5 +70,8 @@ export default function Admin() {
         </Modal>
       </Flex>
     </>
-  ): (navigate('/'))
+        )
+      : (
+          navigate('/')
+        )
 }

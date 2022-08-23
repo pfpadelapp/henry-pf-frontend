@@ -1,5 +1,12 @@
 import {
-  Flex, HStack, Button, Text, useDisclosure, Center, Box, VStack
+  Flex,
+  HStack,
+  Button,
+  Text,
+  useDisclosure,
+  Center,
+  Box,
+  VStack
 } from '@chakra-ui/react'
 import SideBarAdmin from './SideBarAdmin'
 import NavBarAdmin from './NavBarAdmin'
@@ -35,50 +42,57 @@ export default function Reviews() {
   }
 
   return (
-        <>
-          <NavBarAdmin onOpen = {onOpen}/>
-            <Flex>
-              <SideBarAdmin/>
-              <Flex
-                margin='12vh 10vw 0vh 10vw'
-                width='100%'
-                justifyContent='center'
-                flexDir='column'
-                alignSelf='flex-start'>
-                  <Center gap='3rem'
-                    bg='gray.700'
-                    borderRadius='3xl'
-                    alignItems='flex-start'
-                    height='calc(100vh - 12vh)'
-                    margin='2vh 0'>
-                        <VStack justifyContent='center' w='100%' padding='3%'>
-                            <HStack spacing='24px'>
-                                <Center w='225px' h='40px'>
-                                    Review Id
-                                </Center>
-                                <Center w='600px' h='40px'>
-                                    Review
-                                </Center>
-                                <Center w='120px' h='40px'>
-                                    Eliminar review
-                                </Center>
-                            </HStack>
-                                {reviews && reviews.map(e => (
-                            // eslint-disable-next-line react/jsx-key
-                            <HStack w='100%' justifyContent='center'>
-                                  <Box w='225px'>{e.reviewId}</Box>
-                                  <Box w='600px' >{e.review}</Box>
-                                  <Box w='120px' paddingLeft='3%'>
-                                    <Button bg='#95302f' onClick={() => handleDelete(e.reviewId, idField, e.idUser)}>Eliminar</Button>
-                                  </Box>
-                            </HStack>
-                                ))}
-
-                        </VStack>
-            </Center>
-          </Flex>
-            <ModalAdmin isOpen={isOpen} onClose={onClose}/>
-            </Flex>
-        </>
+    <>
+      <NavBarAdmin onOpen={onOpen} />
+      <Flex>
+        <SideBarAdmin />
+        <Flex
+          margin='12vh 10vw 0vh 10vw'
+          width='100%'
+          justifyContent='center'
+          flexDir='column'
+          alignSelf='flex-start'>
+          <Center
+            gap='3rem'
+            bg='gray.700'
+            borderRadius='3xl'
+            alignItems='flex-start'
+            height='calc(100vh - 12vh)'
+            margin='2vh 0'>
+            <VStack justifyContent='center' w='100%' padding='3%'>
+              <HStack spacing='24px'>
+                <Center w='225px' h='40px'>
+                  Review Id
+                </Center>
+                <Center w='600px' h='40px'>
+                  Review
+                </Center>
+                <Center w='120px' h='40px'>
+                  Eliminar review
+                </Center>
+              </HStack>
+              {reviews &&
+                reviews.map((e) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <HStack w='100%' justifyContent='center'>
+                    <Box w='225px'>{e.reviewId}</Box>
+                    <Box w='600px'>{e.review}</Box>
+                    <Box w='120px' paddingLeft='3%'>
+                      <Button
+                        bg='#95302f'
+                        onClick={() =>
+                          handleDelete(e.reviewId, idField, e.idUser)
+                        }>
+                        Eliminar
+                      </Button>
+                    </Box>
+                  </HStack>
+                ))}
+            </VStack>
+          </Center>
+        </Flex>
+        <ModalAdmin isOpen={isOpen} onClose={onClose} />
+      </Flex>
+    </>
   )
 }

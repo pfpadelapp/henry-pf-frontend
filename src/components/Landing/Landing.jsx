@@ -53,7 +53,8 @@ export function Landing() {
         backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}
         borderBottomColor='#F8F1F1'>
         <HStack as='nav' spacing='5'>
-          {isAuthenticated ? (
+          {isAuthenticated
+            ? (
             <Link to='/home'>
               <Button
                 fontSize='15px'
@@ -61,7 +62,8 @@ export function Landing() {
                 Inicio
               </Button>
             </Link>
-          ) : (
+              )
+            : (
             <Button
               onClick={(e) => {
                 login()
@@ -70,7 +72,7 @@ export function Landing() {
               backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}>
               Inicio
             </Button>
-          )}
+              )}
           <Button
             onClick={onOpen}
             fontSize='15px'
@@ -83,7 +85,7 @@ export function Landing() {
               <ModalHeader textColor='gray.00'>Contacto</ModalHeader>
               <ModalCloseButton />
               <ModalBody pb={6}>
-                <Contact/>
+                <Contact />
               </ModalBody>
             </ModalContent>
           </Modal>
@@ -136,7 +138,8 @@ export function Landing() {
           gap='2rem'
           marginTop={{ base: '5rem 0', md: '5rem 0', xl: '0' }}>
           <Center>
-            {slide === 1 ? (
+            {slide === 1
+              ? (
               <Flex alignItems='center' justifyContent='space-around'>
                 <Image
                   height={{ sm: '16em', md: '20em', lg: '24em', xl: 'sm' }}
@@ -153,7 +156,9 @@ export function Landing() {
                   </Text>
                 </Stack>
               </Flex>
-            ) : slide === 2 ? (
+                )
+              : slide === 2
+                ? (
               <Flex alignItems='center' justifyContent='space-around'>
                 <Image
                   height={{ sm: '', md: '20em', lg: '24em', xl: 'sm' }}
@@ -170,7 +175,9 @@ export function Landing() {
                   </Text>
                 </Stack>
               </Flex>
-            ) : slide === 3 ? (
+                  )
+                : slide === 3
+                  ? (
               <Flex alignItems='center' justifyContent='space-around'>
                 <Image
                   height={{ sm: '', md: '20em', lg: '24em', xl: 'sm' }}
@@ -187,7 +194,8 @@ export function Landing() {
                   </Text>
                 </Stack>
               </Flex>
-            ) : (
+                    )
+                  : (
               <Flex alignItems='center' justifyContent='space-around'>
                 <Image
                   height={{ sm: '', md: '20em', lg: '24em', xl: 'sm' }}
@@ -204,7 +212,7 @@ export function Landing() {
                   </Text>
                 </Stack>
               </Flex>
-            )}
+                    )}
           </Center>
           <Center>
             <HStack>

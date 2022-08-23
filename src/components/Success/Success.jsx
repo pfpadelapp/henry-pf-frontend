@@ -21,7 +21,8 @@ export default function Success() {
     dispatch(setPaymentCheckout(tokenFinal))
   }, [])
 
-  return isAuthenticated ? (
+  return isAuthenticated
+    ? (
     <>
       <NavBar />
       <Flex>
@@ -36,7 +37,8 @@ export default function Success() {
         </Center>
       </Flex>
     </>
-  ) : (
-    navigate('/')
-  )
+      )
+    : (
+        navigate('/')
+      )
 }

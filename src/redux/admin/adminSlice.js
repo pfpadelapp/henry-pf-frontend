@@ -22,9 +22,7 @@ export default adminSlice.reducer
 export function getAdmins() {
   return async function (dispatch) {
     try {
-      const alladmins = await axios.get(
-        `${urlDeploy}/admin/`
-      )
+      const alladmins = await axios.get(`${urlDeploy}/admin/`)
       dispatch(setAdmins(alladmins.data))
       console.log('redux', alladmins)
     } catch (error) {

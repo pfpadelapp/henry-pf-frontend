@@ -143,7 +143,8 @@ export default function CreatePadelfield() {
   }
   console.log(input)
   return isAuthenticated
-    ? (<>
+    ? (
+    <>
       <NavBar />
       <Flex>
         <Sidebar />
@@ -166,9 +167,7 @@ export default function CreatePadelfield() {
               gap='2.5rem'
               padding='5rem 0'
               width='70%'>
-              <Heading>
-                Añadi tu cancha!
-              </Heading>
+              <Heading>Añadi tu cancha!</Heading>
               <FormControl isRequired>
                 <FormLabel>Nombre</FormLabel>
                 <Input
@@ -309,6 +308,9 @@ export default function CreatePadelfield() {
           </Center>
         </Flex>
       </Flex>
-    </>)
-    : (navigate('/'))
+    </>
+      )
+    : (
+        navigate('/')
+      )
 }

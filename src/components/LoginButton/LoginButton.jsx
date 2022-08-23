@@ -32,7 +32,7 @@ const LoginButton = () => {
 
   //   // dispatch(getInfoLoginGoogle(userFinal))
   // }
-  //console.log('El estado del setuser es : ', infoUser)
+  // console.log('El estado del setuser es : ', infoUser)
   const login = async () => {
     await loginWithPopup()
   }
@@ -42,8 +42,8 @@ const LoginButton = () => {
       fontSize='15px'
       width='97px'
       height='35px'
-      textColor="#fff"
-      backgroundColor="#98D035"
+      textColor='#fff'
+      backgroundColor='#98D035'
       _hover={{ color: '#fff', backgroundColor: '#E3FFB2' }}
       _active={{ color: '#fff', backgroundColor: '#E3FFB2' }}
       onClick={(e) => {

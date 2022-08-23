@@ -17,7 +17,7 @@ import {
   InputGroup,
   InputLeftElement,
   Radio,
-  RadioGroup,
+  RadioGroup
 } from '@chakra-ui/react'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { updatePadelfieldOwner } from '../../redux/padelField/padelFieldSlice'
@@ -142,7 +142,8 @@ export default function UpdatePadelfield() {
   }
   console.log(input)
   return isAuthenticated
-    ? (<>
+    ? (
+    <>
       <NavBar />
       <Flex>
         <Sidebar />
@@ -165,9 +166,7 @@ export default function UpdatePadelfield() {
               gap='2.5rem'
               padding='5rem 0'
               width='70%'>
-              <Heading>
-                Actualiza tu cancha!
-              </Heading>
+              <Heading>Actualiza tu cancha!</Heading>
               <FormControl isRequired>
                 <FormLabel>Nombre</FormLabel>
                 <Input
@@ -308,6 +307,9 @@ export default function UpdatePadelfield() {
           </Center>
         </Flex>
       </Flex>
-    </>)
-    : (navigate('/'))
+    </>
+      )
+    : (
+        navigate('/')
+      )
 }

@@ -3,7 +3,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 
 const urlDeploy = 'https://pf-padel-app.herokuapp.com'
-const urlLocal = 'http://127.0.0.1:3000'
+// const urlLocal = 'http://127.0.0.1:3000'
 
 export const padelfieldSlice = createSlice({
   name: 'padelFields',
@@ -40,7 +40,6 @@ export const padelfieldSlice = createSlice({
     setInfoByName: (state, action) => {
       state.padelField = action.payload
     },
-    
     setFilterPrice: (state, action) => {
       state.padelField = action.payload
     },
@@ -56,7 +55,7 @@ export const padelfieldSlice = createSlice({
     postReservePadelField: (state, action) => {
       state.postReserve = action.payload
     },
-        postRevieww: (state, action) => { /////////////
+    postRevieww: (state, action) => {
       state.postReview = action.payload
     },
     setPaymentPadelfield: (state, action) => {
@@ -101,7 +100,6 @@ export default padelfieldSlice.reducer
 export function fetchAllPadelFields() {
   return async function (dispatch) {
     try {
-
       const allPadelFields = await axios.get(`${urlDeploy}/field`)
       // console.log('REDUX desde fetchall', allPadelFields.data)
       dispatch(setPadelField(allPadelFields.data))
@@ -115,11 +113,9 @@ export function fetchAllPadelFields() {
 export function getPadelFieldsById(idPadelField) {
   return async function (dispatch) {
     try {
-
       const padelFieldById = await axios.get(
         `${urlDeploy}/field/${idPadelField}`
       )
-
 
       dispatch(setPadelFieldById(padelFieldById.data))
       // console.log('REDUX', padelFieldById.data)
@@ -132,7 +128,6 @@ export function getPadelFieldsById(idPadelField) {
 export function filterByType(type) {
   return async function (dispatch) {
     try {
-
       const padelFieldType = await axios.get(
         `${urlDeploy}/field/typeField?typeField=${type}`
       )
@@ -162,7 +157,6 @@ export function orderByPrice(price) {
 export function orderByAvailability(availability) {
   return async function (dispatch) {
     try {
-
       const padelFieldType = await axios.get(
         `${urlDeploy}/field/able?active=${availability}`
       )
@@ -216,7 +210,6 @@ export function getInfoByName(padelName) {
 export function getFilterPrice(minPrice, maxPrice) {
   return async function (dispatch) {
     try {
-
       const filterPrice = await axios.get(
         `${urlDeploy}/field/rangePrice?minPrice=${minPrice}&maxPrice=${maxPrice}`
       )
@@ -287,8 +280,6 @@ export function postReserveHourPadelField(input) {
   }
 }
 
-
-
 export function getPaymentPadelField(input) {
   return async function (dispatch) {
     try {
@@ -344,7 +335,10 @@ export function removePadelfieldOwner(idPadelfield) {
 export function updatePadelfieldOwner(idPadelfield, inputUpdate) {
   return async function (dispatch) {
     try {
-      const padelFieldUpdate = await axios.put(`${urlDeploy}/field/${idPadelfield}`, inputUpdate)
+      const padelFieldUpdate = await axios.put(
+        `${urlDeploy}/field/${idPadelfield}`,
+        inputUpdate
+      )
       console.log(padelFieldUpdate.data)
       dispatch(setUpdatePadelfiled(padelFieldUpdate.data))
     } catch (error) {
@@ -353,14 +347,17 @@ export function updatePadelfieldOwner(idPadelfield, inputUpdate) {
   }
 }
 
-export function postReviewss(idPadelField, input){
-  return async function (dispatch){
-    try{
-      const postReview = await axios.post(`${urlDeploy}/field/${idPadelField}/reviews`, input)
-      console.log("id padelfield: ", idPadelField)
-      console.log("input: ", input)
+export function postReviewss(idPadelField, input) {
+  return async function (dispatch) {
+    try {
+      const postReview = await axios.post(
+        `${urlDeploy}/field/${idPadelField}/reviews`,
+        input
+      )
+      console.log('id padelfield: ', idPadelField)
+      console.log('input: ', input)
       dispatch(postRevieww(postReview.data))
-    } catch(error){
+    } catch (error) {
       console.log(error)
     }
   }

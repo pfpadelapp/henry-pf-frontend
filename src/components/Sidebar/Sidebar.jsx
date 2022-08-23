@@ -125,7 +125,8 @@ export default function Sidebar() {
         />
         <Link to='/home'>
           {window.location.href.replace('http://127.0.0.1:5173', '') ===
-            '/home' ? (
+          '/home'
+            ? (
             <NavItem
               navSize={navSize}
               icon={FiHome}
@@ -133,9 +134,10 @@ export default function Sidebar() {
               link='/'
               active
             />
-          ) : (
+              )
+            : (
             <NavItem navSize={navSize} icon={FiHome} link='/' title='Inicio' />
-          )}
+              )}
         </Link>
         <NavItem navSize={navSize} icon={FiBell} title='Notificaciones' />
         <Flex
@@ -147,7 +149,7 @@ export default function Sidebar() {
           <Menu placement='right'>
             {/* Link to ??? */}
             <Link2
-              backgroundColor={/*active &&*/ 'none'}
+              backgroundColor={/* active && */ 'none'}
               p={3}
               borderRadius={8}
               _hover={{
@@ -161,11 +163,11 @@ export default function Sidebar() {
                   <Icon
                     as={FiFilter}
                     fontSize='xl'
-                    color={/*active ? "#98D035" :*/ 'gray.500'}
+                    color={/* active ? "#98D035" : */ 'gray.500'}
                   />
                   <Text
                     ml={5}
-                    color={/*active ? "#98D035" : */ 'gray.500'}
+                    color={/* active ? "#98D035" : */ 'gray.500'}
                     display={navSize == 'small' ? 'none' : 'flex'}>
                     Filtrar
                   </Text>
@@ -176,7 +178,8 @@ export default function Sidebar() {
         </Flex>
         <Link to='/notification'>
           {window.location.href.replace('http://127.0.0.1:5173', '') ===
-            '/notification' ? (
+          '/notification'
+            ? (
             <NavItem
               navSize={navSize}
               icon={FiClipboard}
@@ -184,14 +187,15 @@ export default function Sidebar() {
               link='/'
               active
             />
-          ) : (
+              )
+            : (
             <NavItem
               navSize={navSize}
               icon={FiClipboard}
               link='/'
               title='Turnos'
             />
-          )}
+              )}
         </Link>
       </Flex>
 
@@ -326,10 +330,7 @@ export default function Sidebar() {
                     Mi perfil
                   </MenuItem>
                 </Link>
-                <MenuItem
-                  onClick={logout}>
-                  Desconectarse
-                </MenuItem>
+                <MenuItem onClick={logout}>Desconectarse</MenuItem>
               </MenuList>
             </Menu>
           </Flex>

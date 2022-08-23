@@ -1,7 +1,19 @@
 import {
-  Input, InputGroup, Flex, Button, Text,
-  useDisclosure, Center, Thead, Tbody, Tr, Th, Td, TableContainer,
-  Table, TableCaption
+  Input,
+  InputGroup,
+  Flex,
+  Button,
+  Text,
+  useDisclosure,
+  Center,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  Table,
+  TableCaption
 } from '@chakra-ui/react'
 import { useState } from 'react'
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
@@ -27,9 +39,7 @@ export default function Banner() {
   }
 
   async function handleSubmit() {
-    const resU = await axios.get(
-        `${urlDeploy}/admin/searchU?name=${name}`
-    )
+    const resU = await axios.get(`${urlDeploy}/admin/searchU?name=${name}`)
     console.log('u', resU)
     // const resO = await axios.get(
     //   `${urlDeploy}/admin/searchO?name=${name}`
@@ -68,101 +78,106 @@ export default function Banner() {
 
   return (
     <>
-     <NavBarAdmin onOpen={onOpen}/>
-     <Flex>
-      <SideBarAdmin />
-      <Flex
-      margin='12vh 10vw 0vh 10vw'
-      width='100%'
-      justifyContent='center'
-      flexDir='column'
-      alignSelf='flex-start'>
-      <Center gap='3rem'
+      <NavBarAdmin onOpen={onOpen} />
+      <Flex>
+        <SideBarAdmin />
+        <Flex
+          margin='12vh 10vw 0vh 10vw'
+          width='100%'
+          justifyContent='center'
+          flexDir='column'
+          alignSelf='flex-start'>
+          <Center
+            gap='3rem'
             bg='gray.700'
             borderRadius='3xl'
             alignItems='flex-start'
             height='calc(100vh - 12vh)'
             margin='2vh 0'>
-      <Flex>
-      </Flex>
+            <Flex></Flex>
 
-      <TableContainer>
-        <Flex padding='2%' justifyContent='center'>
+            <TableContainer>
+              <Flex padding='2%' justifyContent='center'>
                 <Flex justifyContent='center'>
-                    <InputGroup height='40px' backgroundColor={colorMode === 'dark' ? '#3d414c' : 'white'} borderRadius='10px' >
+                  <InputGroup
+                    height='40px'
+                    backgroundColor={colorMode === 'dark' ? '#3d414c' : 'white'}
+                    borderRadius='10px'>
                     <Input
-                        padding='0 0.5rem'
-                        variant='unstyled'
-                        backgroundColor={colorMode === 'dark' ? '#3d414c' : 'white'}
-                        type='text'
-                        placeholder='Buscar por name'
-                        value={name}
-                        onChange={(e) => handleInput(e)}
+                      padding='0 0.5rem'
+                      variant='unstyled'
+                      backgroundColor={
+                        colorMode === 'dark' ? '#3d414c' : 'white'
+                      }
+                      type='text'
+                      placeholder='Buscar por name'
+                      value={name}
+                      onChange={(e) => handleInput(e)}
                     />
                     <Button
-                        color='gray.500'
-                        bg='none'
-                        children={<FiSearch />}
-                        onClick={() => handleSubmit()}
-                        >
-                    </Button>
-                    </InputGroup>
-                </Flex>
-        </Flex>
-        <Table>
-            <TableCaption>BANEAR USUARIOS Y PROPIETARIOS</TableCaption>
-              <Thead>
-              <Tr>
-              <Th>Id</Th>
-              <Th>Email</Th>
-              <Th >Username</Th>
-              <Th >Role</Th>
-              <Th >Banear/Desbanear</Th>
-              </Tr>
-              </Thead>
-
-            <Tbody>
-            { userToDelete &&
-          userToDelete.map((e) => (
-                // eslint-disable-next-line react/jsx-key
-                <Tr>
-              <Td>{e._id}</Td>
-                <Td>{e.email}</Td>
-                <Td>{e.name}</Td>
-                <Td>{e.role}</Td>
-                {e.isActive === true
-                  ? (
-                    <Td>
-                    <Button
-                      backgroundColor='#98D035'
                       color='gray.500'
                       bg='none'
-                      height='30px'
-                      width='150px'
-                      onClick={() => handleDelete(e._id, e.role)}>
-                      Banear usuario
-                    </Button>
-                    </Td>)
-                  : (<Td>
-                    <Button
-                      backgroundColor='#95302f'
-                      color='white'
-                      bg='none'
-                      height='30px'
-                      width='150px'
-                      onClick={() => disableBanned(e._id, e.role)}>
-                      Desbanear usuario
-                    </Button>
-                    </Td>)}
-              </Tr>
-          ))}
-          </Tbody>
-        </Table>
-      </TableContainer>
-      </Center>
-    </Flex>
-        <ModalAdmin isOpen={isOpen} onClose={onClose}/>
+                      children={<FiSearch />}
+                      onClick={() => handleSubmit()}></Button>
+                  </InputGroup>
+                </Flex>
+              </Flex>
+              <Table>
+                <TableCaption>BANEAR USUARIOS Y PROPIETARIOS</TableCaption>
+                <Thead>
+                  <Tr>
+                    <Th>Id</Th>
+                    <Th>Email</Th>
+                    <Th>Username</Th>
+                    <Th>Role</Th>
+                    <Th>Banear/Desbanear</Th>
+                  </Tr>
+                </Thead>
 
+                <Tbody>
+                  {userToDelete &&
+                    userToDelete.map((e) => (
+                      // eslint-disable-next-line react/jsx-key
+                      <Tr>
+                        <Td>{e._id}</Td>
+                        <Td>{e.email}</Td>
+                        <Td>{e.name}</Td>
+                        <Td>{e.role}</Td>
+                        {e.isActive === true
+                          ? (
+                          <Td>
+                            <Button
+                              backgroundColor='#98D035'
+                              color='gray.500'
+                              bg='none'
+                              height='30px'
+                              width='150px'
+                              onClick={() => handleDelete(e._id, e.role)}>
+                              Banear usuario
+                            </Button>
+                          </Td>
+                            )
+                          : (
+                          <Td>
+                            <Button
+                              backgroundColor='#95302f'
+                              color='white'
+                              bg='none'
+                              height='30px'
+                              width='150px'
+                              onClick={() => disableBanned(e._id, e.role)}>
+                              Desbanear usuario
+                            </Button>
+                          </Td>
+                            )}
+                      </Tr>
+                    ))}
+                </Tbody>
+              </Table>
+            </TableContainer>
+          </Center>
+        </Flex>
+        <ModalAdmin isOpen={isOpen} onClose={onClose} />
       </Flex>
     </>
   )

@@ -30,16 +30,15 @@ export const userSlice = createSlice({
   }
 })
 
-export const { setUpdate, setUserInfoByGoogle, setUsers, setUser } = userSlice.actions
+export const { setUpdate, setUserInfoByGoogle, setUsers, setUser } =
+  userSlice.actions
 
 export default userSlice.reducer
 
 export function fetchAllUsers() {
   return async function (dispatch) {
     try {
-      const allUsers = await axios.get(
-        `${urlDeploy}/users`
-      )
+      const allUsers = await axios.get(`${urlDeploy}/users`)
       dispatch(setUsers(allUsers.data))
     } catch (error) {
       console.log(error)
@@ -79,7 +78,10 @@ export function clearUserDetail() {
 export function getUpdateUser(userId, dataUser) {
   return async function (dispatch) {
     try {
-      const userUpdate = await axios.put(`${urlDeploy}/user/${userId}`, dataUser)
+      const userUpdate = await axios.put(
+        `${urlDeploy}/user/${userId}`,
+        dataUser
+      )
       console.log('actalizar usuario', userUpdate.data)
       dispatch(setUpdate(userUpdate))
     } catch (error) {
