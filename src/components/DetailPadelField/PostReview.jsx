@@ -6,22 +6,24 @@ import Swal from 'sweetalert2'
 import { useAuth0 } from '@auth0/auth0-react'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 import { postReviewss } from '../../redux/padelField/padelFieldSlice'
+import { useParams } from 'react-router-dom'
 
 
 export default function PostReview() {
-
+  
   const dispatch = useDispatch()  
   const { isAuthenticated, user } = useAuth0()
- 
+  
+  const { idPadelField } = useParams()
 
   const [input, setInput] = useState({
-    idUser: user.id,
+    userMail: user.email,
     name: user.name,
     rating: 0,
     review: '',
   })
   const handleClickStarValue = (e) => {
-    setInput({...input, rating: e.target.value});
+    setInput({...input, rating: parseInt( e.target.value)});
     console.log(e.target.value)
   };
 
@@ -31,9 +33,7 @@ export default function PostReview() {
       ...input,
       [e.target.name]: e.target.value
     })
-    console.log("input: ", input)
-    console.log("setInput: ", setInput)
-    console.log("user ", user)
+  
 
   }
 
@@ -45,31 +45,33 @@ export default function PostReview() {
         title: 'Error',
         text: 'Debes seleccionar una puntuacion',
         confirmButtonColor: '#F27474'
-      }) :  dispatch(postReviewss({...input}))
-
+      }) :  dispatch(postReviewss(idPadelField, {...input}))
+setInput("")
   }
 
   return isAuthenticated ? (
     <>
       <Flex alignItems='center' justifyContent='center'>
         <FormControl maxWidth="50%" margin='5'  >
-                      <HStack color='brand.primary'>
+                 
+        
+          <Textarea placeholder='Escribe un comentario' name='review' value={input.review} onChange={(e) => handleChange(e)}></Textarea>
+          <HStack color='brand.primary'>
         
                     
-          <Button onClick={handleClickStarValue} name='rating' value={1} ><AiFillStar/>
-          </Button>
-          <Button onClick={handleClickStarValue} name='rating' value={2} ><AiFillStar/>
-          </Button>
-          <Button onClick={handleClickStarValue}  name='rating' value={3}><AiFillStar/>
-          </Button>
-          <Button onClick={handleClickStarValue} name='rating' value={4}><AiFillStar/>
-          </Button>
-          <Button onClick={handleClickStarValue} name='rating' value={5}><AiFillStar/>
-          </Button>
-         
-                       
-                      </HStack>
-          <Textarea placeholder='Escribe un comentario' name='review' value={input.review} onChange={(e) => handleChange(e)}></Textarea>
+        <Button onClick={handleClickStarValue} name='rating' value={1} ><AiFillStar/>
+        </Button>
+        <Button onClick={handleClickStarValue} name='rating' value={2} ><AiFillStar/>
+        </Button>
+        <Button onClick={handleClickStarValue}  name='rating' value={3}><AiFillStar/>
+        </Button>
+        <Button onClick={handleClickStarValue} name='rating' value={4}><AiFillStar/>
+        </Button>
+        <Button onClick={handleClickStarValue} name='rating' value={5}><AiFillStar/>
+        </Button>
+       
+                     
+                    </HStack>
         </FormControl>
 
         <Link to='/'>

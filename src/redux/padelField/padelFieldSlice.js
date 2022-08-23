@@ -356,7 +356,8 @@ export function postReviewss(idPadelField, input){
   return async function (dispatch){
     try{
       const postReview = await axios.post(`${urlDeploy}/field/${idPadelField}/reviews`, input)
-      console.log("postReview redux: ", postReview)
+      console.log("id padelfield: ", idPadelField)
+      console.log("input: ", input)
       dispatch(postRevieww(postReview.data))
     } catch(error){
       console.log(error)

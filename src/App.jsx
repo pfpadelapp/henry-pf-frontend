@@ -20,7 +20,7 @@ export default function App() {
     <Routes>
       <Route exact path='/' element={<Landing />} />
       <Route exact path='/nosotros' element={<About />} />
-      <Route path='/detail/:id' element={<DetailPadelField />} />
+      <Route path='/detail/:idPadelField' element={<DetailPadelField />} />
       <Route exact path='/home' element={<Home />} />
       <Route exact path='/notification' element={<Home />} />
       <Route exact path='/panel' element={<Panel />} />
