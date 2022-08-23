@@ -1,18 +1,16 @@
-import { FormControl, Flex, Button, Textarea, Icon, HStack,RangeSlider,RangeSliderTrack,RangeSliderFilledTrack,Tooltip,RangeSliderThumb} from '@chakra-ui/react'
+import { FormControl, Flex, Button, Textarea, Icon, HStack} from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import { useAuth0 } from '@auth0/auth0-react'
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
-
+import { postReviewss } from '../../redux/padelField/padelFieldSlice'
 
 
 export default function PostReview() {
 
-  //const dispatch = useDispatch()
-  
-  
+  const dispatch = useDispatch()  
   const { isAuthenticated, user } = useAuth0()
  
 
@@ -33,9 +31,11 @@ export default function PostReview() {
       ...input,
       [e.target.name]: e.target.value
     })
+    console.log("input: ", input)
+    console.log("setInput: ", setInput)
+    console.log("user ", user)
 
   }
-
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -45,30 +45,26 @@ export default function PostReview() {
         title: 'Error',
         text: 'Debes seleccionar una puntuacion',
         confirmButtonColor: '#F27474'
-      }) : null
-
-
-  
+      }) :  dispatch(postReviewss({...input}))
 
   }
-
 
   return isAuthenticated ? (
     <>
       <Flex alignItems='center' justifyContent='center'>
-        <FormControl maxWidth="50%" margin='5' >
+        <FormControl maxWidth="50%" margin='5'  >
                       <HStack color='brand.primary'>
         
                     
-          <Button onClick={handleClickStarValue} value={1} ><AiFillStar/>
+          <Button onClick={handleClickStarValue} name='rating' value={1} ><AiFillStar/>
           </Button>
-          <Button onClick={handleClickStarValue} value={2} ><AiFillStar/>
+          <Button onClick={handleClickStarValue} name='rating' value={2} ><AiFillStar/>
           </Button>
-          <Button onClick={handleClickStarValue} value={3}><AiFillStar/>
+          <Button onClick={handleClickStarValue}  name='rating' value={3}><AiFillStar/>
           </Button>
-          <Button onClick={handleClickStarValue} value={4}><AiFillStar/>
+          <Button onClick={handleClickStarValue} name='rating' value={4}><AiFillStar/>
           </Button>
-          <Button onClick={handleClickStarValue} value={5}><AiFillStar/>
+          <Button onClick={handleClickStarValue} name='rating' value={5}><AiFillStar/>
           </Button>
          
                        
