@@ -3,7 +3,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 
 const urlDeploy = 'https://pf-padel-app.herokuapp.com'
-const urlLocal = 'http://127.0.0.1:3000'
+// const urlLocal = 'http://127.0.0.1:3000'
 
 export const padelfieldSlice = createSlice({
   name: 'padelFields',
@@ -12,7 +12,8 @@ export const padelfieldSlice = createSlice({
     detailPadelField: [],
     hoursByDatePadelField: [],
     postReserve: [],
-    payReserve: []
+    payReserve: [],
+    postReview: []
   },
   reducers: {
     setPadelField: (state, action) => {
@@ -54,16 +55,27 @@ export const padelfieldSlice = createSlice({
     postReservePadelField: (state, action) => {
       state.postReserve = action.payload
     },
+    postRevieww: (state, action) => {
+      state.postReview = action.payload
+    },
     setPaymentPadelfield: (state, action) => {
       state.payReserve = action.payload
     },
     setCreatePAdelField: (state, action) => {
+      state.padelField = action.payload
+    },
+    setUpdatePadelfiled: (state, action) => {
+      state.padelField = action.payload
+    },
+    setHidePadelfiled: (state, action) => {
       state.padelField = action.payload
     }
   }
 })
 
 export const {
+  setUpdatePadelfiled,
+  setHidePadelfiled,
   setCreatePAdelField,
   setPaymentCheck,
   setPaymentPadelfield,
@@ -79,7 +91,8 @@ export const {
   setPadelFieldType,
   setPadelFieldOrderByPrice,
   setPadelFieldAvailability,
-  cleanDetail
+  cleanDetail,
+  postRevieww
 } = padelfieldSlice.actions
 
 export default padelfieldSlice.reducer
@@ -87,7 +100,6 @@ export default padelfieldSlice.reducer
 export function fetchAllPadelFields() {
   return async function (dispatch) {
     try {
-
       const allPadelFields = await axios.get(`${urlDeploy}/field`)
       // console.log('REDUX desde fetchall', allPadelFields.data)
       dispatch(setPadelField(allPadelFields.data))
@@ -101,11 +113,9 @@ export function fetchAllPadelFields() {
 export function getPadelFieldsById(idPadelField) {
   return async function (dispatch) {
     try {
-
       const padelFieldById = await axios.get(
         `${urlDeploy}/field/${idPadelField}`
       )
-
 
       dispatch(setPadelFieldById(padelFieldById.data))
       // console.log('REDUX', padelFieldById.data)
@@ -118,7 +128,6 @@ export function getPadelFieldsById(idPadelField) {
 export function filterByType(type) {
   return async function (dispatch) {
     try {
-
       const padelFieldType = await axios.get(
         `${urlDeploy}/field/typeField?typeField=${type}`
       )
@@ -148,7 +157,6 @@ export function orderByPrice(price) {
 export function orderByAvailability(availability) {
   return async function (dispatch) {
     try {
-
       const padelFieldType = await axios.get(
         `${urlDeploy}/field/able?active=${availability}`
       )
@@ -202,7 +210,6 @@ export function getInfoByName(padelName) {
 export function getFilterPrice(minPrice, maxPrice) {
   return async function (dispatch) {
     try {
-
       const filterPrice = await axios.get(
         `${urlDeploy}/field/rangePrice?minPrice=${minPrice}&maxPrice=${maxPrice}`
       )
@@ -230,8 +237,7 @@ export function getHoursByDate(idPadelField, date) {
       const hoursByDate = await axios.get(
         `${urlDeploy}/booking/hours?idField=${idPadelField}&day=${date}`
       )
-
-      // console.log(hoursByDate.data)
+      console.log('getHoursByDate', hoursByDate.data)
       // console.log(idPadelField)
       // console.log(date)
       dispatch(setDateActual(hoursByDate.data))
@@ -263,10 +269,10 @@ export function postReserveHourPadelField(input) {
   // esta no
   return async function (dispatch) {
     try {
-      const post = await axios.post(`${urlDeploy}/booking/`, input)
-
-      // console.log('rtk, el id que devuelve es: ', post.data)
-      dispatch(postReservePadelField(post.data))
+      console.log('postReserveHourPadelField input ', input)
+      const post = await axios.post(`${urlDeploy}/booking`, input)
+      console.log('rtk, postReserveHourPadelField es: ', post)
+      dispatch(postReservePadelField(post))
     } catch (error) {
       console.log(error)
     }
@@ -276,12 +282,13 @@ export function postReserveHourPadelField(input) {
 export function getPaymentPadelField(input) {
   return async function (dispatch) {
     try {
+      console.log('getPaymentPadelField', input)
       const payment = await axios.post(
         `${urlDeploy}/payment/createPayment`,
         input
       )
-      // console.log('Este es el pago ', payment.data)
-      dispatch(setPaymentPadelfield(payment.data))
+      console.log('Este es el pago de getPaymentPadelField', payment.data.links[1].href)
+      dispatch(setPaymentPadelfield(payment.data.links[1].href))
     } catch (error) {
       console.log(error)
     }
@@ -291,11 +298,12 @@ export function getPaymentPadelField(input) {
 export function setPaymentCheckout(checkId) {
   return async function (dispatch) {
     try {
+      console.log('setPaymentCheckout', checkId)
       const checkIdPayment = await axios.get(
         `${urlDeploy}/payment/executePayment?token=${checkId}`
       )
-      console.log('Y en el rtk es : ', checkIdPayment.data.msg)
-      dispatch(setPaymentCheck(checkIdPayment.data.msg))
+      console.log('Y en el rtk setPaymentCheckout es : ', checkIdPayment.data)
+      dispatch(setPaymentCheck(checkIdPayment.data))
     } catch (error) {
       console.log(error)
     }
@@ -309,6 +317,47 @@ export function createPadelField(input) {
       const newPadelfield = await axios.post(`${urlDeploy}/field`, input)
       // console.log('input que muestro', newPadelfield.data)
       dispatch(setCreatePAdelField(newPadelfield.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export function removePadelfieldOwner(idPadelfield) {
+  return async function (dispatch) {
+    try {
+      const padelFieldHide = axios.post(`${urlDeploy}/field/${idPadelfield}`)
+      dispatch(setHidePadelfiled(padelFieldHide))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function updatePadelfieldOwner(idPadelfield, inputUpdate) {
+  return async function (dispatch) {
+    try {
+      const padelFieldUpdate = await axios.put(
+        `${urlDeploy}/field/${idPadelfield}`,
+        inputUpdate
+      )
+      console.log(padelFieldUpdate.data)
+      dispatch(setUpdatePadelfiled(padelFieldUpdate.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function postReviewss(idPadelField, input) {
+  return async function (dispatch) {
+    try {
+      const postReview = await axios.post(
+        `${urlDeploy}/field/${idPadelField}/reviews`,
+        input
+      )
+      console.log('id padelfield: ', idPadelField)
+      console.log('input: ', input)
+      dispatch(postRevieww(postReview.data))
     } catch (error) {
       console.log(error)
     }

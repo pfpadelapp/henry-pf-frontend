@@ -17,26 +17,29 @@ export default function Success() {
     const params = new URLSearchParams(querystring)
     const tokenId = params.get('token')
     const tokenFinal = tokenId.split('&').join()
-    console.log('Este es el token ', tokenFinal)
+    // console.log('Este es el token ', tokenFinal)
     dispatch(setPaymentCheckout(tokenFinal))
   }, [])
 
-  return isAuthenticated ? (
-    <>
-      <NavBar />
-      <Flex>
-        <Sidebar />
-        <Center
-          width='100%'
-          marginTop='10%'
-          flexDir='column'
-          alignSelf='center'>
-          <Image src={successImage} maxW='500px' />
-          <Text>La reserva se ha realizado con exito!</Text>
-        </Center>
-      </Flex>
-    </>
-  ) : (
-    navigate('/')
-  )
+  return isAuthenticated
+    ? (
+      <>
+        <NavBar />
+        <Flex>
+          <Sidebar />
+          <Center
+            width='100%'
+            marginTop='10%'
+            flexDir='column'
+            alignSelf='center'>
+            <Image src={successImage} maxW='500px' />
+            <Text>La reserva se ha realizado con exito!</Text>
+            <Text color='gray.500'>Sera re-dirigido al inicio en { }</Text>
+          </Center>
+        </Flex>
+      </>
+    )
+    : (
+      navigate('/')
+    )
 }

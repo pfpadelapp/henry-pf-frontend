@@ -17,19 +17,13 @@ export const ownerSlice = createSlice({
     setOwnerDetail: (state, action) => {
       state.ownerDetail = action.payload
     },
-    setPutPadelfiled: (state, action) => {
-      state.ownerDetail = action.payload
-    },
-    setHidePadelfiled: (state, action) => {
-      state.ownerDetail = action.payload
-    },
     setUpdate: (state, action) => {
       state.ownerDetail = action.payload
     }
   }
 })
 
-export const { setUpdate, setHidePadelfiled, setOwnerDetail, setOwner } = ownerSlice.actions
+export const { setUpdate, setOwnerDetail, setOwner } = ownerSlice.actions
 
 export default ownerSlice.reducer
 
@@ -55,32 +49,13 @@ export function getOwnerById(idOwner) {
   }
 }
 
-export function updatePadelfieldOwner(idPadelfield) {
-  return async function (dispatch) {
-    try {
-      const padelFieldHide = axios.post(`${urlDeploy}/field/${idPadelfield}`)
-      dispatch(setHidePadelfiled(padelFieldHide))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}
-
-export function removePadelfieldOwner(idPadelfield, inputUpdate) {
-  return async function (dispatch) {
-    try {
-      const padelFieldUpdate = axios.put(`${urlDeploy}/field/${idPadelfield}`, inputUpdate)
-      dispatch(setHidePadelfiled(padelFieldUpdate))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}
-
 export function getUpdateOwner(ownerId, dataOwner) {
   return async function (dispatch) {
     try {
-      const ownerUpdate = await axios.put(`${urlDeploy}/owner/${ownerId}`, dataOwner)
+      const ownerUpdate = await axios.put(
+        `${urlDeploy}/owner/${ownerId}`,
+        dataOwner
+      )
       console.log('actalizar owner', ownerUpdate.data)
       dispatch(setUpdate(ownerUpdate))
     } catch (error) {

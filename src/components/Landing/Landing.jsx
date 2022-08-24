@@ -19,7 +19,8 @@ import {
   ModalHeader,
   Stack,
   Select,
-  Divider
+  Divider,
+  Textarea
 } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
@@ -31,6 +32,7 @@ import LoginButton from '../LoginButton/LoginButton'
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { useAuth0 } from '@auth0/auth0-react'
+import Contact from '../Contact/Contact'
 
 export function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -51,7 +53,8 @@ export function Landing() {
         backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}
         borderBottomColor='#F8F1F1'>
         <HStack as='nav' spacing='5'>
-          {isAuthenticated ? (
+          {isAuthenticated
+            ? (
             <Link to='/home'>
               <Button
                 fontSize='15px'
@@ -59,7 +62,8 @@ export function Landing() {
                 Inicio
               </Button>
             </Link>
-          ) : (
+              )
+            : (
             <Button
               onClick={(e) => {
                 login()
@@ -68,12 +72,23 @@ export function Landing() {
               backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}>
               Inicio
             </Button>
-          )}
+              )}
           <Button
+            onClick={onOpen}
             fontSize='15px'
             backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}>
             Contacto
           </Button>
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader textColor='gray.00'>Contacto</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody pb={6}>
+                <Contact />
+              </ModalBody>
+            </ModalContent>
+          </Modal>
           <Link to='/nosotros'>
             <Button
               fontSize='15px'
@@ -123,7 +138,8 @@ export function Landing() {
           gap='2rem'
           marginTop={{ base: '5rem 0', md: '5rem 0', xl: '0' }}>
           <Center>
-            {slide === 1 ? (
+            {slide === 1
+              ? (
               <Flex alignItems='center' justifyContent='space-around'>
                 <Image
                   height={{ sm: '16em', md: '20em', lg: '24em', xl: 'sm' }}
@@ -140,7 +156,9 @@ export function Landing() {
                   </Text>
                 </Stack>
               </Flex>
-            ) : slide === 2 ? (
+                )
+              : slide === 2
+                ? (
               <Flex alignItems='center' justifyContent='space-around'>
                 <Image
                   height={{ sm: '', md: '20em', lg: '24em', xl: 'sm' }}
@@ -157,7 +175,9 @@ export function Landing() {
                   </Text>
                 </Stack>
               </Flex>
-            ) : slide === 3 ? (
+                  )
+                : slide === 3
+                  ? (
               <Flex alignItems='center' justifyContent='space-around'>
                 <Image
                   height={{ sm: '', md: '20em', lg: '24em', xl: 'sm' }}
@@ -174,7 +194,8 @@ export function Landing() {
                   </Text>
                 </Stack>
               </Flex>
-            ) : (
+                    )
+                  : (
               <Flex alignItems='center' justifyContent='space-around'>
                 <Image
                   height={{ sm: '', md: '20em', lg: '24em', xl: 'sm' }}
@@ -191,7 +212,7 @@ export function Landing() {
                   </Text>
                 </Stack>
               </Flex>
-            )}
+                    )}
           </Center>
           <Center>
             <HStack>
@@ -230,34 +251,6 @@ export function Landing() {
             </HStack>
           </Center>
         </Flex>
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader textColor='gray.00'>Iniciar sesion</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody pb={6}>
-              <FormControl>
-                <FormLabel textColor='gray.600'>Usuario</FormLabel>
-                <Input placeholder='First name' />
-              </FormControl>
-
-              <FormControl mt={4}>
-                <FormLabel textColor='gray.600'>Contraseña</FormLabel>
-                <Input type='password' placeholder='Last name' />
-              </FormControl>
-              <ModalFooter marginTop='20px'>
-                <Button bgColor='#98D035' textColor='#ffff' mr={3}>
-                  Ingresar
-                </Button>
-                <Button onClick={onClose} textColor='gray.700'>
-                  Cancelar
-                </Button>
-              </ModalFooter>
-              <Divider margin='20px' />
-              <Center textColor='gray.500'>O ingresa con:</Center>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
       </Flex>
     </>
   )

@@ -9,7 +9,6 @@ export const userSlice = createSlice({
   initialState: {
     users: [],
     userDetail: []
-    //userByGoogle: []
   },
   reducers: {
     setUser: (state, action) => {
@@ -21,26 +20,25 @@ export const userSlice = createSlice({
     setClearUserState: (state) => {
       state.userDetail = []
     },
-    setUserInfoByGoogle: (state, action) => {
-      state.userByGoogle = action.payload
-    },
     setUpdate: (state, action) => {
+      state.userDetail = action.payload
+    },
+    setDetail: (state, action) => {
       state.userDetail = action.payload
     }
   }
 })
 
-export const { setUpdate, setUserInfoByGoogle, setUsers, setUser } = userSlice.actions
+export const { setUpdate, setDetail, setUsers, setUser, setClearUserState } =
+  userSlice.actions
 
 export default userSlice.reducer
 
 export function fetchAllUsers() {
   return async function (dispatch) {
     try {
-      const allUsers = await axios.get(
-        `${urlDeploy}/users`
-      )
-      dispatch(setUsers(allUsers.data))
+      const allUsers = await axios.get(`${urlDeploy}/user`)
+      dispatch(setUser(allUsers.data))
     } catch (error) {
       console.log(error)
     }
@@ -60,7 +58,7 @@ export function getUserById(id) {
 
 export function clearUserDetail() {
   return function (dispatch) {
-    dispatch(clearUserDetail)
+    dispatch(clearUserDetail())
   }
 }
 
@@ -79,9 +77,38 @@ export function clearUserDetail() {
 export function getUpdateUser(userId, dataUser) {
   return async function (dispatch) {
     try {
-      const userUpdate = await axios.put(`${urlDeploy}/user/${userId}`, dataUser)
-      console.log('actalizar usuario', userUpdate.data)
-      dispatch(setUpdate(userUpdate))
+      console.log('actalizar usuario antes', dataUser)
+      const userUpdate = await axios.put(
+        `${urlDeploy}/user/${userId}`,
+        dataUser
+      )
+      // console.log('actalizar usuario', userUpdate.data)
+      dispatch(setUpdate(userUpdate.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function getDataDetail(email) {
+  return async function (dispatch) {
+    try {
+      const allData = await axios.get(`${urlDeploy}/user`)
+      const find = allData.data.find((user) => { return user.email === email })
+      // console.log('en el rtk el find es  ', find)
+      dispatch(setDetail(find))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export function postUser(user) {
+  return async function () {
+    try {
+      // console.log('input que recibo', input)
+      console.log("consolelog del ", user)
+      var usuarioGoogle =await axios.post(`${urlDeploy}/user/google`, user)
+      console.log('input que muestro', usuarioGoogle)
     } catch (error) {
       console.log(error)
     }

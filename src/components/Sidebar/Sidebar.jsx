@@ -8,6 +8,7 @@ import {
   FiClipboard,
   FiInfo
 } from 'react-icons/fi'
+import { RiAdminFill } from 'react-icons/ri'
 import {
   Link as Link2,
   Flex,
@@ -47,7 +48,7 @@ import {
 } from '../../redux/padelField/padelFieldSlice'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { IoMdArrowDropdown } from 'react-icons/io'
-import { getUserById } from '../../redux/users/usersSlice.js'
+import { getDataDetail, getUserById, fetchAllUsers } from '../../redux/users/usersSlice.js'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 
@@ -57,12 +58,24 @@ export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [limit, setLimit] = useState([500, 3500])
   const [navSize, changeNavSize] = useState('small')
-  const { colorMode, toggleColorMode } = useColorMode()
-  const { logout, user, isAuthenticated } = useAuth0()
-  const idUser = '62eab574cac7d39b3b7427c5'
-  const userData = {
-    role: 'owner'
+  const { colorMode } = useColorMode()
+  const { logout, user, isAuthenticated, isLoading } = useAuth0()
+  // const [superA, setSuperA] = useState(false)
+  console.log('El user email es', user)
+  const allUsers = useSelector((state) => state.users.users)
+
+  if (isLoading === false) {
+    const find = allUsers.filter((e) => { return e.email === user.email })
+    var superA = find[0]?.user_metadata.isSuperAdmin
+    var admin = find[0]?.user_metadata.isAdmin
   }
+
+  useEffect(() => {
+    dispatch(fetchAllUsers())
+    dispatch(getDataDetail(user.email))
+  }, [])
+  const dataRender = useSelector((state) => state.users.userDetail)
+  // console.log(dataRender)
   const onChange = (val) => {
     setLimit(val)
   }
@@ -96,9 +109,9 @@ export default function Sidebar() {
     dispatch(getFilterPrice(limit[0], limit[1]))
   }
   function handleGetDetailPerfil() {
-    dispatch(getUserById(idUser))
+    dispatch(getUserById())
   }
-  return isAuthenticated ? (
+  return isLoading === true ? null : isAuthenticated ? (
     <Flex
       zIndex='2'
       marginTop='10vh'
@@ -124,20 +137,22 @@ export default function Sidebar() {
           }}
         />
         <Link to='/home'>
-          {window.location.href.replace('http://127.0.0.1:5173', '') ===
-            '/home' ? (
-            <NavItem
-              navSize={navSize}
-              icon={FiHome}
-              title='Inicio'
-              link='/'
-              active
-            />
-          ) : (
-            <NavItem navSize={navSize} icon={FiHome} link='/' title='Inicio' />
-          )}
+          {window.location.href.replace('https://padelapp.netlify.app/', '') ===
+            '/home'
+            ? (
+              <NavItem
+                navSize={navSize}
+                icon={FiHome}
+                title='Inicio'
+                link='/'
+                active
+              />
+              )
+            : (
+              <NavItem navSize={navSize} icon={FiHome} link='/' title='Inicio' />
+              )}
         </Link>
-        <NavItem navSize={navSize} icon={FiBell} title='Notificaciones' />
+
         <Flex
           onClick={onOpen}
           mt={30}
@@ -147,7 +162,7 @@ export default function Sidebar() {
           <Menu placement='right'>
             {/* Link to ??? */}
             <Link2
-              backgroundColor={/*active &&*/ 'none'}
+              backgroundColor={/* active && */ 'none'}
               p={3}
               borderRadius={8}
               _hover={{
@@ -161,11 +176,11 @@ export default function Sidebar() {
                   <Icon
                     as={FiFilter}
                     fontSize='xl'
-                    color={/*active ? "#98D035" :*/ 'gray.500'}
+                    color={/* active ? "#98D035" : */ 'gray.500'}
                   />
                   <Text
                     ml={5}
-                    color={/*active ? "#98D035" : */ 'gray.500'}
+                    color={/* active ? "#98D035" : */ 'gray.500'}
                     display={navSize == 'small' ? 'none' : 'flex'}>
                     Filtrar
                   </Text>
@@ -174,25 +189,41 @@ export default function Sidebar() {
             </Link2>
           </Menu>
         </Flex>
-        <Link to='/notification'>
-          {window.location.href.replace('http://127.0.0.1:5173', '') ===
-            '/notification' ? (
-            <NavItem
-              navSize={navSize}
-              icon={FiClipboard}
-              title='Turnos'
-              link='/'
-              active
-            />
-          ) : (
-            <NavItem
-              navSize={navSize}
-              icon={FiClipboard}
-              link='/'
-              title='Turnos'
-            />
-          )}
+        <Link to='/historial'>
+          {window.location.href.replace('https://padelapp.netlify.app/', '') ===
+            '/historial'
+            ? (
+              <NavItem
+                navSize={navSize}
+                icon={FiClipboard}
+                title='Turnos'
+                link='/'
+                active
+              />
+              )
+            : (
+              <NavItem
+                navSize={navSize}
+                icon={FiClipboard}
+                link='/'
+                title='Turnos'
+              />
+              )}
         </Link>
+        {
+          superA === true  && (
+            <Link to='/adminInterfaz'>
+              <NavItem navSize={navSize} icon={RiAdminFill} title='Admin Interfaz' />
+            </Link>
+          )
+        }
+        {
+          admin === true  && (
+            <Link to='/adminInterfaz'>
+              <NavItem navSize={navSize} icon={RiAdminFill} title='Admin Interfaz' />
+            </Link>
+          )
+        }
       </Flex>
 
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -296,17 +327,17 @@ export default function Sidebar() {
         <Flex
           mt={4}
           justifyContent={navSize == 'small' ? 'center' : 'flex-start'}>
-          <Link to='/perfil'>
+          <Link to={dataRender?.user_metadata?.rol === 'player' ? '/perfil' : '/panel'}>
             <Flex>
-              <Avatar size='sm' src={user ? user.picture : null} />
+              <Avatar size='sm' src={dataRender?.picture ? dataRender.picture : user.picture} />
               <Flex
                 flexDir='column'
                 ml={4}
                 display={navSize == 'small' ? 'none' : 'flex'}>
                 <Heading as='h3' size='sm' color='gray.500'>
-                  {user.name}
+                  {dataRender?.name}
                 </Heading>
-                <Text color='gray'>Admin</Text>
+                <Text color='gray'>{dataRender?.user_metadata?.rol === 'player' ? 'Jugador' : dataRender?.user_metadata?.rol === 'owner' ? 'Propietario' : 'Admin'}</Text>
               </Flex>
             </Flex>
           </Link>
@@ -321,15 +352,12 @@ export default function Sidebar() {
                 icon={<IoMdArrowDropdown />}
                 variant='outline'></MenuButton>
               <MenuList>
-                <Link to={userData.role === 'owner' ? '/panel' : '/perfil'}>
+                <Link to={dataRender?.user_metadata?.rol === 'player' ? '/perfil' : '/panel'}>
                   <MenuItem onClick={() => handleGetDetailPerfil()}>
                     Mi perfil
                   </MenuItem>
                 </Link>
-                <MenuItem
-                  onClick={logout}>
-                  Desconectarse
-                </MenuItem>
+                <MenuItem onClick={logout}>Desconectarse</MenuItem>
               </MenuList>
             </Menu>
           </Flex>
