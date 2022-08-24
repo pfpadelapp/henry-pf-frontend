@@ -8,6 +8,7 @@ import {
   FiClipboard,
   FiInfo
 } from 'react-icons/fi'
+import { RiAdminFill } from 'react-icons/ri'
 import {
   Link as Link2,
   Flex,
@@ -47,7 +48,7 @@ import {
 } from '../../redux/padelField/padelFieldSlice'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { IoMdArrowDropdown } from 'react-icons/io'
-import { getDataDetail, getUserById } from '../../redux/users/usersSlice.js'
+import { getDataDetail, getUserById, fetchAllUsers } from '../../redux/users/usersSlice.js'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react'
 
@@ -58,9 +59,19 @@ export default function Sidebar() {
   const [limit, setLimit] = useState([500, 3500])
   const [navSize, changeNavSize] = useState('small')
   const { colorMode } = useColorMode()
-  const { logout, user, isAuthenticated } = useAuth0()
-  // console.log('El user email es', user.email)
+  const { logout, user, isAuthenticated, isLoading } = useAuth0()
+  // const [superA, setSuperA] = useState(false)
+  console.log('El user email es', user)
+  const allUsers = useSelector((state) => state.users.users)
+
+  if (isLoading === false) {
+    const find = allUsers.filter((e) => { return e.email === user.email })
+    var superA = find[0]?.user_metadata.isSuperAdmin
+    var admin = find[0]?.user_metadata.isAdmin
+  }
+
   useEffect(() => {
+    dispatch(fetchAllUsers())
     dispatch(getDataDetail(user.email))
   }, [])
   const dataRender = useSelector((state) => state.users.userDetail)
@@ -100,7 +111,7 @@ export default function Sidebar() {
   function handleGetDetailPerfil() {
     dispatch(getUserById())
   }
-  return isAuthenticated ? (
+  return isLoading === true ? null : isAuthenticated ? (
     <Flex
       zIndex='2'
       marginTop='10vh'
@@ -136,11 +147,12 @@ export default function Sidebar() {
                 link='/'
                 active
               />
-            )
+              )
             : (
               <NavItem navSize={navSize} icon={FiHome} link='/' title='Inicio' />
-            )}
+              )}
         </Link>
+
         <Flex
           onClick={onOpen}
           mt={30}
@@ -188,7 +200,7 @@ export default function Sidebar() {
                 link='/'
                 active
               />
-            )
+              )
             : (
               <NavItem
                 navSize={navSize}
@@ -196,8 +208,22 @@ export default function Sidebar() {
                 link='/'
                 title='Turnos'
               />
-            )}
+              )}
         </Link>
+        {
+          superA === true  && (
+            <Link to='/adminInterfaz'>
+              <NavItem navSize={navSize} icon={RiAdminFill} title='Admin Interfaz' />
+            </Link>
+          )
+        }
+        {
+          admin === true  && (
+            <Link to='/adminInterfaz'>
+              <NavItem navSize={navSize} icon={RiAdminFill} title='Admin Interfaz' />
+            </Link>
+          )
+        }
       </Flex>
 
       <Modal isOpen={isOpen} onClose={onClose}>
