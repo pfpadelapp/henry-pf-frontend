@@ -61,7 +61,7 @@ export default function Sidebar() {
   const { colorMode } = useColorMode()
   const { logout, user, isAuthenticated, isLoading } = useAuth0()
   // const [superA, setSuperA] = useState(false)
-  console.log('El user email es', user)
+  // console.log('El user email es', user)
   const allUsers = useSelector((state) => state.users.users)
 
   if (isLoading === false) {
@@ -110,7 +110,7 @@ export default function Sidebar() {
   function handleGetDetailPerfil() {
     dispatch(getUserById())
   }
-  console.log(dataRender)
+  // console.log(dataRender)
   return isLoading === true ? null : isAuthenticated ? (
     <Flex
       zIndex='2'

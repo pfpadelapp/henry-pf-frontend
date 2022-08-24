@@ -77,7 +77,7 @@ export default function Panel() {
       console.log(error)
     }
   }
-  console.log(dataRender)
+  // console.log(dataRender)
   useEffect(() => {
     dispatch(getPadelFieldsById(dataRender.padelFields[0]))
   }, [])
