@@ -14,6 +14,7 @@ import BanneReviews from './components/Admin/BanneReviews'
 import Reviews from './components/Admin/Reviews.jsx'
 import Contact from './components/Contact/Contact.jsx'
 import UpdatePadelfield from './components/UpdatePadelfield/UpdatePadelfield.jsx'
+import History from './components/History/History.jsx' 
 
 export default function App() {
   return (
@@ -22,7 +23,7 @@ export default function App() {
       <Route exact path='/nosotros' element={<About />} />
       <Route path='/detail/:idPadelField' element={<DetailPadelField />} />
       <Route exact path='/home' element={<Home />} />
-      <Route exact path='/historial' element={<Home />} />
+      <Route exact path='/historial' element={<History />} />
       <Route exact path='/panel' element={<Panel />} />
       <Route exact path='/perfil' element={<Perfil />} />
       <Route path='/resultadoPago' element={<Success />} />

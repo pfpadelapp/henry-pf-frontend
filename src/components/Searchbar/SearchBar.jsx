@@ -4,11 +4,13 @@ import { FiSearch } from 'react-icons/fi'
 import { InputGroup, Input, Button, Flex } from '@chakra-ui/react'
 import { getInfoByName } from '../../redux/padelField/padelFieldSlice.js'
 import { useColorMode } from '@chakra-ui/color-mode'
+import { useNavigate } from 'react-router-dom'
 
 export default function SearchBar() {
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [name, setName] = useState('')
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
   function handleInput(e) {
     e.preventDefault()
     setName(e.target.value)
@@ -16,6 +18,7 @@ export default function SearchBar() {
   function handleSubmit(e) {
     e.preventDefault()
     dispatch(getInfoByName(name))
+    navigate('/home')
     setName('')
   }
   return (

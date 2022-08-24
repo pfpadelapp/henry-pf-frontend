@@ -113,6 +113,7 @@ export default function DetailPadelField() {
     }
   }
   function handleHour(e) {
+
     setGetHour(e.target.value) // 10
     const horaaa = e.target.value
     console.log(horaaa)
