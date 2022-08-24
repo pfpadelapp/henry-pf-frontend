@@ -65,7 +65,7 @@ import axios from 'axios'
 
 export default function Panel() {
   const dispatch = useDispatch()
-  const { user, isAuthenticated } = useAuth0()
+  const { user, isAuthenticated, isLoading } = useAuth0()
   const navigate = useNavigate()
   const { colorMode } = useColorMode()
   const dataRender = useSelector((state) => state.users.userDetail)
@@ -165,7 +165,7 @@ export default function Panel() {
     e.preventDefault()
     dispatch(removePadelfieldOwner(dataRender.id))
   }
-  return isAuthenticated
+  return isLoading === true ? null : isAuthenticated
     ? (
       <>
         <NavBar />
@@ -314,7 +314,7 @@ export default function Panel() {
                         </Tr>
                       </Thead>
                       <Tbody>
-                        {dataRender.padelFields.length > 0
+                        {dataRender.padelFields?.length > 0
                           ? dataRender.padelFields?.map((padelfield) => {
                             return (
                               <>
