@@ -291,7 +291,6 @@ export default function Sidebar() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-
       <Flex
         p='5%'
         flexDir='column'
