@@ -1,49 +1,35 @@
 import {
-  FormControl,
-  FormLabel,
-  Input,
   Flex,
   HStack,
   Spacer,
   Button,
   Text,
-  Image,
   Center,
   useDisclosure,
   Modal,
   ModalCloseButton,
-  ModalFooter,
   ModalBody,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  Stack,
-  Select,
-  Divider,
-  Textarea
+  ModalHeader
 } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import loginImage from '../../resources/assets/login.svg'
-import turnoImage from '../../resources/assets/turno.svg'
-import payImage from '../../resources/assets/pay.svg'
-import playImage from '../../resources/assets/play.svg'
 import LoginButton from '../LoginButton/LoginButton'
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { useAuth0 } from '@auth0/auth0-react'
 import Contact from '../Contact/Contact'
+import Slider from '../slider/slider'
 
 export function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [slide, setSlide] = useState(1)
-  const { colorMode, toggleColorMode } = useColorMode()
+
+  const { colorMode } = useColorMode()
   const { isAuthenticated, loginWithPopup } = useAuth0()
 
   const login = async () => {
     await loginWithPopup()
   }
-
   return (
     <>
       <Flex
@@ -138,117 +124,7 @@ export function Landing() {
           gap='2rem'
           marginTop={{ base: '5rem 0', md: '5rem 0', xl: '0' }}>
           <Center>
-            {slide === 1
-              ? (
-              <Flex alignItems='center' justifyContent='space-around'>
-                <Image
-                  height={{ sm: '16em', md: '20em', lg: '24em', xl: 'sm' }}
-                  width={{ sm: '', md: '16em', lg: '24em', xl: 'sm' }}
-                  src={loginImage}
-                  alt='Login'
-                />
-                <Stack width='30%'>
-                  <Text fontSize='xl' fontWeight='bold' color='gray.500'>
-                    Registrate
-                  </Text>
-                  <Text color='gray.500'>
-                    Crea una cuenta para comenzar a hacer reservas
-                  </Text>
-                </Stack>
-              </Flex>
-                )
-              : slide === 2
-                ? (
-              <Flex alignItems='center' justifyContent='space-around'>
-                <Image
-                  height={{ sm: '', md: '20em', lg: '24em', xl: 'sm' }}
-                  width={{ sm: '', md: '16em', lg: '24em', xl: 'sm' }}
-                  src={turnoImage}
-                  alt='Turno'
-                />
-                <Stack width='30%'>
-                  <Text fontSize='xl' fontWeight='bold' color='gray.500'>
-                    Reserva
-                  </Text>
-                  <Text color='gray.500'>
-                    Selecciona la fecha y hora en la que deseas jugar
-                  </Text>
-                </Stack>
-              </Flex>
-                  )
-                : slide === 3
-                  ? (
-              <Flex alignItems='center' justifyContent='space-around'>
-                <Image
-                  height={{ sm: '', md: '20em', lg: '24em', xl: 'sm' }}
-                  width={{ sm: '', md: '16em', lg: '24em', xl: 'sm' }}
-                  src={payImage}
-                  alt='Pay'
-                />
-                <Stack width='30%'>
-                  <Text fontSize='xl' fontWeight='bold' color='gray.500'>
-                    Paga
-                  </Text>
-                  <Text color='gray.500'>
-                    Selecciona el medio por el cual queres pagar
-                  </Text>
-                </Stack>
-              </Flex>
-                    )
-                  : (
-              <Flex alignItems='center' justifyContent='space-around'>
-                <Image
-                  height={{ sm: '', md: '20em', lg: '24em', xl: 'sm' }}
-                  width={{ sm: '', md: '16em', lg: '24em', xl: 'sm' }}
-                  src={playImage}
-                  alt='Play'
-                />
-                <Stack width='30%'>
-                  <Text fontSize='xl' fontWeight='bold' color='gray.500'>
-                    Juga
-                  </Text>
-                  <Text color='gray.500'>
-                    ¡Espera la confirmación de la pagina y listo!
-                  </Text>
-                </Stack>
-              </Flex>
-                    )}
-          </Center>
-          <Center>
-            <HStack>
-              <Button
-                onClick={() => setSlide(1)}
-                width='1px'
-                height='10px'
-                borderRadius='full'
-                _focus={{ backgroundColor: '#98D035' }}
-                _hover={{ backgroundColor: '#98D035' }}
-              />
-              <Button
-                onClick={() => setSlide(2)}
-                width='1px'
-                height='10px'
-                borderRadius='full'
-                _focus={{ backgroundColor: '#98D035' }}
-                _hover={{ backgroundColor: '#98D035' }}
-              />
-              <Button
-                onClick={() => setSlide(3)}
-                width='1px'
-                height='10px'
-                borderRadius='full'
-                _focus={{ backgroundColor: '#98D035' }}
-                _hover={{ backgroundColor: '#98D035' }}
-              />
-              <Button
-                onClick={() => setSlide(4)}
-                width='1px'
-                height='10px'
-                borderRadius='full'
-                _focus={{ backgroundColor: '#98D035' }}
-                _hover={{ backgroundColor: '#98D035' }}
-              />
-            </HStack>
+            <Slider />
           </Center>
         </Flex>
       </Flex>

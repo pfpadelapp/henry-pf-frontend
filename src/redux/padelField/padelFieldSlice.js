@@ -13,7 +13,8 @@ export const padelfieldSlice = createSlice({
     hoursByDatePadelField: [],
     postReserve: [],
     payReserve: [],
-    postReview: []
+    postReview: [],
+    padelfieldsByOwner: []
   },
   reducers: {
     setPadelField: (state, action) => {
@@ -69,11 +70,15 @@ export const padelfieldSlice = createSlice({
     },
     setHidePadelfiled: (state, action) => {
       state.padelField = action.payload
+    },
+    getPadelFieldByOwner: (state, action) => {
+      state.padelfieldsByOwner = action.payload
     }
   }
 })
 
 export const {
+  getPadelFieldByOwner,
   setUpdatePadelfiled,
   setHidePadelfiled,
   setCreatePAdelField,
@@ -271,8 +276,8 @@ export function postReserveHourPadelField(input) {
     try {
       console.log('postReserveHourPadelField input ', input)
       const post = await axios.post(`${urlDeploy}/booking`, input)
-      console.log('rtk, postReserveHourPadelField es: ', post)
-      dispatch(postReservePadelField(post))
+      console.log('rtk, postReserveHourPadelField es: ', post.data)
+      dispatch(postReservePadelField(post.data))
     } catch (error) {
       console.log(error)
     }
@@ -358,6 +363,25 @@ export function postReviewss(idPadelField, input) {
       console.log('id padelfield: ', idPadelField)
       console.log('input: ', input)
       dispatch(postRevieww(postReview.data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function PadelFieldDataByOwner(array) {
+  return async function (dispatch) {
+    try {
+      console.log('PadelFieldDataByOwner array ', array)
+      const allPadelFields = await axios.get(`${urlDeploy}/field`)
+
+      for (let i = 0; i < array.length; i++) {
+        const padelfieldsOwner = allPadelFields?.find((element) => {
+          return element.id === array[i]
+        })
+        console.log('PadelFieldDataByOwner', padelfieldsOwner)
+      }
+      dispatch(getPadelFieldByOwner(array))
     } catch (error) {
       console.log(error)
     }

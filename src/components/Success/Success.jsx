@@ -1,5 +1,5 @@
 import { Center, Flex, Image, Text } from '@chakra-ui/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setPaymentCheckout } from '../../redux/padelField/padelFieldSlice'
 import { NavBar } from '../NavBar/NavBar'
@@ -12,6 +12,15 @@ export default function Success() {
   const dispatch = useDispatch()
   const { isAuthenticated } = useAuth0()
   const navigate = useNavigate()
+
+  let count = 5
+  setInterval(function () {
+    count--
+    if (count === 0) {
+      navigate('/home')
+    }
+  }, 1000)
+
   useEffect(() => {
     const querystring = window.location.search
     const params = new URLSearchParams(querystring)
@@ -20,7 +29,6 @@ export default function Success() {
     // console.log('Este es el token ', tokenFinal)
     dispatch(setPaymentCheckout(tokenFinal))
   }, [])
-
   return isAuthenticated
     ? (
       <>
@@ -34,7 +42,7 @@ export default function Success() {
             alignSelf='center'>
             <Image src={successImage} maxW='500px' />
             <Text>La reserva se ha realizado con exito!</Text>
-            <Text color='gray.500'>Sera re-dirigido al inicio en { }</Text>
+            <Text color='gray.500'>Sera re-dirigido al inicio en {count} segundos</Text>
           </Center>
         </Flex>
       </>

@@ -60,6 +60,7 @@ export default function Sidebar() {
   const [navSize, changeNavSize] = useState('small')
   const { colorMode } = useColorMode()
   const { logout, user, isAuthenticated, isLoading } = useAuth0()
+
   const allUsers = useSelector((state) => state.users.users)
 
   if (isLoading === false) {
@@ -67,7 +68,6 @@ export default function Sidebar() {
     var superA = find[0]?.user_metadata.isSuperAdmin
     var admin = find[0]?.user_metadata.isAdmin
   }
-
   useEffect(() => {
     dispatch(fetchAllUsers())
     dispatch(getDataDetail(user.email))
@@ -109,6 +109,7 @@ export default function Sidebar() {
   function handleGetDetailPerfil() {
     dispatch(getUserById())
   }
+  // console.log(dataRender)
   return isLoading === true ? null : isAuthenticated ? (
     <Flex
       zIndex='2'
@@ -145,10 +146,10 @@ export default function Sidebar() {
                 link='/'
                 active
               />
-              )
+            )
             : (
               <NavItem navSize={navSize} icon={FiHome} link='/' title='Inicio' />
-              )}
+            )}
         </Link>
 
         <Flex
@@ -198,7 +199,7 @@ export default function Sidebar() {
                 link='/'
                 active
               />
-              )
+            )
             : (
               <NavItem
                 navSize={navSize}
@@ -206,7 +207,7 @@ export default function Sidebar() {
                 link='/'
                 title='Turnos'
               />
-              )}
+            )}
         </Link>
         {
           superA === true  && (
@@ -216,6 +217,7 @@ export default function Sidebar() {
           )
         }
         {
+
           admin === true  && (
             <Link to='/admin'>
               <NavItem navSize={navSize} icon={RiAdminFill} title='Admin Interfaz' />

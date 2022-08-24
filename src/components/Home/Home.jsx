@@ -5,7 +5,7 @@ import { fetchAllUsers, postUser } from '../../redux/users/usersSlice'
 import { fetchAllPadelFields } from '../../redux/padelField/padelFieldSlice'
 import CardPadel from '../CardPadel/CardPadel.jsx'
 import Sidebar from '../Sidebar/Sidebar'
-import { Flex, Spinner, Text, SimpleGrid } from '@chakra-ui/react'
+import { Flex, Spinner, Text, SimpleGrid, Center } from '@chakra-ui/react'
 import { NavBar } from '../NavBar/NavBar'
 // import Paginado from '../Paginado/Paginado.jsx'
 import Footer from '../Footer/Footer'
@@ -27,7 +27,7 @@ export default function Home() {
     const find = allUsers.filter((e) => {
       return e.email === user.email
     })
-    console.log('success', find)
+    // console.log('success', find)
     var find2 = find[0]?.user_metadata.isActive
 
     const navigate = useNavigate()
@@ -57,28 +57,32 @@ export default function Home() {
               justifyContent='center'
               flexDir='column'
               alignSelf='flex-start'>
-              <SimpleGrid
-                justifyItems='center'
-                margin='12vh 10vw 0vh 10vw'
-                paddingLeft='75px'
-                spacing={20}
-                columns={{ base: 1, lg: 2, xl: 3 }}>
-                {!allPadelField.length ? (
+              {!allPadelField.length ? (
+                (<Center height='50vh'>
                   <Spinner size='xl' />
-                ) : (
-                  allPadelField?.map((card) => (
-                    <CardPadel
-                      key={card.id}
-                      id={card.id}
-                      location={card.location}
-                      image={card.image}
-                      name={card.name}
-                      type={card.type}
-                      price={card.price}
-                    />
-                  ))
-                )}
-              </SimpleGrid>
+                </Center>)
+              ) : (
+                <SimpleGrid
+                  justifyItems='center'
+                  margin='12vh 10vw 0vh 10vw'
+                  paddingLeft='75px'
+                  spacing={20}
+                  columns={{ base: 1, lg: 2, xl: 3 }}>
+                  {
+                    allPadelField?.map((card) => (
+                      <CardPadel
+                        key={card.id}
+                        id={card.id}
+                        location={card.location}
+                        image={card.image}
+                        name={card.name}
+                        type={card.type}
+                        price={card.price}
+                      />
+                    ))
+                  }
+                </SimpleGrid>
+              )}
               {/* <Center margin='4rem 0'>
             <Paginado pageFunction={paginado} current={currentPage}/>
           </Center> */}
