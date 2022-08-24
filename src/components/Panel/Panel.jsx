@@ -167,6 +167,7 @@ export default function Panel() {
   }
   return isLoading === true ? null : isAuthenticated
     ? (
+
       <>
         <NavBar />
         <Flex>
