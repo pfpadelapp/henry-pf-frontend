@@ -307,10 +307,10 @@ export default function Panel() {
                       </Thead>
                       <Tbody>
                         {dataRender.padelFields?.length > 0
-                          ? dataRender.padelFields?.map((padelfield) => {
+                          ? dataRender.padelFields?.map((padelfield, index) => {
                             return (
                               <>
-                                <Tr>
+                                <Tr key={index}>
                                   <Td>
                                     <Flex gap='1rem' alignItems='center'>
                                       <Avatar size='sm' src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg' />
