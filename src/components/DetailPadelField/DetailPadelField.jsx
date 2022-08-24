@@ -127,7 +127,7 @@ export default function DetailPadelField() {
   // }
   function handlePaymentReserve(e) {
     e.preventDefault()
-    console.log('handlePaymentReserve', inputPayment)
+    console.log('handlePaymentReserve react', inputPayment)
     dispatch(getPaymentPadelField(inputPayment))
   }
 

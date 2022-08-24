@@ -126,7 +126,7 @@ export default function Sidebar() {
           }}
         />
         <Link to='/home'>
-          {window.location.href.replace('http://127.0.0.1:5173', '') ===
+          {window.location.href.replace('https://padelapp.netlify.app/', '') ===
             '/home'
             ? (
               <NavItem
@@ -141,7 +141,6 @@ export default function Sidebar() {
               <NavItem navSize={navSize} icon={FiHome} link='/' title='Inicio' />
             )}
         </Link>
-        <NavItem navSize={navSize} icon={FiBell} title='Notificaciones' />
         <Flex
           onClick={onOpen}
           mt={30}
@@ -178,9 +177,9 @@ export default function Sidebar() {
             </Link2>
           </Menu>
         </Flex>
-        <Link to='/notification'>
-          {window.location.href.replace('http://127.0.0.1:5173', '') ===
-            '/notification'
+        <Link to='/historial'>
+          {window.location.href.replace('https://padelapp.netlify.app/', '') ===
+            '/historial'
             ? (
               <NavItem
                 navSize={navSize}
