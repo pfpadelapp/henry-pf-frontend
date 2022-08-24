@@ -55,6 +55,18 @@ export default function Panel() {
   const navigate = useNavigate()
   const { colorMode } = useColorMode()
   const dataRender = useSelector((state) => state.users.userDetail)
+  const allPadelfields = useSelector((state) => state.padelFields.detailPadelField)
+  const valores = dataRender?.padelFields?.map((elemento) => {
+    return elemento._id
+  })
+  // ----------------------------------DESPUES----------------------------------
+  // for (let i = 0; i < valores.length; i++) {
+  //   const arrayPadelOwner = []
+  //   // console.log(valores[i])
+  //   dispatch(getPadelFieldsById(valores[i]))
+  //   arrayPadelOwner.push(allPadelfields)
+  //   console.log('si funca? ', arrayPadelOwner)
+  // }
   const [input, setInput] = useState({
     name: '',
     telephone: '',
@@ -77,11 +89,15 @@ export default function Panel() {
       console.log(error)
     }
   }
-  console.log(dataRender)
-  useEffect(() => {
-    dispatch(getPadelFieldsById(dataRender.padelFields[0]))
-  }, [])
-
+  // useEffect(() => {
+  //   dispatch(PadelFieldDataByOwner(valores))
+  // }, [])
+  // console.log(dataRender)
+  // function handleDetailPadelfieldsByOwner () {
+  //   dataRender?.map((padelField) => {
+  //     return dispatch(getPadelFieldsById(padelField._id))
+  //   })
+  // }
   const [errors, setErrors] = useState({})
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = useRef()
@@ -307,14 +323,14 @@ export default function Panel() {
                       </Thead>
                       <Tbody>
                         {dataRender.padelFields?.length > 0
-                          ? dataRender.padelFields?.map((padelfield) => {
+                          ? dataRender.padelFields?.map((padelfield, index) => {
                             return (
                               <>
-                                <Tr>
+                                <Tr key={index}>
                                   <Td>
                                     <Flex gap='1rem' alignItems='center'>
                                       <Avatar size='sm' src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg' />
-                                      {padelfield.name}
+                                      { }
                                     </Flex>
                                   </Td>
                                   <Td textAlign='center'>
