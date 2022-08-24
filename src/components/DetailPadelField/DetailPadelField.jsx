@@ -127,7 +127,7 @@ export default function DetailPadelField() {
   // }
   function handlePaymentReserve(e) {
     e.preventDefault()
-    // console.log(inputPayment)
+    console.log('handlePaymentReserve', inputPayment)
     dispatch(getPaymentPadelField(inputPayment))
   }
 
@@ -139,7 +139,7 @@ export default function DetailPadelField() {
   })
   const handleClickStarValue = (e) => {
     setInputReview({ ...inputReview, rating: parseInt(e.target.value) })
-    console.log(e.target.value)
+    // console.log(e.target.value)
   }
 
   function handleChange(e) {
@@ -161,7 +161,7 @@ export default function DetailPadelField() {
       })
       : dispatch(postReviewss(idPadelField, { ...inputReview }))
   }
-  console.log('inputtttt', inputReview)
+  // console.log('inputtttt', inputReview)
   return isAuthenticated
     ? (<Flex flexDirection='column'>
       <NavBar />
@@ -656,12 +656,12 @@ export default function DetailPadelField() {
                   name='review'
                   value={inputReview.review}
                   onChange={(e) => handleChange(e)} />
-                <HStack color='brand.primary'>
-                  <IconButton onClick={handleClickStarValue} value={1} icon={<AiFillStar />} />
-                  <IconButton onClick={handleClickStarValue} value={2} icon={<AiFillStar />} />
-                  <IconButton onClick={handleClickStarValue} value={3} icon={<AiFillStar />} />
-                  <IconButton onClick={handleClickStarValue} value={4} icon={<AiFillStar />} />
-                  <IconButton onClick={handleClickStarValue} value={5} icon={<AiFillStar />} />
+                <HStack color='#98D035'>
+                  <Button onClick={handleClickStarValue} value={1}>★</Button>
+                  <Button onClick={handleClickStarValue} value={2}>★</Button>
+                  <Button onClick={handleClickStarValue} value={3}>★</Button>
+                  <Button onClick={handleClickStarValue} value={4}>★</Button>
+                  <Button onClick={handleClickStarValue} value={5}>★</Button>
                 </HStack>
               </FormControl>
               <Link to='/'>
