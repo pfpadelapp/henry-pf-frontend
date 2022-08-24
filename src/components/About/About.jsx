@@ -107,17 +107,6 @@ export default function SocialProfileSimple() {
         <Spacer />
         <HStack as='nav' spacing='5'>
           <LoginButton />
-          <Button
-            fontSize='15px'
-            onClick={onOpen}
-            width='118px'
-            height='35px'
-            textColor={colorMode === 'dark' ? '#F8F8F8' : '#2c313d'}
-            backgroundColor='#98D035'
-            _hover={{ color: '#98D035', backgroundColor: '#E3FFB2' }}
-            _active={{ color: '#98D035', backgroundColor: '#E3FFB2' }}>
-            Registrarse
-          </Button>
           <ToggleColorMode />
         </HStack>
       </Flex>
