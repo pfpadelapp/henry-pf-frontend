@@ -48,7 +48,8 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  ModalCloseButton
+  ModalCloseButton,
+  Heading
 } from '@chakra-ui/react'
 import Sidebar from '../Sidebar/Sidebar.jsx'
 import { useColorMode } from '@chakra-ui/color-mode'
@@ -91,12 +92,26 @@ export default function DetailPadelField() {
       dispatch(cleanDetailPadelField())
     }
   }, [dispatch])
+
   const [input, setInput] = useState(null)
   function handleDate(e) {
     e.preventDefault()
     setDate(e.target.value)
     const dateFormat = e.target.value.split('-').reverse().join('/')
-    dispatch(getHoursByDate(idPadelField, dateFormat))
+    const aux = new Date().toISOString().slice(0, 10)
+    const dateFormatDay = dateFormat.slice(0, 2)
+    const today = aux.split('-').reverse().join('/').slice(0, 2)
+    const dateFormatMonth = dateFormat.slice(3, 5)
+    const todayMonth = aux.split('-').reverse().join('/').slice(3, 5)
+    console.log('mes', dateFormatMonth, ' es mayor o igual a ', todayMonth)
+    console.log('dia', dateFormatDay, ' es mayor o igual a ', today)
+    if (Number(dateFormatMonth) > Number(todayMonth) || Number(dateFormatMonth) === Number(todayMonth)) {
+      if (Number(dateFormatDay) > Number(today) || Number(dateFormatDay) === Number(today)) {
+        dispatch(getHoursByDate(idPadelField, dateFormat))
+      }
+    } else {
+      console.log('INGRESA BIEN LA FECHAAAAAAAAAAA')
+    }
   }
   function handleHour(e) {
     e.preventDefault()
@@ -127,7 +142,7 @@ export default function DetailPadelField() {
   // }
   function handlePaymentReserve(e) {
     e.preventDefault()
-    console.log('handlePaymentReserve', inputPayment)
+    console.log('handlePaymentReserve react', inputPayment)
     dispatch(getPaymentPadelField(inputPayment))
   }
 
@@ -320,10 +335,10 @@ export default function DetailPadelField() {
                   isOpen={menuRightModal.isOpen}
                   size='md'
                   closeOnEsc={true}
+                  closeOnOverlayClick={false}
                   preserveScrollBarGap={true}>
                   <DrawerOverlay />
                   <DrawerContent p='2rem'>
-                    <DrawerCloseButton />
                     <DrawerHeader borderBottomWidth='1px'>
                       Reserva una cancha
                     </DrawerHeader>
@@ -649,30 +664,43 @@ export default function DetailPadelField() {
                 </ModalFooter>
               </ModalContent>
             </Modal>
-            <Flex alignItems='center' justifyContent='flex-start' marginTop='3rem'>
+            <Flex flexDirection='column' alignItems='flex-start' justifyContent='flex-start' marginTop='3rem' gap='5'>
+              <Text
+                color='brand.primary'
+                margin='0 1.5rem'
+                fontWeight='medium'
+                fontSize='2xl'>Dejar una reseña</Text>
+              <Text margin='0 2rem' color='gray.500'>Comparte tu experiencia para ayudar a otros usuarios</Text>
+              <HStack margin='0 2rem'>
+                <Avatar size='lg' src={dataRender.picture} />
+                <Stack>
+                  <Text>{dataRender.email}</Text>
+                  <HStack color='#98D035'>
+                    <Button onClick={handleClickStarValue} value={1}>★</Button>
+                    <Button onClick={handleClickStarValue} value={2}>★</Button>
+                    <Button onClick={handleClickStarValue} value={3}>★</Button>
+                    <Button onClick={handleClickStarValue} value={4}>★</Button>
+                    <Button onClick={handleClickStarValue} value={5}>★</Button>
+                  </HStack>
+                </Stack>
+              </HStack>
               <FormControl maxWidth='50%' margin='5'>
+
                 <Textarea
                   placeholder='Escribe un comentario'
                   name='review'
                   value={inputReview.review}
                   onChange={(e) => handleChange(e)} />
-                <HStack color='#98D035'>
-                  <Button onClick={handleClickStarValue} value={1}>★</Button>
-                  <Button onClick={handleClickStarValue} value={2}>★</Button>
-                  <Button onClick={handleClickStarValue} value={3}>★</Button>
-                  <Button onClick={handleClickStarValue} value={4}>★</Button>
-                  <Button onClick={handleClickStarValue} value={5}>★</Button>
-                </HStack>
+                <Link to='/'>
+                  <Button
+                    bgColor='#98D035'
+                    textColor='#ffff'
+                    mr={3}
+                    onClick={(e) => handleSubmit(e)}>
+                    Publicar
+                  </Button>
+                </Link>
               </FormControl>
-              <Link to='/'>
-                <Button
-                  bgColor='#98D035'
-                  textColor='#ffff'
-                  mr={3}
-                  onClick={(e) => handleSubmit(e)}>
-                  Enviar
-                </Button>
-              </Link>
             </Flex>
           </Box>
         </Flex>

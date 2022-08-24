@@ -17,7 +17,7 @@ export default function Success() {
     const params = new URLSearchParams(querystring)
     const tokenId = params.get('token')
     const tokenFinal = tokenId.split('&').join()
-    console.log('Este es el token ', tokenFinal)
+    // console.log('Este es el token ', tokenFinal)
     dispatch(setPaymentCheckout(tokenFinal))
   }, [])
 
