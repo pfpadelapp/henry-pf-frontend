@@ -19,6 +19,7 @@ export default function CardPadel({ id, location, image, name, price }) {
           _hover={{ filter: 'brightness(0.7)', transition: 'all .5s ease' }}
           borderRadius='xl'
           width='sm'
+          objectFit='cover'
           height='300px'
           fallbackSrc='https://via.placeholder.com/150'
           src={image}

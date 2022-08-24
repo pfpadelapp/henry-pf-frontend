@@ -38,7 +38,7 @@ export default function CreatePadelfield() {
     image: '',
     type: '',
     price: 0,
-    ownerId: dataRender.id,
+    user: dataRender.id,
     availability: ''
   })
   const [errors, setErrors] = useState({})
