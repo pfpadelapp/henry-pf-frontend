@@ -82,7 +82,7 @@ export function getUpdateUser(userId, dataUser) {
         `${urlDeploy}/user/${userId}`,
         dataUser
       )
-      console.log('actalizar usuario', userUpdate.data)
+      // console.log('actalizar usuario', userUpdate.data)
       dispatch(setUpdate(userUpdate.data))
     } catch (error) {
       console.log(error)
@@ -95,8 +95,20 @@ export function getDataDetail(email) {
     try {
       const allData = await axios.get(`${urlDeploy}/user`)
       const find = allData.data.find((user) => { return user.email === email })
-      console.log('en el rtk el find es  ', find)
+      // console.log('en el rtk el find es  ', find)
       dispatch(setDetail(find))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+export function postUser(user) {
+  return async function () {
+    try {
+      // console.log('input que recibo', input)
+      console.log("consolelog del ", user)
+      var usuarioGoogle =await axios.post(`${urlDeploy}/user/google`, user)
+      console.log('input que muestro', usuarioGoogle)
     } catch (error) {
       console.log(error)
     }

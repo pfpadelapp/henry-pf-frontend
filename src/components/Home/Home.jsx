@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllOwners } from '../../redux/owner/ownerSlice'
-import { fetchAllUsers } from '../../redux/users/usersSlice'
+import { fetchAllUsers, postUser } from '../../redux/users/usersSlice'
 import { fetchAllPadelFields } from '../../redux/padelField/padelFieldSlice'
 import CardPadel from '../CardPadel/CardPadel.jsx'
 import Sidebar from '../Sidebar/Sidebar'
@@ -24,18 +24,24 @@ export default function Home() {
   if(isLoading === false){
     let find = allUsers.filter((e) => { return e.email === user.email })
     var find2 = find[0]?.user_metadata.isActive
+    if(user.sub.slice(0,6) === "google"){
+      console.log("hols me gusta poner consoleslog",user)
+      dispatch(postUser(user))
+    }
   }
-  console.log("este es el find",find2)
+  // console.log("este es el find",find2)
   const navigate = useNavigate()
 
   // console.log(allPadelField)
   useEffect(() => {
     // dispatch(fetchAllOwners())
     // dispatch(fetchAllUsers())
-    dispatch(fetchAllPadelFields(currentPage))
+    
+    dispatch(fetchAllPadelFields())
     dispatch(fetchAllUsers())
-  }, [currentPage])
+  }, [])
 
+  //console.log(user.sub.slice(0,6))
   // const paginado = (pageNumber) => {
   //   setCurrentPage(pageNumber)
   // }
