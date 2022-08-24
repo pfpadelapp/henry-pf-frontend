@@ -165,8 +165,9 @@ export default function Panel() {
     e.preventDefault()
     dispatch(removePadelfieldOwner(dataRender.id))
   }
-  return isLoading === true ? null : isAuthenticated ?
-     (
+  return isLoading === true ? null : isAuthenticated
+    ? (
+
       <>
         <NavBar />
         <Flex>
@@ -314,7 +315,7 @@ export default function Panel() {
                         </Tr>
                       </Thead>
                       <Tbody>
-                        {dataRender.padelFields.length > 0
+                        {dataRender.padelFields?.length > 0
                           ? dataRender.padelFields?.map((padelfield) => {
                             return (
                               <>
