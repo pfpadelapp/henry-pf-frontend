@@ -65,7 +65,7 @@ import axios from 'axios'
 
 export default function Panel() {
   const dispatch = useDispatch()
-  const { user, isAuthenticated } = useAuth0()
+  const { user, isAuthenticated, isLoading } = useAuth0()
   const navigate = useNavigate()
   const { colorMode } = useColorMode()
   const dataRender = useSelector((state) => state.users.userDetail)
