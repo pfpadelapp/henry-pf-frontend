@@ -24,6 +24,8 @@ import axios from 'axios'
 import { useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
 import ModalAdmin from './ModalAdmin'
+import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from 'react-router-dom'
 
 const urlDeploy = 'https://pf-padel-app.herokuapp.com'
 
@@ -32,6 +34,8 @@ export default function BanneReviews() {
   const { colorMode, toggleColorMode } = useColorMode()
   const [fieldName, setFieldName] = useState('')
   const [field, setField] = useState([])
+  const navigate = useNavigate()
+  const { isAuthenticated, isLoading, user } = useAuth0()
 
   const handleInput = (e) => {
     e.preventDefault()
@@ -45,7 +49,6 @@ export default function BanneReviews() {
     const resF = await axios.get(
       `${urlDeploy}/field/panel/search?name=${fieldName}`
     )
-    console.log('OKEY', resF.data)
     setField(resF.data)
     // setName('')
   }
@@ -67,7 +70,7 @@ export default function BanneReviews() {
     handleSubmit()
   }
 
-  return (
+  return isLoading === true ? null : isAuthenticated ? (
     <>
       <NavBarAdmin onOpen={onOpen} />
       <Flex>
@@ -183,5 +186,7 @@ export default function BanneReviews() {
         <ModalAdmin isOpen={isOpen} onClose={onClose} />
       </Flex>
     </>
+  ): (
+    navigate('/')
   )
 }

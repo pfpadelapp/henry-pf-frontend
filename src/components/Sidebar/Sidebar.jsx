@@ -60,8 +60,7 @@ export default function Sidebar() {
   const [navSize, changeNavSize] = useState('small')
   const { colorMode } = useColorMode()
   const { logout, user, isAuthenticated, isLoading } = useAuth0()
-  // const [superA, setSuperA] = useState(false)
-  // console.log('El user email es', user)
+
   const allUsers = useSelector((state) => state.users.users)
 
   if (isLoading === false) {
@@ -211,15 +210,16 @@ export default function Sidebar() {
             )}
         </Link>
         {
-          superA === true && (
-            <Link to='/adminInterfaz'>
+          superA === true  && (
+            <Link to='/admin'>
               <NavItem navSize={navSize} icon={RiAdminFill} title='Admin Interfaz' />
             </Link>
           )
         }
         {
-          admin === true && (
-            <Link to='/adminInterfaz'>
+
+          admin === true  && (
+            <Link to='/admin'>
               <NavItem navSize={navSize} icon={RiAdminFill} title='Admin Interfaz' />
             </Link>
           )
@@ -337,7 +337,7 @@ export default function Sidebar() {
                 <Heading as='h3' size='sm' color='gray.500'>
                   {dataRender?.name}
                 </Heading>
-                <Text color='gray'>{dataRender?.user_metadata?.rol === 'player' ? 'Jugador' : dataRender?.user_metadata?.rol === 'owner' ? 'Propietario' : 'Admin'}</Text>
+                <Text color='gray'>{dataRender?.user_metadata?.rol === 'player' ? 'Jugador' : dataRender?.user_metadata?.rol === 'owner' ? 'Propietario' : dataRender?.user_metadata?.rol === 'SuperAdmin' ? 'Super Admin' : 'Admin'}</Text>
               </Flex>
             </Flex>
           </Link>

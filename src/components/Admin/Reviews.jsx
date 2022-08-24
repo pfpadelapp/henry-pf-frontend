@@ -12,15 +12,18 @@ import SideBarAdmin from './SideBarAdmin'
 import NavBarAdmin from './NavBarAdmin'
 import ModalAdmin from './ModalAdmin'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const urlDeploy = 'https://pf-padel-app.herokuapp.com'
 
 export default function Reviews() {
+  const navigate = useNavigate()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { idField } = useParams()
   const [reviews, setReviews] = useState([])
+  const { isAuthenticated, isLoading } = useAuth0()
 
   async function getReviews() {
     const res = await axios.get(`${urlDeploy}/field/${idField}`)
@@ -41,7 +44,7 @@ export default function Reviews() {
     window.location.reload()
   }
 
-  return (
+  return isLoading === true ? null : isAuthenticated ? (
     <>
       <NavBarAdmin onOpen={onOpen} />
       <Flex>
@@ -57,18 +60,18 @@ export default function Reviews() {
             bg='gray.700'
             borderRadius='3xl'
             alignItems='flex-start'
-            height='calc(100vh - 12vh)'
+            height='calc(200vh - 12vh)'
             margin='2vh 0'>
             <VStack justifyContent='center' w='100%' padding='3%'>
               <HStack spacing='24px'>
-                <Center w='225px' h='40px'>
-                  Review Id
+                <Center w='225px' h='40px' fontWeight='bold'>
+                  Id Reseña
                 </Center>
-                <Center w='600px' h='40px'>
-                  Review
+                <Center w='600px' h='40px' fontWeight='bold'>
+                  Reseña
                 </Center>
-                <Center w='120px' h='40px'>
-                  Eliminar review
+                <Center w='120px' h='40px' fontWeight='bold'>
+                  Eliminar reseña
                 </Center>
               </HStack>
               {reviews &&
@@ -94,5 +97,7 @@ export default function Reviews() {
         <ModalAdmin isOpen={isOpen} onClose={onClose} />
       </Flex>
     </>
+  ) : (
+    navigate('/')
   )
 }

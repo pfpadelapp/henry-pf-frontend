@@ -23,30 +23,27 @@ import { FiSearch } from 'react-icons/fi'
 import axios from 'axios'
 import NavBarAdmin from './NavBarAdmin'
 import ModalAdmin from './ModalAdmin'
+import { useAuth0 } from '@auth0/auth0-react'
+import { useNavigate } from 'react-router-dom'
 
 const urlDeploy = 'https://pf-padel-app.herokuapp.com'
 
 export default function Banner() {
+  const navigate = useNavigate()
   const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [name, setName] = useState('')
   const [userToDelete, setUserToDelete] = useState([])
+  const { isAuthenticated, isLoading, user } = useAuth0()
 
   const handleInput = (e) => {
     e.preventDefault()
-    console.log(e.target.value)
     setName(e.target.value)
   }
 
   async function handleSubmit() {
     const resU = await axios.get(`${urlDeploy}/admin/searchU?name=${name}`)
-    console.log('u', resU)
-    // const resO = await axios.get(
-    //   `${urlDeploy}/admin/searchO?name=${name}`
-    // )
-    // const resT = [...resU.data, ...resO.data]
     const resT = resU.data
-    // console.log('u', resO)
     console.log(resT)
     setUserToDelete(resT)
     // setName('')
@@ -76,7 +73,7 @@ export default function Banner() {
     // setName('')
   }
 
-  return (
+  return isLoading === true ? null : isAuthenticated ? (
     <>
       <NavBarAdmin onOpen={onOpen} />
       <Flex>
@@ -92,12 +89,12 @@ export default function Banner() {
             bg='gray.700'
             borderRadius='3xl'
             alignItems='flex-start'
-            height='calc(100vh - 12vh)'
+            height='calc(230vh - 12vh)'
             margin='2vh 0'>
-            <Flex></Flex>
+              
 
             <TableContainer>
-              <Flex padding='2%' justifyContent='center'>
+              <Flex padding='3%' justifyContent='center'>
                 <Flex justifyContent='center'>
                   <InputGroup
                     height='40px'
@@ -123,14 +120,14 @@ export default function Banner() {
                 </Flex>
               </Flex>
               <Table>
-                <TableCaption>BANEAR USUARIOS Y PROPIETARIOS</TableCaption>
+                <TableCaption>HABILITAR/DESHABILITAR USUARIOS Y PROPIETARIOS</TableCaption>
                 <Thead>
                   <Tr>
                     <Th>Id</Th>
                     <Th>Email</Th>
                     <Th>Username</Th>
                     <Th>Role</Th>
-                    <Th>Banear/Desbanear</Th>
+                    <Th>Habilitar/Deshabilitar</Th>
                   </Tr>
                 </Thead>
 
@@ -151,9 +148,9 @@ export default function Banner() {
                               color='gray.500'
                               bg='none'
                               height='30px'
-                              width='150px'
+                              width='130px'
                               onClick={() => handleDelete(e._id, e.role)}>
-                              Banear usuario
+                              Deshabilitar
                             </Button>
                           </Td>
                             )
@@ -164,9 +161,9 @@ export default function Banner() {
                               color='white'
                               bg='none'
                               height='30px'
-                              width='150px'
+                              width='130px'
                               onClick={() => disableBanned(e._id, e.role)}>
-                              Desbanear usuario
+                              Habilitar
                             </Button>
                           </Td>
                             )}
@@ -180,5 +177,7 @@ export default function Banner() {
         <ModalAdmin isOpen={isOpen} onClose={onClose} />
       </Flex>
     </>
+  ): (
+    navigate('/')
   )
 }
