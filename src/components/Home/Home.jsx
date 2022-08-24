@@ -17,8 +17,15 @@ import { useNavigate } from 'react-router-dom'
 export default function Home() {
   const dispatch = useDispatch()
   const allPadelField = useSelector((state) => state.padelFields.padelField)
+  const allUsers = useSelector((state) => state.users.users)
   const [currentPage, setCurrentPage] = useState(1)
-  const { isAuthenticated, isLoading } = useAuth0()
+  const [findUser, setFindUser] = useState()
+  const { isAuthenticated, isLoading, user } = useAuth0()
+  if(isLoading === false){
+    let find = allUsers.filter((e) => { return e.email === user.email })
+    var find2 = find[0]?.user_metadata.isActive
+  }
+  console.log("este es el find",find2)
   const navigate = useNavigate()
 
   // console.log(allPadelField)
@@ -26,13 +33,14 @@ export default function Home() {
     // dispatch(fetchAllOwners())
     // dispatch(fetchAllUsers())
     dispatch(fetchAllPadelFields(currentPage))
+    dispatch(fetchAllUsers())
   }, [currentPage])
 
   // const paginado = (pageNumber) => {
   //   setCurrentPage(pageNumber)
   // }
 
-  return isLoading === true ? null : isAuthenticated ? (
+  return isLoading === true ? null : isAuthenticated ? find2 === true ? (
     <>
       <NavBar setCurrentPage={setCurrentPage} />
       <Flex>
@@ -86,7 +94,9 @@ export default function Home() {
       {/*  2200 */}
       <Footer />
     </>
-  ) : (
+  ) 
+  : (
     navigate('/')
   )
+  : navigate('/')
 }
