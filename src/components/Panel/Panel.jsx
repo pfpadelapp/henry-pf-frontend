@@ -165,8 +165,8 @@ export default function Panel() {
     e.preventDefault()
     dispatch(removePadelfieldOwner(dataRender.id))
   }
-  return isAuthenticated
-    ? (
+  return isLoading === true ? null : isAuthenticated ?
+     (
       <>
         <NavBar />
         <Flex>
