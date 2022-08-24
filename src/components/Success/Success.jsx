@@ -29,11 +29,6 @@ export default function Success() {
     // console.log('Este es el token ', tokenFinal)
     dispatch(setPaymentCheckout(tokenFinal))
   }, [])
-
-  const aa = setTimeout(function () {
-    console.log('aaaaaaa')
-  }, 2000)
-  console.log(aa)
   return isAuthenticated
     ? (
       <>
@@ -47,7 +42,7 @@ export default function Success() {
             alignSelf='center'>
             <Image src={successImage} maxW='500px' />
             <Text>La reserva se ha realizado con exito!</Text>
-            <Text color='gray.500'>Sera re-dirigido al inicio en { }</Text>
+            <Text color='gray.500'>Sera re-dirigido al inicio en {count} segundos</Text>
           </Center>
         </Flex>
       </>
