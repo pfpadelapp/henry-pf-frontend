@@ -69,7 +69,6 @@ export default function Sidebar() {
     var superA = find[0]?.user_metadata.isSuperAdmin
     var admin = find[0]?.user_metadata.isAdmin
   }
-
   useEffect(() => {
     dispatch(fetchAllUsers())
     dispatch(getDataDetail(user.email))
@@ -111,6 +110,7 @@ export default function Sidebar() {
   function handleGetDetailPerfil() {
     dispatch(getUserById())
   }
+  console.log(dataRender)
   return isLoading === true ? null : isAuthenticated ? (
     <Flex
       zIndex='2'
@@ -147,10 +147,10 @@ export default function Sidebar() {
                 link='/'
                 active
               />
-              )
+            )
             : (
               <NavItem navSize={navSize} icon={FiHome} link='/' title='Inicio' />
-              )}
+            )}
         </Link>
 
         <Flex
@@ -200,7 +200,7 @@ export default function Sidebar() {
                 link='/'
                 active
               />
-              )
+            )
             : (
               <NavItem
                 navSize={navSize}
@@ -208,17 +208,17 @@ export default function Sidebar() {
                 link='/'
                 title='Turnos'
               />
-              )}
+            )}
         </Link>
         {
-          superA === true  && (
+          superA === true && (
             <Link to='/adminInterfaz'>
               <NavItem navSize={navSize} icon={RiAdminFill} title='Admin Interfaz' />
             </Link>
           )
         }
         {
-          admin === true  && (
+          admin === true && (
             <Link to='/adminInterfaz'>
               <NavItem navSize={navSize} icon={RiAdminFill} title='Admin Interfaz' />
             </Link>

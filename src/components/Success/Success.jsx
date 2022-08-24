@@ -21,6 +21,10 @@ export default function Success() {
     dispatch(setPaymentCheckout(tokenFinal))
   }, [])
 
+  const aa = setTimeout(function () {
+    console.log('aaaaaaa')
+  }, 2000)
+  console.log(aa)
   return isAuthenticated
     ? (
       <>
