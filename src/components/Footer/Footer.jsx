@@ -31,7 +31,7 @@ export default function Footer() {
         padding='2rem 0'
       />
       <SimpleGrid
-        columns={{ base: 1, lg: 2, xl: 3 }}
+        columns={{ base: 1, lg: 2, xl: 2 }}
         justifyItems='center'
         margin={{ base: '0 0 0 75px', lg: '0 0 0 75px', xl: '0 0 0 75px' }}
         padding='3rem 0'>
@@ -69,43 +69,6 @@ export default function Footer() {
             />
             <Text fontSize='medium' color='gray.500'>
               PadelfieldApp@proyectohenry.com
-            </Text>
-          </Flex>
-        </Stack>
-        <Stack
-          width={{ base: 'xs', lg: 'sm', xl: 'base' }}
-          margin={{ base: '2rem 0', lg: '2rem 0', xl: '0' }}>
-          <Heading size='md' paddingBottom='2rem'>
-            Quienes somos
-          </Heading>
-          <Flex flexDirection='row' alignItems='center' gap='10px'>
-            <IconButton
-              variant='outline'
-              color='#98D035'
-              icon={<BsFillPersonFill />}
-            />
-            <Text fontSize='medium' color='gray.500'>
-              Servicios
-            </Text>
-          </Flex>
-          <Flex flexDirection='row' alignItems='center' gap='10px'>
-            <IconButton
-              variant='outline'
-              color='#98D035'
-              icon={<FaUserFriends />}
-            />
-            <Text fontSize='medium' color='gray.500'>
-              Miembros del equipo
-            </Text>
-          </Flex>
-          <Flex flexDirection='row' alignItems='center' gap='10px'>
-            <IconButton
-              variant='outline'
-              color='#98D035'
-              icon={<RiCustomerService2Fill />}
-            />
-            <Text fontSize='medium' color='gray.500'>
-              Soporte tecnico
             </Text>
           </Flex>
         </Stack>

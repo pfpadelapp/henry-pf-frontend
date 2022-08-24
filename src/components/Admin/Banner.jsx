@@ -110,7 +110,7 @@ export default function Banner() {
                         colorMode === 'dark' ? '#3d414c' : 'white'
                       }
                       type='text'
-                      placeholder='Buscar por name'
+                      placeholder='Buscar por name o email'
                       value={name}
                       onChange={(e) => handleInput(e)}
                     />

@@ -57,13 +57,14 @@ export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [limit, setLimit] = useState([500, 3500])
   const [navSize, changeNavSize] = useState('small')
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
   const { logout, user, isAuthenticated } = useAuth0()
+  // console.log('El user email es', user.email)
   useEffect(() => {
     dispatch(getDataDetail(user.email))
   }, [])
   const dataRender = useSelector((state) => state.users.userDetail)
-  console.log(dataRender)
+  // console.log(dataRender)
   const onChange = (val) => {
     setLimit(val)
   }
@@ -125,7 +126,7 @@ export default function Sidebar() {
           }}
         />
         <Link to='/home'>
-          {window.location.href.replace('http://127.0.0.1:5173', '') ===
+          {window.location.href.replace('https://padelapp.netlify.app/', '') ===
             '/home'
             ? (
               <NavItem
@@ -140,7 +141,6 @@ export default function Sidebar() {
               <NavItem navSize={navSize} icon={FiHome} link='/' title='Inicio' />
             )}
         </Link>
-        <NavItem navSize={navSize} icon={FiBell} title='Notificaciones' />
         <Flex
           onClick={onOpen}
           mt={30}
@@ -177,9 +177,9 @@ export default function Sidebar() {
             </Link2>
           </Menu>
         </Flex>
-        <Link to='/notification'>
-          {window.location.href.replace('http://127.0.0.1:5173', '') ===
-            '/notification'
+        <Link to='/historial'>
+          {window.location.href.replace('https://padelapp.netlify.app/', '') ===
+            '/historial'
             ? (
               <NavItem
                 navSize={navSize}
@@ -303,7 +303,7 @@ export default function Sidebar() {
           justifyContent={navSize == 'small' ? 'center' : 'flex-start'}>
           <Link to={dataRender?.user_metadata?.rol === 'player' ? '/perfil' : '/panel'}>
             <Flex>
-              <Avatar size='sm' src={user ? user.picture : null} />
+              <Avatar size='sm' src={dataRender?.picture ? dataRender.picture : user.picture} />
               <Flex
                 flexDir='column'
                 ml={4}

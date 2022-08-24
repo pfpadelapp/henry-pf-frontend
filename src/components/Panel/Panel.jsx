@@ -61,54 +61,62 @@ import { getUpdateOwner } from '../../redux/owner/ownerSlice.js'
 import { useDispatch, useSelector } from 'react-redux'
 import { removePadelfieldOwner } from '../../redux/padelField/padelFieldSlice'
 import { getUpdateUser } from '../../redux/users/usersSlice'
+import axios from 'axios'
 
 export default function Panel() {
   const dispatch = useDispatch()
   const { user, isAuthenticated } = useAuth0()
   const navigate = useNavigate()
   const { colorMode } = useColorMode()
-  const [input, setInput] = useState({
-    password: '',
-    contact: '',
-    username: ''
-  })
   const dataRender = useSelector((state) => state.users.userDetail)
+  const [input, setInput] = useState({
+    name: '',
+    telephone: '',
+    pic: ''
+  })
+  const [image, setImage] = useState(null)
+  const uploadImage = async (files) => {
+    const formData = new FormData()
+    formData.append('file', files[0])
+    formData.append('upload_preset', 'wtm3pwuj')
+    try {
+      const aux = await axios.post(
+        'https://api.cloudinary.com/v1_1/dbhb8sohh/image/upload',
+        formData
+      )
+      const imageUpload = aux.data
+      console.log(imageUpload)
+      setImage(imageUpload)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const [errors, setErrors] = useState({})
-  const [show, setShow] = useState(false)
-  const handleShowPassword = () => setShow(!show)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = useRef()
   const validateName = /^[a-zA-Z\s]+$/
-  const validatePass =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/
   function validate(input) {
     const errors = {}
-    if (!input.username) {
-      errors.username = 'Debes ingresar el nuevo username'
-    } else if (input.username.length < 7) {
-      errors.username = 'Debe tener al menos 7 caracteres'
-    } else if (input.username.length > 20) {
-      errors.username = 'Debe tener menos de 20 caracteres'
-    } else if (!validateName.test(input.username)) {
-      errors.username = 'Los caracteres especiales no estan permitidos'
+    if (!input.name) {
+      errors.name = 'Debes ingresar el nuevo nombre'
+    } else if (input.name.length < 7) {
+      errors.name = 'Debe tener al menos 7 caracteres'
+    } else if (input.name.length > 20) {
+      errors.name = 'Debe tener menos de 20 caracteres'
+    } else if (!validateName.test(input.name)) {
+      errors.name = 'Los caracteres especiales no estan permitidos'
     }
-    if (!input.contact) {
-      errors.contact = 'El celular es necesario'
-    } else if (input.contact.length > 10) {
-      errors.contact = 'El numero de celular no puede tener mas de 10 digitos'
-    } else if (input.contact < 0) {
-      errors.contact = 'El numero de celular no puede ser negativo'
+    if (!input.telephone) {
+      errors.telephone = 'El celular es necesario'
+    } else if (input.telephone.length > 10) {
+      errors.telephone = 'El numero de celular no puede tener mas de 10 digitos'
+    } else if (input.telephone < 0) {
+      errors.telephone = 'El numero de celular no puede ser negativo'
     } else if (
-      input.contact.toString().includes('.') ||
-      input.contact.toString().includes(',')
+      input.telephone.toString().includes('.') ||
+      input.telephone.toString().includes(',')
     ) {
-      errors.contact = 'Los valores decimales no estan permitidos'
-    }
-    if (!input.password) {
-      errors.password = 'La contraseña es necesaria'
-    } else if (!validatePass.test(input.password)) {
-      errors.password =
-        'Debe tener entre 8 y 16 caracteres, un digito, una minuscula, una mayuscula y un caracter especial'
+      errors.telephone = 'Los valores decimales no estan permitidos'
     }
     return errors
   }
@@ -127,7 +135,7 @@ export default function Panel() {
   }
   function handleSubmit(e) {
     e.preventDefault()
-    if (!input.contact && !input.password && !input.username) {
+    if (!input.telephone && !input.name) {
       return Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -135,8 +143,11 @@ export default function Panel() {
         confirmButtonColor: '#F27474'
       })
     } else {
+      if (image !== null) {
+        input.pic = image.secure_url
+      }
       setErrors(validate(input))
-      dispatch(getUpdateOwner(dataRender.id, input))
+      dispatch(getUpdateUser(dataRender.id, input))
       Swal.fire({
         icon: 'success',
         title: 'Operación exitosa!',
@@ -144,15 +155,15 @@ export default function Panel() {
         confirmButtonColor: '#98D035'
       })
       setInput({
-        password: '',
-        contact: '',
-        username: ''
+        telephone: '',
+        name: '',
+        pic: ''
       })
     }
   }
   function handleRemove(e) {
     e.preventDefault()
-    dispatch(removePadelfieldOwner(idPadelfield))
+    dispatch(removePadelfieldOwner(dataRender.id))
   }
   return isAuthenticated
     ? (
@@ -184,9 +195,9 @@ export default function Panel() {
                     paddingBottom='2rem'
                     alignItems='center'
                     gap='1rem'>
-                    <Avatar size='xl' src={user.picture} />
+                    <Avatar size='xl' src={dataRender?.picture ? dataRender.picture : user.picture} />
                     <Flex flexDirection='column'>
-                      <Heading>Hola<span style={{ color: '#98D035' }}> {dataRender.given_name}</span></Heading>
+                      <Heading>Hola<span style={{ color: '#98D035' }}> {dataRender.name}</span></Heading>
                       <Heading size='lg'>bienvenid@ de nuevo!</Heading>
                     </Flex>
                   </Flex>
@@ -200,9 +211,9 @@ export default function Panel() {
                     <TabPanels>
                       <TabPanel>
                         <Box lineHeight='2rem'>
-                          <Text padding='1rem 0'>Nombre: {dataRender.given_name}</Text>
                           <Text padding='1rem 0'>Usuario: {dataRender.name}</Text>
                           <Text padding='1rem 0'>Email: {dataRender.email}</Text>
+                          <Text padding='1rem 0'>Telefono: {dataRender.user_metadata?.telePhone ? dataRender.user_metadata?.telePhone : dataRender.user_metadata?.telephone}</Text>
                         </Box>
                       </TabPanel>
                       <TabPanel>
@@ -212,8 +223,8 @@ export default function Panel() {
                               <FormLabel>Nombre de usuario</FormLabel>
                               <Input
                                 focusBorderColor='#98D035'
-                                name='username'
-                                value={input.username}
+                                name='name'
+                                value={input.name}
                                 variant='flushed'
                                 htmlSize={4}
                                 size='md'
@@ -221,36 +232,9 @@ export default function Panel() {
                                 onChange={(e) => handleChange(e)}
                                 type='text'
                               />
-                              {errors.username && (
+                              {errors.name && (
                                 <FormHelperText color='red.400'>
-                                  {errors.username}
-                                </FormHelperText>
-                              )}
-                            </FormControl>
-                            <FormControl isRequired>
-                              <FormLabel>Contraseña</FormLabel>
-                              <InputGroup size='md'>
-                                <Input
-                                  focusBorderColor='#98D035'
-                                  type={show ? 'text' : 'password'}
-                                  name='password'
-                                  value={input.password}
-                                  variant='flushed'
-                                  htmlSize={4}
-                                  onChange={(e) => handleChange(e)}
-                                  placeholder='Ingrese la nueva contraseña'
-                                />
-                                <InputRightElement width='4.5rem'>
-                                  <Button
-                                    height='1.75rem'
-                                    onClick={handleShowPassword}>
-                                    {show ? 'Ocultar' : 'Mostrar'}
-                                  </Button>
-                                </InputRightElement>
-                              </InputGroup>
-                              {errors.password && (
-                                <FormHelperText width='70%' color='red.400'>
-                                  {errors.password}
+                                  {errors.name}
                                 </FormHelperText>
                               )}
                             </FormControl>
@@ -258,8 +242,8 @@ export default function Panel() {
                               <FormLabel>Telefono</FormLabel>
                               <Input
                                 focusBorderColor='#98D035'
-                                name='contact'
-                                value={input.contact}
+                                name='telephone'
+                                value={input.telephone}
                                 variant='flushed'
                                 htmlSize={4}
                                 size='md'
@@ -267,11 +251,26 @@ export default function Panel() {
                                 onChange={(e) => handleChange(e)}
                                 type='number'
                               />
-                              {errors.contact && (
+                              {errors.telephone && (
                                 <FormHelperText color='red.400'>
-                                  {errors.contact}
+                                  {errors.telephone}
                                 </FormHelperText>
                               )}
+                            </FormControl>
+                            <FormControl>
+                              <FormLabel>Imagen</FormLabel>
+                              <InputGroup>
+                                <Input
+                                  focusBorderColor='#98D035'
+                                  name='image'
+                                  value={input.pic}
+                                  variant='flushed'
+                                  htmlSize={4}
+                                  size='md'
+                                  onChange={(e) => uploadImage(e.target.files)}
+                                  type='file'
+                                />
+                              </InputGroup>
                             </FormControl>
                           </Stack>
                         </Box>
@@ -293,9 +292,8 @@ export default function Panel() {
                           backgroundColor='#98D035'
                           isDisabled={
                             !(Object.keys(errors).length === 0 &&
-                              input.username &&
-                              input.contact &&
-                              input.password)
+                              input.name &&
+                              input.telephone)
                           }>
                           Actualizar datos
                         </Button>

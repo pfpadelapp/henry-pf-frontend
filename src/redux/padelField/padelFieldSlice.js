@@ -237,8 +237,7 @@ export function getHoursByDate(idPadelField, date) {
       const hoursByDate = await axios.get(
         `${urlDeploy}/booking/hours?idField=${idPadelField}&day=${date}`
       )
-
-      // console.log(hoursByDate.data)
+      console.log('getHoursByDate', hoursByDate.data)
       // console.log(idPadelField)
       // console.log(date)
       dispatch(setDateActual(hoursByDate.data))
@@ -271,8 +270,7 @@ export function postReserveHourPadelField(input) {
   return async function (dispatch) {
     try {
       const post = await axios.post(`${urlDeploy}/booking/`, input)
-
-      // console.log('rtk, el id que devuelve es: ', post.data)
+      console.log('rtk, postReserveHourPadelField es: ', post.data)
       dispatch(postReservePadelField(post.data))
     } catch (error) {
       console.log(error)
@@ -283,12 +281,13 @@ export function postReserveHourPadelField(input) {
 export function getPaymentPadelField(input) {
   return async function (dispatch) {
     try {
+      console.log('getPaymentPadelField', input)
       const payment = await axios.post(
         `${urlDeploy}/payment/createPayment`,
         input
       )
-      // console.log('Este es el pago ', payment.data)
-      dispatch(setPaymentPadelfield(payment.data))
+      console.log('Este es el pago de getPaymentPadelField', payment.data.links[1].href)
+      dispatch(setPaymentPadelfield(payment.data.links[1].href))
     } catch (error) {
       console.log(error)
     }
@@ -298,11 +297,12 @@ export function getPaymentPadelField(input) {
 export function setPaymentCheckout(checkId) {
   return async function (dispatch) {
     try {
+      console.log('setPaymentCheckout', checkId)
       const checkIdPayment = await axios.get(
         `${urlDeploy}/payment/executePayment?token=${checkId}`
       )
-      console.log('Y en el rtk es : ', checkIdPayment.data.msg)
-      dispatch(setPaymentCheck(checkIdPayment.data.msg))
+      console.log('Y en el rtk setPaymentCheckout es : ', checkIdPayment.data)
+      dispatch(setPaymentCheck(checkIdPayment.data))
     } catch (error) {
       console.log(error)
     }

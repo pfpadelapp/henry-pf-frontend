@@ -90,7 +90,6 @@ export default function Sidebar() {
             title='Eliminar canchas/reseñas'
           />
         </Link>
-        <NavItem navSize={navSize} icon={FiBell} title='Notificaciones' />
         <Flex
           onClick={onOpen}
           mt={30}

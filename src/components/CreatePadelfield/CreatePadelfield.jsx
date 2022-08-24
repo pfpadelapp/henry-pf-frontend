@@ -31,6 +31,7 @@ export default function CreatePadelfield() {
   const { user, isAuthenticated } = useAuth0()
   const { colorMode } = useColorMode()
   const navigate = useNavigate()
+  const dataRender = useSelector((state) => state.users.userDetail)
   const [input, setInput] = useState({
     name: '',
     location: '',
@@ -55,7 +56,7 @@ export default function CreatePadelfield() {
         formData
       )
       const imageUpload = aux.data
-      console.log(imageUpload)
+      // console.log(imageUpload)
       setImage(imageUpload)
     } catch (error) {
       console.log(error)
@@ -141,7 +142,7 @@ export default function CreatePadelfield() {
       navigate('/panel')
     }
   }
-  console.log(input)
+  // console.log(input)
   return isAuthenticated
     ? (
       <>
