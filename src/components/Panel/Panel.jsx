@@ -375,22 +375,6 @@ export default function Panel() {
                       </Button>
                     </Link>
                     <Button
-                      color='#ffffff'
-                      _hover={{
-                        color: '#98D035',
-                        transition: 'all .5s ease',
-                        backgroundColor: '#E3FFB2'
-                      }}
-                      _active={{
-                        color: '#98D035',
-                        transition: 'all .5s ease',
-                        backgroundColor: '#E3FFB2'
-                      }}
-                      backgroundColor='#98D035'
-                      bg='#98D035'>
-                      Organizar torneo
-                    </Button>
-                    <Button
                       _hover={{
                         color: '#98D035',
                         transition: 'all .5s ease',
