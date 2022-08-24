@@ -269,9 +269,10 @@ export function postReserveHourPadelField(input) {
   // esta no
   return async function (dispatch) {
     try {
-      const post = await axios.post(`${urlDeploy}/booking/`, input)
-      console.log('rtk, postReserveHourPadelField es: ', post.data)
-      dispatch(postReservePadelField(post.data))
+      console.log('postReserveHourPadelField input ', input)
+      const post = await axios.post(`${urlDeploy}/booking`, input)
+      console.log('rtk, postReserveHourPadelField es: ', post)
+      dispatch(postReservePadelField(post))
     } catch (error) {
       console.log(error)
     }

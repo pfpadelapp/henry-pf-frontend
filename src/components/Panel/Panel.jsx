@@ -9,7 +9,6 @@ import {
   Stack,
   Tab,
   Table,
-  TableCaption,
   TableContainer,
   TabList,
   TabPanel,
@@ -20,27 +19,15 @@ import {
   Td,
   Th,
   Tbody,
-  Badge,
   IconButton,
   FormControl,
   FormLabel,
   Input,
   InputGroup,
-  InputRightElement,
   TabPanels,
   FormHelperText,
   Divider,
   useDisclosure,
-  Modal,
-  ModalContent,
-  ModalOverlay,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  RadioGroup,
-  Radio,
-  InputLeftElement,
   AlertDialog,
   AlertDialogOverlay,
   AlertDialogContent,
@@ -55,11 +42,10 @@ import { useNavigate, Link } from 'react-router-dom'
 import { BiUpload } from 'react-icons/bi'
 import { AiFillDelete } from 'react-icons/ai'
 import Swal from 'sweetalert2'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useColorMode } from '@chakra-ui/color-mode'
-import { getUpdateOwner } from '../../redux/owner/ownerSlice.js'
 import { useDispatch, useSelector } from 'react-redux'
-import { removePadelfieldOwner } from '../../redux/padelField/padelFieldSlice'
+import { getPadelFieldsById, removePadelfieldOwner } from '../../redux/padelField/padelFieldSlice'
 import { getUpdateUser } from '../../redux/users/usersSlice'
 import axios from 'axios'
 
@@ -85,12 +71,17 @@ export default function Panel() {
         formData
       )
       const imageUpload = aux.data
-      console.log(imageUpload)
+      // console.log(imageUpload)
       setImage(imageUpload)
     } catch (error) {
       console.log(error)
     }
   }
+  console.log(dataRender)
+  useEffect(() => {
+    dispatch(getPadelFieldsById(dataRender.padelFields[0]))
+  }, [])
+
   const [errors, setErrors] = useState({})
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = useRef()
@@ -323,7 +314,7 @@ export default function Panel() {
                                   <Td>
                                     <Flex gap='1rem' alignItems='center'>
                                       <Avatar size='sm' src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg' />
-                                      Super cancha de padel
+                                      {padelfield.name}
                                     </Flex>
                                   </Td>
                                   <Td textAlign='center'>

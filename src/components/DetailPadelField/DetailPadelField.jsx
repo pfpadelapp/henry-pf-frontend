@@ -84,6 +84,7 @@ export default function DetailPadelField() {
   const cancelRef = useRef()
   const [date, setDate] = useState('')
   const [getHour, setGetHour] = useState()
+  const navigate = useNavigate()
   const [renderMsg, setRenderMsg] = useState(1)
   const msgRenderHourInDrawer = Number(getHour)
   useEffect(() => {
@@ -103,8 +104,6 @@ export default function DetailPadelField() {
     const today = aux.split('-').reverse().join('/').slice(0, 2)
     const dateFormatMonth = dateFormat.slice(3, 5)
     const todayMonth = aux.split('-').reverse().join('/').slice(3, 5)
-    console.log('mes', dateFormatMonth, ' es mayor o igual a ', todayMonth)
-    console.log('dia', dateFormatDay, ' es mayor o igual a ', today)
     if (Number(dateFormatMonth) > Number(todayMonth) || Number(dateFormatMonth) === Number(todayMonth)) {
       if (Number(dateFormatDay) > Number(today) || Number(dateFormatDay) === Number(today)) {
         dispatch(getHoursByDate(idPadelField, dateFormat))
@@ -114,9 +113,25 @@ export default function DetailPadelField() {
     }
   }
   function handleHour(e) {
-    e.preventDefault()
     setGetHour(e.target.value) // 10
-    // console.log(e.target.value)
+    const horaaa = e.target.value
+    console.log(horaaa)
+    const dateFormat = date.split('/').reverse().join('-')
+    console.log('dateFormat', dateFormat)
+    const dateToPost =
+      Number(horaaa) === 9 ? `0${Number(horaaa)}:00:00` : `${horaaa}:00:00` // 10:00:00
+    console.log('dateToPost', dateToPost)
+    const dateFormatToInput = dateFormat + 'T' + dateToPost // 2022-08-25T17:00:00
+    console.log('dateFormatToInput', dateFormatToInput)
+    dispatch(postReserveHourPadelField({
+      idUser: dataRender.id,
+      idField: idPadelField,
+      date: dateFormatToInput
+    }))
+    setInput({
+      ...input,
+      date: dateFormatToInput
+    })
   }
   function handleCleanHoursByDate(e) {
     e.preventDefault()
@@ -130,19 +145,21 @@ export default function DetailPadelField() {
       Number(getHour) === 9 ? `0${Number(getHour)}:00:00` : `${getHour}:00:00` // 10:00:00
     // console.log(dateToPost)
     const dateFormatToInput = dateFormat + 'T' + dateToPost // 2022-08-25T17:00:00
+    console.log(input)
     setInput({
       ...input,
       date: dateFormatToInput
     })
+    console.log('en el handle es', getHour)
   }
-  // function handlePostReserve(e) {
-  //   e.preventDefault()
-  //   // console.log('cuarto', input)
-  //   dispatch(postReserveHourPadelField(input))
-  // }
+  function handlePostReserve(e) {
+    e.preventDefault()
+    // console.log('cuarto', input)
+    dispatch(postReserveHourPadelField(input))
+  }
   function handlePaymentReserve(e) {
     e.preventDefault()
-    console.log('handlePaymentReserve react', inputPayment)
+    // console.log('handlePaymentReserve react', inputPayment)
     dispatch(getPaymentPadelField(inputPayment))
   }
 
@@ -167,16 +184,26 @@ export default function DetailPadelField() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    !inputReview.rating
-      ? Swal.fire({
+    if (!inputReview.rating) {
+      Swal.fire({
         icon: 'error',
         title: 'Error',
         text: 'Debes seleccionar una puntuacion',
         confirmButtonColor: '#F27474'
       })
-      : dispatch(postReviewss(idPadelField, { ...inputReview }))
+    } else {
+      dispatch(postReviewss(idPadelField, { ...inputReview }))
+      Swal.fire({
+        icon: 'success',
+        title: 'Operación exitosa!',
+        text: 'Publicaste una reseña',
+        confirmButtonColor: '#98D035'
+      })
+      // window.location.reload()
+    }
   }
-  // console.log('inputtttt', inputReview)
+  // console.log('inputtttt', dataRender.id)
+  // console.log('inputtttt', date, 'T', getHour)
   return isAuthenticated
     ? (<Flex flexDirection='column'>
       <NavBar />
@@ -252,7 +279,6 @@ export default function DetailPadelField() {
                 m='1rem 0'>
                 Puntaje:
               </Text>
-              {/* ERROR */}
               {padelField.ratingsAverage === 1
                 ? (
                   <HStack color='#98D035'>
@@ -272,7 +298,7 @@ export default function DetailPadelField() {
                       <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                       <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                       <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                      <Text>{padelField.review?.length} Reseñas</Text>
+                      <Text color='white'>{padelField.review?.length} Reseñas</Text>
                     </HStack>
                   )
                   : padelField.ratingsAverage === 3
@@ -283,7 +309,7 @@ export default function DetailPadelField() {
                         <Icon h='2rem' w='2rem' as={AiFillStar} />
                         <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                         <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                        <Text>{padelField.review?.length} Reseñas</Text>
+                        <Text color='white'>{padelField.review?.length} Reseñas</Text>
                       </HStack>
                     )
                     : padelField.ratingsAverage === 4
@@ -294,7 +320,7 @@ export default function DetailPadelField() {
                           <Icon h='2rem' w='2rem' as={AiFillStar} />
                           <Icon h='2rem' w='2rem' as={AiFillStar} />
                           <Icon h='2rem' w='2rem' as={AiOutlineStar} />
-                          <Text>{padelField.review?.length} Reseñas</Text>
+                          <Text color='white'>{padelField.review?.length} Reseñas</Text>
                         </HStack>
                       )
                       : (
@@ -498,7 +524,7 @@ export default function DetailPadelField() {
               fontSize='2xl'>
               Reseñas recientes
             </Text>
-            {recentReviews?.map((recents, index) => {
+            {recentReviews?.reverse().map((recents, index) => {
               return (
                 <HStack key={index} margin='2rem' alignItems='top' spacing={10}>
                   <Avatar
@@ -685,7 +711,6 @@ export default function DetailPadelField() {
                 </Stack>
               </HStack>
               <FormControl maxWidth='50%' margin='5'>
-
                 <Textarea
                   placeholder='Escribe un comentario'
                   name='review'
