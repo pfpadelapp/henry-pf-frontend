@@ -13,28 +13,44 @@ import ScrollToTop from 'react-scroll-to-top'
 import { IoIosArrowUp } from 'react-icons/io'
 import { useAuth0 } from '@auth0/auth0-react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 
 export default function Home() {
   const dispatch = useDispatch()
   const allPadelField = useSelector((state) => state.padelFields.padelField)
   const allUsers = useSelector((state) => state.users.users)
   const [currentPage, setCurrentPage] = useState(1)
-  // const [superA, setSuperA] = useState(false)
+  const [findUser, setFindUser] = useState()
   const { isAuthenticated, isLoading, user } = useAuth0()
-
+  const [input, setInput] = useState({
+    name: '',
+    lastName: '',
+    email: '',
+    user_metadata: {}
+  })
   if (isLoading === false) {
-    const find = allUsers.filter((e) => { return e.email === user.email })
-    console.log('success', find)
+    let find = allUsers.filter((e) => {
+      return e.email === user.email
+    })
     var find2 = find[0]?.user_metadata.isActive
-
+    if (user.sub.slice(0, 6) === 'google') {
+      console.log('hols me gusta poner consoleslog', user)
+      setInput({
+        ...input,
+        name: user.given_name,
+        lastName: user.family_name,
+        email: user.email
+      })
+      dispatch(postUser(input))
+    }
+  }
+  // console.log("este es el find",find2)
   const navigate = useNavigate()
 
   // console.log(allPadelField)
   useEffect(() => {
     // dispatch(fetchAllOwners())
     // dispatch(fetchAllUsers())
-    
+
     dispatch(fetchAllPadelFields())
     dispatch(fetchAllUsers())
   }, [])
@@ -44,7 +60,8 @@ export default function Home() {
   //   setCurrentPage(pageNumber)
   // }
 
-  return isLoading === true ? null : isAuthenticated ? find2 === true ? (
+  return isLoading === true ? null : isAuthenticated ? (
+    find2 === true ? (
       <>
         <NavBar setCurrentPage={setCurrentPage} />
         <Flex>
@@ -60,12 +77,10 @@ export default function Home() {
               paddingLeft='75px'
               spacing={20}
               columns={{ base: 1, lg: 2, xl: 3 }}>
-              {!allPadelField.length
-                ? (
+              {!allPadelField.length ? (
                 <Spinner size='xl' />
-                  )
-                : (
-                    allPadelField?.map((card) => (
+              ) : (
+                allPadelField?.map((card) => (
                   <CardPadel
                     key={card.id}
                     id={card.id}
@@ -75,12 +90,12 @@ export default function Home() {
                     type={card.type}
                     price={card.price}
                   />
-                    ))
-                  )}
+                ))
+              )}
             </SimpleGrid>
             {/* <Center margin='4rem 0'>
-            <Paginado pageFunction={paginado} current={currentPage}/>
-          </Center> */}
+          <Paginado pageFunction={paginado} current={currentPage}/>
+        </Center> */}
           </Flex>
         </Flex>
         <ScrollToTop
@@ -97,10 +112,11 @@ export default function Home() {
         />{' '}
         {/*  2200 */}
         <Footer />
-        </>
+      </>
+    ) : (
+      navigate('/')
+    )
+  ) : (
+    navigate('/')
   )
-    : (
-        navigate('/')
-      )
-    : navigate('/')
 }
