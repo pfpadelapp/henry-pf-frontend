@@ -1,5 +1,5 @@
 import { Center, Flex, Image, Text } from '@chakra-ui/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setPaymentCheckout } from '../../redux/padelField/padelFieldSlice'
 import { NavBar } from '../NavBar/NavBar'
@@ -12,6 +12,15 @@ export default function Success() {
   const dispatch = useDispatch()
   const { isAuthenticated } = useAuth0()
   const navigate = useNavigate()
+
+  let count = 5
+  setInterval(function () {
+    count--
+    if (count === 0) {
+      navigate('/home')
+    }
+  }, 1000)
+
   useEffect(() => {
     const querystring = window.location.search
     const params = new URLSearchParams(querystring)
