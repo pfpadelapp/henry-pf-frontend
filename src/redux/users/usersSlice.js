@@ -37,8 +37,8 @@ export default userSlice.reducer
 export function fetchAllUsers() {
   return async function (dispatch) {
     try {
-      const allUsers = await axios.get(`${urlDeploy}/users`)
-      dispatch(setUsers(allUsers.data))
+      const allUsers = await axios.get(`${urlDeploy}/user`)
+      dispatch(setUser(allUsers.data))
     } catch (error) {
       console.log(error)
     }
