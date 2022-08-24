@@ -57,13 +57,14 @@ export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [limit, setLimit] = useState([500, 3500])
   const [navSize, changeNavSize] = useState('small')
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
   const { logout, user, isAuthenticated } = useAuth0()
+  // console.log('El user email es', user.email)
   useEffect(() => {
     dispatch(getDataDetail(user.email))
   }, [])
   const dataRender = useSelector((state) => state.users.userDetail)
-  console.log(dataRender)
+  // console.log(dataRender)
   const onChange = (val) => {
     setLimit(val)
   }
@@ -291,6 +292,7 @@ export default function Sidebar() {
           </ModalFooter>
         </ModalContent>
       </Modal>
+
       <Flex
         p='5%'
         flexDir='column'
@@ -302,7 +304,7 @@ export default function Sidebar() {
           justifyContent={navSize == 'small' ? 'center' : 'flex-start'}>
           <Link to={dataRender?.user_metadata?.rol === 'player' ? '/perfil' : '/panel'}>
             <Flex>
-              <Avatar size='sm' src={user ? user.picture : null} />
+              <Avatar size='sm' src={dataRender?.picture ? dataRender.picture : user.picture} />
               <Flex
                 flexDir='column'
                 ml={4}

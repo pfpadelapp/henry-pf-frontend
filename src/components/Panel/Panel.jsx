@@ -68,19 +68,15 @@ export default function Panel() {
   const navigate = useNavigate()
   const { colorMode } = useColorMode()
   const [input, setInput] = useState({
-    password: '',
     contact: '',
     username: ''
   })
   const dataRender = useSelector((state) => state.users.userDetail)
   const [errors, setErrors] = useState({})
   const [show, setShow] = useState(false)
-  const handleShowPassword = () => setShow(!show)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = useRef()
   const validateName = /^[a-zA-Z\s]+$/
-  const validatePass =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/
   function validate(input) {
     const errors = {}
     if (!input.username) {
@@ -103,12 +99,6 @@ export default function Panel() {
       input.contact.toString().includes(',')
     ) {
       errors.contact = 'Los valores decimales no estan permitidos'
-    }
-    if (!input.password) {
-      errors.password = 'La contraseña es necesaria'
-    } else if (!validatePass.test(input.password)) {
-      errors.password =
-        'Debe tener entre 8 y 16 caracteres, un digito, una minuscula, una mayuscula y un caracter especial'
     }
     return errors
   }
@@ -144,7 +134,6 @@ export default function Panel() {
         confirmButtonColor: '#98D035'
       })
       setInput({
-        password: '',
         contact: '',
         username: ''
       })
@@ -152,7 +141,7 @@ export default function Panel() {
   }
   function handleRemove(e) {
     e.preventDefault()
-    dispatch(removePadelfieldOwner(idPadelfield))
+    dispatch(removePadelfieldOwner(dataRender.id))
   }
   return isAuthenticated
     ? (
@@ -224,33 +213,6 @@ export default function Panel() {
                               {errors.username && (
                                 <FormHelperText color='red.400'>
                                   {errors.username}
-                                </FormHelperText>
-                              )}
-                            </FormControl>
-                            <FormControl isRequired>
-                              <FormLabel>Contraseña</FormLabel>
-                              <InputGroup size='md'>
-                                <Input
-                                  focusBorderColor='#98D035'
-                                  type={show ? 'text' : 'password'}
-                                  name='password'
-                                  value={input.password}
-                                  variant='flushed'
-                                  htmlSize={4}
-                                  onChange={(e) => handleChange(e)}
-                                  placeholder='Ingrese la nueva contraseña'
-                                />
-                                <InputRightElement width='4.5rem'>
-                                  <Button
-                                    height='1.75rem'
-                                    onClick={handleShowPassword}>
-                                    {show ? 'Ocultar' : 'Mostrar'}
-                                  </Button>
-                                </InputRightElement>
-                              </InputGroup>
-                              {errors.password && (
-                                <FormHelperText width='70%' color='red.400'>
-                                  {errors.password}
                                 </FormHelperText>
                               )}
                             </FormControl>

@@ -283,12 +283,12 @@ export function postReserveHourPadelField(input) {
 export function getPaymentPadelField(input) {
   return async function (dispatch) {
     try {
+      console.log(input)
       const payment = await axios.post(
         `${urlDeploy}/payment/createPayment`,
         input
       )
-      // console.log('Este es el pago ', payment.data)
-      dispatch(setPaymentPadelfield(payment.data))
+      console.log('Este es el pago ', payment.data)
     } catch (error) {
       console.log(error)
     }
