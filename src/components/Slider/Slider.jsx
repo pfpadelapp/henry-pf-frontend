@@ -6,7 +6,7 @@ import payImage from '../../resources/assets/pay.svg'
 import playImage from '../../resources/assets/play.svg'
 import { Image, Text, Stack, Flex } from '@chakra-ui/react'
 
-export default function slider() {
+export default function Slider() {
   return (
     <Splide
       options={{
