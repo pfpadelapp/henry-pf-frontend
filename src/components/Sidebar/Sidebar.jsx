@@ -243,7 +243,7 @@ export default function Sidebar() {
                 size='md'
                 onChange={(e) => handleOrderPrice(e)}>
                 <option value='1'>Ascendente</option>
-                <option value='-1'>Descendiente</option>
+                <option value='-1'>Descendente</option>
               </Select>
               <Select
                 variant='filled'

@@ -26,6 +26,11 @@ export default function Home() {
     const find2 = find[0]?.user_metadata.isActive
     const navigate = useNavigate()
     useEffect(() => {
+      // dispatch(fetchAllOwners())
+      if(isLoading===false && user.email_verified === true){
+        dispatch(createGoogleUser(user))
+      }
+
       dispatch(fetchAllPadelFields())
       dispatch(fetchAllUsers())
     }, [])
