@@ -25,7 +25,7 @@ export default function History() {
       <Flex   width='100%'
               justifyContent='center'
               alignSelf='flex-start'>
-      { 
+      {dataRender?.history?.length>0 ? 
       (dataRender?.history?.map((e=>{
                         return(
                                 <Flex 
@@ -44,7 +44,10 @@ export default function History() {
                                       </Box>
                                 </Flex>
                         )
-                    })))}
+                    }))): <Text column={1}
+                    justifyItems='center'
+                    margin='4rem'
+                    marginTop="15vh"> Aun no alquilo ninguna cancha</Text>}
         </Flex>
       <Footer/>
       <ScrollToTop/>
