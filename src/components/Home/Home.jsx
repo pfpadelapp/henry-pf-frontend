@@ -36,7 +36,6 @@ export default function Home() {
     useEffect(() => {
       // dispatch(fetchAllOwners())
       // dispatch(fetchAllUsers())
-
       dispatch(fetchAllPadelFields())
       dispatch(fetchAllUsers())
     }, [])
