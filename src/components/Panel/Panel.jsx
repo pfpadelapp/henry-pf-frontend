@@ -39,7 +39,8 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter
+  ModalFooter,
+  ModalCloseButton
 } from '@chakra-ui/react'
 import { NavBar } from '../NavBar/NavBar'
 import Sidebar from '../Sidebar/Sidebar'
@@ -86,7 +87,8 @@ export default function Panel() {
     }
   }
   const [errors, setErrors] = useState({})
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const deleteModal = useDisclosure()
+  const allPadelFieldsModal = useDisclosure()
   const cancelRef = useRef()
   const validateName = /^[a-zA-Z\s]+$/
   function validate(input) {
@@ -175,13 +177,15 @@ export default function Panel() {
   useEffect(() => {
     dispatch(fetchAllPadelFields())
   }, [dispatch])
-
+  // const [filtered, setFiltered] = useState()
   const filterPadelfielOwner = allPadelfields?.filter((elem) => elem.user === dataRender.id && elem.isActive === true)
+  const filterPadelfielOwnerRecents = allPadelfields?.slice(allPadelfields?.length - 3)
   // console.log('allPadelfields', allPadelfields)
   // console.log('allPadelfields', filterPadelfielOwner)
   // console.log('useer padelfieldddds', dataRender)
 
-  console.log('SE RENDERIZA?????', idFromRtk)
+  console.log('SE RENDERIZA?????', filterPadelfielOwner)
+  console.log('SE RENDERIZA?????', filterPadelfielOwnerRecents)
   return isLoading === true ? null : isAuthenticated
     ? (
       <>
@@ -331,24 +335,24 @@ export default function Panel() {
                         </Tr>
                       </Thead>
                       <Tbody>
-                        {filterPadelfielOwner?.length > 0
-                          ? filterPadelfielOwner?.map((padelfield, index) => {
+                        {filterPadelfielOwnerRecents?.length > 0
+                          ? filterPadelfielOwnerRecents?.reverse().map((recents, index) => {
                             return (
                               (
                                 <Tr key={index}>
                                   <Td>
                                     <Flex gap='1rem' alignItems='center'>
-                                      <Avatar size='sm' src={padelfield.image} />
-                                      {padelfield.name}
+                                      <Avatar size='sm' src={recents.image} />
+                                      {recents.name}
                                     </Flex>
                                   </Td>
                                   <Td textAlign='center'>
                                     <Link to='/actualizarCancha'>
-                                      <IconButton icon={<BiUpload />} bg='#98D035' value={padelfield.id} onClick={(e) => handleSetIdPadel(padelfield.id)} />
+                                      <IconButton icon={<BiUpload />} bg='#98D035' value={recents.id} onClick={(e) => handleSetIdPadel(recents.id)} />
                                     </Link>
                                   </Td>
-                                  <Td onClick={onOpen} textAlign='center'>
-                                    <IconButton icon={<AiFillDelete />} bg='red.500' value={padelfield.id} onClick={(e) => handleSetIdPadel(padelfield.id)} />
+                                  <Td onClick={deleteModal.onOpen} textAlign='center'>
+                                    <IconButton icon={<AiFillDelete />} bg='red.500' value={recents.id} onClick={(e) => handleSetIdPadel(recents.id)} />
                                   </Td>
                                 </Tr>
                               )
@@ -403,17 +407,59 @@ export default function Panel() {
                         transition: 'all .5s ease',
                         backgroundColor: '#E3FFB2'
                       }}
+                      onClick={allPadelFieldsModal.onOpen}
                       backgroundColor='#98D035'>
                       Ver todas las canchas
                     </Button>
+                    <Modal scrollBehavior='inside' size='3xl' isCentered closeOnOverlayClick={false} isOpen={allPadelFieldsModal.isOpen} onClose={allPadelFieldsModal.onClose}>
+                      <ModalOverlay />
+                      <ModalContent>
+                        <ModalHeader>Todas las canchas</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                          {filterPadelfielOwner?.map((padelfield, index) => {
+                            return (
+                              <Flex key={index}>
+                                <Flex gap='1rem' alignItems='center'>
+                                  <Avatar size='sm' src={padelfield.image} />
+                                  {padelfield.name}
+                                </Flex>
+                                <Link to='/actualizarCancha'>
+                                  <IconButton icon={<BiUpload />} bg='#98D035' value={padelfield.id} onClick={(e) => handleSetIdPadel(padelfield.id)} />
+                                </Link>
+                                <Flex onClick={deleteModal.onOpen} textAlign='center'>
+                                  <IconButton icon={<AiFillDelete />} bg='red.500' value={padelfield.id} onClick={(e) => handleSetIdPadel(padelfield.id)} />
+                                </Flex>
+                              </Flex>
+                            )
+                          })}
+                        </ModalBody>
+                        <ModalFooter>
+                          <Button
+                            bg='#98D035'
+                            _hover={{
+                              color: '#98D035',
+                              backgroundColor: '#E3FFB2'
+                            }}
+                            _active={{
+                              color: '#98D035',
+                              backgroundColor: '#E3FFB2'
+                            }}
+                            onClick={deleteModal.onClose}
+                            color='white' >
+                            Cerrar
+                          </Button>
+                        </ModalFooter>
+                      </ModalContent>
+                    </Modal>
                   </HStack>
                 </Box>
               </Flex>
             </Center>
             <AlertDialog
-              isOpen={isOpen}
+              isOpen={deleteModal.isOpen}
               leastDestructiveRef={cancelRef}
-              onClose={onClose}
+              onClose={deleteModal.onClose}
               isCentered>
               <AlertDialogOverlay />
               <AlertDialogContent>
@@ -424,7 +470,7 @@ export default function Panel() {
                   Estas seguro de que quieres eliminar esta cancha?
                 </AlertDialogBody>
                 <AlertDialogFooter>
-                  <Button ref={cancelRef} onClick={onClose}>
+                  <Button ref={cancelRef} onClick={deleteModal.onClose}>
                     Cancelar
                   </Button>
                   <Button
@@ -432,7 +478,7 @@ export default function Panel() {
                     color='white'
                     ml={3}
                     onClick={(e) => {
-                      onClose()
+                      deleteModal.onClose()
                       handleRemove(e)
                     }}>
                     Eliminar
