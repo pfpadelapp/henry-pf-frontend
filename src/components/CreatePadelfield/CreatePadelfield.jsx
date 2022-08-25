@@ -139,7 +139,7 @@ export default function CreatePadelfield() {
         ownerId: '',
         availability: ''
       })
-      navigate('/home')
+      navigate('/')
     }
   }
   // console.log(input)
@@ -293,7 +293,7 @@ export default function CreatePadelfield() {
                     <Button
                       marginLeft='1rem'
                     >
-                      Cancelar
+                      Volver
                     </Button>
                   </Link>
                 </HStack>
