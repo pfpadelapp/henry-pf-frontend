@@ -109,21 +109,20 @@ export default function DetailPadelField() {
         dispatch(getHoursByDate(idPadelField, dateFormat))
       }
     } else {
-      console.log('INGRESA BIEN LA FECHAAAAAAAAAAA')
+      console.log('INGRESA BIEn')
     }
   }
   function handleHour(e) {
-
     setGetHour(e.target.value) // 10
     const horaaa = e.target.value
-    console.log(horaaa)
+    // console.log(horaaa)
     const dateFormat = date.split('/').reverse().join('-')
-    console.log('dateFormat', dateFormat)
+    // console.log('dateFormat', dateFormat)
     const dateToPost =
       Number(horaaa) === 9 ? `0${Number(horaaa)}:00:00` : `${horaaa}:00:00` // 10:00:00
-    console.log('dateToPost', dateToPost)
+    // console.log('dateToPost', dateToPost)
     const dateFormatToInput = dateFormat + 'T' + dateToPost // 2022-08-25T17:00:00
-    console.log('dateFormatToInput', dateFormatToInput)
+    // console.log('dateFormatToInput', dateFormatToInput)
     dispatch(postReserveHourPadelField({
       idUser: dataRender.id,
       idField: idPadelField,
@@ -146,12 +145,12 @@ export default function DetailPadelField() {
       Number(getHour) === 9 ? `0${Number(getHour)}:00:00` : `${getHour}:00:00` // 10:00:00
     // console.log(dateToPost)
     const dateFormatToInput = dateFormat + 'T' + dateToPost // 2022-08-25T17:00:00
-    console.log(input)
+    // console.log(input)
     setInput({
       ...input,
       date: dateFormatToInput
     })
-    console.log('en el handle es', getHour)
+    // console.log('en el handle es', getHour)
   }
   function handlePostReserve(e) {
     e.preventDefault()
@@ -290,7 +289,7 @@ export default function DetailPadelField() {
                     <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                     <Text color='white'> {padelField.review?.length} Reseñas</Text>
                   </HStack>
-                  )
+                )
                 : padelField.ratingsAverage === 2
                   ? (
                     <HStack color='#98D035'>
@@ -301,7 +300,7 @@ export default function DetailPadelField() {
                       <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                       <Text color='white'>{padelField.review?.length} Reseñas</Text>
                     </HStack>
-                    )
+                  )
                   : padelField.ratingsAverage === 3
                     ? (
                       <HStack color='#98D035'>
@@ -312,7 +311,7 @@ export default function DetailPadelField() {
                         <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                         <Text color='white'>{padelField.review?.length} Reseñas</Text>
                       </HStack>
-                      )
+                    )
                     : padelField.ratingsAverage === 4
                       ? (
                         <HStack color='#98D035'>
@@ -397,8 +396,8 @@ export default function DetailPadelField() {
                         <Stack w='100%'>
                           {hourByDatePadelFiels.length > 0
                             ? (
-                                hourByDatePadelFiels?.map((element, i) => {
-                                  return (
+                              hourByDatePadelFiels?.map((element, i) => {
+                                return (
                                   <div key={i}>
                                     <Button
                                       width='100%'
@@ -411,9 +410,9 @@ export default function DetailPadelField() {
                                       {element} hs
                                     </Button>
                                   </div>
-                                  )
-                                })
-                              )
+                                )
+                              })
+                            )
                             : (
                               <Stack gap='2rem'>
                                 <Image
@@ -428,7 +427,7 @@ export default function DetailPadelField() {
                                   primero debes seleccionar una fecha
                                 </Text>
                               </Stack>
-                              )}
+                            )}
                           <AlertDialog
                             motionPreset='slideInBottom'
                             leastDestructiveRef={cancelRef}

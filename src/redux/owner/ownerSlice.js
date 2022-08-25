@@ -56,7 +56,7 @@ export function getUpdateOwner(ownerId, dataOwner) {
         `${urlDeploy}/owner/${ownerId}`,
         dataOwner
       )
-      console.log('actalizar owner', ownerUpdate.data)
+      // console.log('actalizar owner', ownerUpdate.data)
       dispatch(setUpdate(ownerUpdate))
     } catch (error) {
       console.log(error)

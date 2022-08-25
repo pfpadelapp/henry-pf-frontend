@@ -77,7 +77,7 @@ export function clearUserDetail() {
 export function getUpdateUser(userId, dataUser) {
   return async function (dispatch) {
     try {
-      console.log('actalizar usuario antes', dataUser)
+      // console.log('actalizar usuario antes', dataUser)
       const userUpdate = await axios.put(
         `${urlDeploy}/user/${userId}`,
         dataUser
@@ -106,8 +106,8 @@ export function createGoogleUser(user) {
   return async function () {
     try {
       // console.log('input que recibo', input)
-      console.log("consolelog del ", user)
-      var usuarioGoogle =await axios.post(`${urlDeploy}/user/google`, user)
+      // console.log("consolelog del ", user)
+      var usuarioGoogle = await axios.post(`${urlDeploy}/user/google`, user)
       console.log('input que muestro', usuarioGoogle)
     } catch (error) {
       console.log(error)

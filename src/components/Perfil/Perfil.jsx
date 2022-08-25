@@ -52,7 +52,7 @@ export default function Perfil() {
         formData
       )
       const imageUpload = aux.data
-      console.log(imageUpload)
+      // console.log(imageUpload)
       setImage(imageUpload)
     } catch (error) {
       console.log(error)

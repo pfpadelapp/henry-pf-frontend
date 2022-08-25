@@ -192,7 +192,7 @@ export function getInfoByName(padelName) {
       )
 
       // console.log('REdux', padelFieldSearch.data.results)
-      console.log('REDUX desde el searchBar', padelFieldSearch.data)
+      // console.log('REDUX desde el searchBar', padelFieldSearch.data)
       if (padelName === '') {
         Swal.fire({
           icon: 'error',
@@ -247,7 +247,7 @@ export function getHoursByDate(idPadelField, date) {
       const hoursByDate = await axios.get(
         `${urlDeploy}/booking/hours?idField=${idPadelField}&day=${date}`
       )
-      console.log('getHoursByDate', hoursByDate.data)
+      // console.log('getHoursByDate', hoursByDate.data)
       // console.log(idPadelField)
       // console.log(date)
       dispatch(setDateActual(hoursByDate.data))
@@ -279,9 +279,9 @@ export function postReserveHourPadelField(input) {
   // esta no
   return async function (dispatch) {
     try {
-      console.log('postReserveHourPadelField input ', input)
+      // console.log('postReserveHourPadelField input ', input)
       const post = await axios.post(`${urlDeploy}/booking`, input)
-      console.log('rtk, postReserveHourPadelField es: ', post.data)
+      // console.log('rtk, postReserveHourPadelField es: ', post.data)
       dispatch(postReservePadelField(post.data))
     } catch (error) {
       console.log(error)
@@ -292,12 +292,12 @@ export function postReserveHourPadelField(input) {
 export function getPaymentPadelField(input) {
   return async function (dispatch) {
     try {
-      console.log('getPaymentPadelField', input)
+      // console.log('getPaymentPadelField', input)
       const payment = await axios.post(
         `${urlDeploy}/payment/createPayment`,
         input
       )
-      console.log('Este es el pago de getPaymentPadelField', payment.data.links[1].href)
+      // console.log('Este es el pago de getPaymentPadelField', payment.data.links[1].href)
       dispatch(setPaymentPadelfield(payment.data.links[1].href))
     } catch (error) {
       console.log(error)
@@ -308,11 +308,11 @@ export function getPaymentPadelField(input) {
 export function setPaymentCheckout(checkId) {
   return async function (dispatch) {
     try {
-      console.log('setPaymentCheckout', checkId)
+      // console.log('setPaymentCheckout', checkId)
       const checkIdPayment = await axios.get(
         `${urlDeploy}/payment/executePayment?token=${checkId}`
       )
-      console.log('Y en el rtk setPaymentCheckout es : ', checkIdPayment.data)
+      // console.log('Y en el rtk setPaymentCheckout es : ', checkIdPayment.data)
       dispatch(setPaymentCheck(checkIdPayment.data))
     } catch (error) {
       console.log(error)
@@ -335,9 +335,9 @@ export function createPadelField(input) {
 export function removePadelfieldOwner(idPadelfield) {
   return async function (dispatch) {
     try {
-      console.log('aca lo llame', idPadelfield)
+      // console.log('aca lo llame', idPadelfield)
       const padelFieldHide = await axios.delete(`${urlDeploy}/field/${idPadelfield}`)
-      console.log(padelFieldHide.data)
+      // console.log(padelFieldHide.data)
       dispatch(setHidePadelfiled(padelFieldHide.data))
     } catch (error) {
       console.log(error)
@@ -348,12 +348,12 @@ export function removePadelfieldOwner(idPadelfield) {
 export function updatePadelfieldOwner(idPadelfield, inputUpdate) {
   return async function (dispatch) {
     try {
-      console.log('ya casii', idPadelfield, inputUpdate)
+      // console.log('ya casii', idPadelfield, inputUpdate)
       const padelFieldUpdate = await axios.put(
         `${urlDeploy}/field/${idPadelfield}`,
         inputUpdate
       )
-      console.log('ya meritoooo', padelFieldUpdate.data)
+      // console.log('ya meritoooo', padelFieldUpdate.data)
       dispatch(setUpdatePadelfiled(padelFieldUpdate.data))
     } catch (error) {
       console.log(error)
@@ -368,8 +368,8 @@ export function postReviewss(idPadelField, input) {
         `${urlDeploy}/field/${idPadelField}/reviews`,
         input
       )
-      console.log('id padelfield: ', idPadelField)
-      console.log('input: ', input)
+      // console.log('id padelfield: ', idPadelField)
+      // console.log('input: ', input)
       dispatch(postRevieww(postReview.data))
     } catch (error) {
       console.log(error)
@@ -380,14 +380,14 @@ export function postReviewss(idPadelField, input) {
 export function PadelFieldDataByOwner(array) {
   return async function (dispatch) {
     try {
-      console.log('PadelFieldDataByOwner array ', array)
+      // console.log('PadelFieldDataByOwner array ', array)
       const allPadelFields = await axios.get(`${urlDeploy}/field`)
 
       for (let i = 0; i < array.length; i++) {
         const padelfieldsOwner = allPadelFields?.find((element) => {
           return element.id === array[i]
         })
-        console.log('PadelFieldDataByOwner', padelfieldsOwner)
+        // console.log('PadelFieldDataByOwner', padelfieldsOwner)
       }
       dispatch(getPadelFieldByOwner(array))
     } catch (error) {
@@ -399,7 +399,7 @@ export function PadelFieldDataByOwner(array) {
 export function catchTempPadel(idpadel) {
   return function (dispatch) {
     try {
-      console.log('en el rtk es', idpadel)
+      // console.log('en el rtk es', idpadel)
       dispatch(catchIdPadelTemp(idpadel))
     } catch (error) {
       console.log(error)

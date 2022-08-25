@@ -54,7 +54,7 @@ export default function UpdatePadelfield() {
         formData
       )
       const imageUpload = aux.data
-      console.log(imageUpload)
+      // console.log(imageUpload)
       setImage(imageUpload)
     } catch (error) {
       console.log(error)
@@ -140,7 +140,7 @@ export default function UpdatePadelfield() {
       navigate('/home')
     }
   }
-  console.log(input)
+  // console.log(input)
   return isAuthenticated
     ? (
       <>

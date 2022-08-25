@@ -24,7 +24,7 @@ export function getAdmins() {
     try {
       const alladmins = await axios.get(`${urlDeploy}/admin/`)
       dispatch(setAdmins(alladmins.data))
-      console.log('redux', alladmins)
+      // console.log('redux', alladmins)
     } catch (error) {
       console.log(error)
     }

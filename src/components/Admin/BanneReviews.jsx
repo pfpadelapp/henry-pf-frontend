@@ -39,10 +39,10 @@ export default function BanneReviews() {
 
   const handleInput = (e) => {
     e.preventDefault()
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setFieldName(e.target.value)
   }
-  console.log(fieldName)
+  // console.log(fieldName)
 
   async function handleSubmit() {
     // const resF = await axios.get(`http://localhost:3000/field/panel/search?name=${fieldName}`)
@@ -55,8 +55,8 @@ export default function BanneReviews() {
 
   async function disableField(id) {
     await axios.delete(`${urlDeploy}/field/${id}`)
-    console.log('CANCHA INHABILITADA')
-    console.log('des', field)
+    // console.log('CANCHA INHABILITADA')
+    // console.log('des', field)
     handleSubmit()
   }
 
@@ -65,8 +65,8 @@ export default function BanneReviews() {
   async function enableField(id) {
     // await axios.put(`http://localhost:3000/field//enable/${id}`)
     await axios.put(`${urlDeploy}/field/enable/${id}`)
-    console.log('CANCHA INHABILITADA')
-    console.log('hab', field)
+    // console.log('CANCHA INHABILITADA')
+    // console.log('hab', field)
     handleSubmit()
   }
 
@@ -89,7 +89,7 @@ export default function BanneReviews() {
             height='calc(100vh - 12vh)'
             margin='2vh 0'>
             <VStack justifyContent='center' width='100%' >
-               <Text paddingTop='3%' fontWeight='bold' >LISTA DE CANCHAS</Text>
+              <Text paddingTop='3%' fontWeight='bold' >LISTA DE CANCHAS</Text>
               <HStack paddingTop='2%' paddingBottom='2%'>
                 <InputGroup
                   height='40px'
@@ -155,27 +155,27 @@ export default function BanneReviews() {
                       <HStack justifyContent='center' paddingTop='3%'>
                         {e.isActive === true
                           ? (
-                          <Button
-                            bg='#98D035'
-                            alignContent='center'
-                            alignItems='center'
-                            width='170px'
-                            height='30px'
-                            onClick={() => disableField(e.id)}>
-                            Deshabilitar cancha
-                          </Button>
-                            )
+                            <Button
+                              bg='#98D035'
+                              alignContent='center'
+                              alignItems='center'
+                              width='170px'
+                              height='30px'
+                              onClick={() => disableField(e.id)}>
+                              Deshabilitar cancha
+                            </Button>
+                          )
                           : (
-                          <Button
-                            bg='#95302f'
-                            alignContent='center'
-                            alignItems='center'
-                            width='170px'
-                            height='30px'
-                            onClick={() => enableField(e.id)}>
-                            Habilitar cancha
-                          </Button>
-                            )}
+                            <Button
+                              bg='#95302f'
+                              alignContent='center'
+                              alignItems='center'
+                              width='170px'
+                              height='30px'
+                              onClick={() => enableField(e.id)}>
+                              Habilitar cancha
+                            </Button>
+                          )}
                       </HStack>
                     </Box>
                   ))}
@@ -186,7 +186,7 @@ export default function BanneReviews() {
         <ModalAdmin isOpen={isOpen} onClose={onClose} />
       </Flex>
     </>
-  ): (
+  ) : (
     navigate('/')
   )
 }
