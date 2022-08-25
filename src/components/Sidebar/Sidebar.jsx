@@ -3,10 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   FiMenu,
   FiHome,
-  FiBell,
   FiFilter,
-  FiClipboard,
-  FiInfo
+  FiClipboard
 } from 'react-icons/fi'
 import { RiAdminFill } from 'react-icons/ri'
 import {
@@ -18,7 +16,6 @@ import {
   Button,
   Icon,
   Avatar,
-  ModalCloseButton,
   ModalFooter,
   ModalBody,
   Heading,

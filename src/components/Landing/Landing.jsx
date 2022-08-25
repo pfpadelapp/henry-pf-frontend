@@ -25,7 +25,9 @@ export function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const { colorMode } = useColorMode()
-  const { isAuthenticated, loginWithPopup } = useAuth0()
+  const { isAuthenticated, loginWithPopup, user } = useAuth0()
+
+  console.log(user)
 
   const login = async () => {
     await loginWithPopup()
@@ -85,7 +87,7 @@ export function Landing() {
         </HStack>
         <Spacer />
         <HStack as='nav' spacing='5'>
-          <LoginButton />
+          {!user ? <LoginButton /> : null}
           <ToggleColorMode />
         </HStack>
       </Flex>

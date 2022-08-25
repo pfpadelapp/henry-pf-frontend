@@ -5,7 +5,7 @@ import { useColorMode } from '@chakra-ui/color-mode'
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 
 export function NavBar() {
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
 
   return (
     <Flex
@@ -32,7 +32,6 @@ export function NavBar() {
         align='center'
         justifyContent='space.between'>
         <Spacer />
-
         <Box>
           <SearchBar />
         </Box>
