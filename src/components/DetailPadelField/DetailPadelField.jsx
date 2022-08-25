@@ -709,6 +709,7 @@ export default function DetailPadelField() {
                     <Button onClick={handleClickStarValue} value={4}>★</Button>
                     <Button onClick={handleClickStarValue} value={5}>★</Button>
                   </HStack>
+                  
                 </Stack>
               </HStack>
               <FormControl maxWidth='50%' margin='5'>
