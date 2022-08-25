@@ -701,7 +701,7 @@ export default function DetailPadelField() {
               <HStack margin='0 2rem'>
                 <Avatar size='lg' src={dataRender?.picture || user?.picture} />
                 <Stack>
-                  <Text>{dataRender?.email || user?.picture}</Text>
+                  <Text>{dataRender?.name || user?.name}</Text>
                   <HStack color='#98D035'>
                     <Button onClick={handleClickStarValue} value={1}>★</Button>
                     <Button onClick={handleClickStarValue} value={2}>★</Button>
