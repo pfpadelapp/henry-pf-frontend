@@ -23,7 +23,7 @@ import {
 import Footer from '../Footer/Footer'
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 import { useColorMode } from '@chakra-ui/color-mode'
-import { NavLink } from 'react-router-dom'
+import { Link as ReachLink } from 'react-router-dom'
 import Contact from '../Contact/Contact'
 import LoginButton from '../LoginButton/LoginButton'
 import { useAuth0 } from '@auth0/auth0-react'
@@ -89,13 +89,11 @@ export default function SocialProfileSimple() {
         backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}
         borderBottomColor='#F8F1F1'>
         <HStack as='nav' spacing='5'>
-          <NavLink to='/home'>
-            <Button
-              fontSize='15px'
-              backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}>
-              Inicio
-            </Button>
-          </NavLink>
+          <Link as={ReachLink} to={'/home'}>
+            <Text fontWeight='bold' fontSize='2xl'>
+              PadelApp
+            </Text>
+          </Link>
           <Button
             onClick={onOpen}
             fontSize='15px'
