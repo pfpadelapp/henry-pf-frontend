@@ -14,7 +14,8 @@ export const padelfieldSlice = createSlice({
     postReserve: [],
     payReserve: [],
     postReview: [],
-    padelfieldsByOwner: []
+    padelfieldsByOwner: [],
+    idPadelfieldTemp: ''
   },
   reducers: {
     setPadelField: (state, action) => {
@@ -73,11 +74,15 @@ export const padelfieldSlice = createSlice({
     },
     getPadelFieldByOwner: (state, action) => {
       state.padelfieldsByOwner = action.payload
+    },
+    catchIdPadelTemp: (state, action) => {
+      state.idPadelfieldTemp = action.payload
     }
   }
 })
 
 export const {
+  catchIdPadelTemp,
   getPadelFieldByOwner,
   setUpdatePadelfiled,
   setHidePadelfiled,
@@ -330,8 +335,10 @@ export function createPadelField(input) {
 export function removePadelfieldOwner(idPadelfield) {
   return async function (dispatch) {
     try {
-      const padelFieldHide = axios.post(`${urlDeploy}/field/${idPadelfield}`)
-      dispatch(setHidePadelfiled(padelFieldHide))
+      console.log('aca lo llame', idPadelfield)
+      const padelFieldHide = await axios.delete(`${urlDeploy}/field/${idPadelfield}`)
+      console.log(padelFieldHide.data)
+      dispatch(setHidePadelfiled(padelFieldHide.data))
     } catch (error) {
       console.log(error)
     }
@@ -341,11 +348,12 @@ export function removePadelfieldOwner(idPadelfield) {
 export function updatePadelfieldOwner(idPadelfield, inputUpdate) {
   return async function (dispatch) {
     try {
+      console.log('ya casii', idPadelfield, inputUpdate)
       const padelFieldUpdate = await axios.put(
         `${urlDeploy}/field/${idPadelfield}`,
         inputUpdate
       )
-      console.log(padelFieldUpdate.data)
+      console.log('ya meritoooo', padelFieldUpdate.data)
       dispatch(setUpdatePadelfiled(padelFieldUpdate.data))
     } catch (error) {
       console.log(error)
@@ -382,6 +390,17 @@ export function PadelFieldDataByOwner(array) {
         console.log('PadelFieldDataByOwner', padelfieldsOwner)
       }
       dispatch(getPadelFieldByOwner(array))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export function catchTempPadel(idpadel) {
+  return function (dispatch) {
+    try {
+      console.log('en el rtk es', idpadel)
+      dispatch(catchIdPadelTemp(idpadel))
     } catch (error) {
       console.log(error)
     }

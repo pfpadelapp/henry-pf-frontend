@@ -33,7 +33,13 @@ import {
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogBody,
-  AlertDialogFooter
+  AlertDialogFooter,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from '@chakra-ui/react'
 import { NavBar } from '../NavBar/NavBar'
 import Sidebar from '../Sidebar/Sidebar'
@@ -45,7 +51,7 @@ import Swal from 'sweetalert2'
 import { useEffect, useRef, useState } from 'react'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPadelFieldsById, removePadelfieldOwner } from '../../redux/padelField/padelFieldSlice'
+import { catchTempPadel, fetchAllPadelFields, getPadelFieldsById, removePadelfieldOwner } from '../../redux/padelField/padelFieldSlice'
 import { getUpdateUser } from '../../redux/users/usersSlice'
 import axios from 'axios'
 
@@ -55,18 +61,8 @@ export default function Panel() {
   const navigate = useNavigate()
   const { colorMode } = useColorMode()
   const dataRender = useSelector((state) => state.users.userDetail)
-  const allPadelfields = useSelector((state) => state.padelFields.detailPadelField)
-  const valores = dataRender?.padelFields?.map((elemento) => {
-    return elemento._id
-  })
-  // ----------------------------------DESPUES----------------------------------
-  // for (let i = 0; i < valores.length; i++) {
-  //   const arrayPadelOwner = []
-  //   // console.log(valores[i])
-  //   dispatch(getPadelFieldsById(valores[i]))
-  //   arrayPadelOwner.push(allPadelfields)
-  //   console.log('si funca? ', arrayPadelOwner)
-  // }
+  const allPadelfields = useSelector((state) => state.padelFields.padelField)
+  const idFromRtk = useSelector((state) => state.padelFields.idPadelfieldTemp)
   const [input, setInput] = useState({
     name: '',
     telephone: '',
@@ -89,15 +85,6 @@ export default function Panel() {
       console.log(error)
     }
   }
-  // useEffect(() => {
-  //   dispatch(PadelFieldDataByOwner(valores))
-  // }, [])
-  // console.log(dataRender)
-  // function handleDetailPadelfieldsByOwner () {
-  //   dataRender?.map((padelField) => {
-  //     return dispatch(getPadelFieldsById(padelField._id))
-  //   })
-  // }
   const [errors, setErrors] = useState({})
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = useRef()
@@ -170,11 +157,33 @@ export default function Panel() {
   }
   function handleRemove(e) {
     e.preventDefault()
-    dispatch(removePadelfieldOwner(dataRender.id))
+    console.log('el id en react es ', idFromRtk)
+    dispatch(removePadelfieldOwner(idFromRtk))
+    Swal.fire({
+      icon: 'success',
+      title: 'Operación exitosa!',
+      text: 'Actualizaste los datos',
+      confirmButtonColor: '#98D035'
+    })
+    navigate('/home')
   }
+
+  function handleSetIdPadel(e) {
+    console.log('SE SUPONE QUE MI ID ES ', e)
+    dispatch(catchTempPadel(e))
+  }
+  useEffect(() => {
+    dispatch(fetchAllPadelFields())
+  }, [dispatch])
+
+  const filterPadelfielOwner = allPadelfields?.filter((elem) => elem.user === dataRender.id && elem.isActive === true)
+  // console.log('allPadelfields', allPadelfields)
+  // console.log('allPadelfields', filterPadelfielOwner)
+  // console.log('useer padelfieldddds', dataRender)
+
+  console.log('SE RENDERIZA?????', idFromRtk)
   return isLoading === true ? null : isAuthenticated
     ? (
-
       <>
         <NavBar />
         <Flex>
@@ -188,7 +197,7 @@ export default function Panel() {
             padding={{ base: '', lg: '0 5rem', xl: '0 15rem' }}>
             <Center
               backgroundColor={colorMode == 'dark' ? '#2C313D' : '#F8F8F8'}
-              width='80%'
+              width='90%'
               borderRadius='3xl'
               alignItems='flex-start'
               margin='2vh 0'>
@@ -322,30 +331,32 @@ export default function Panel() {
                         </Tr>
                       </Thead>
                       <Tbody>
-                        {dataRender.padelFields?.length > 0
-                          ? dataRender.padelFields?.map((padelfield, index) => {
+                        {filterPadelfielOwner?.length > 0
+                          ? filterPadelfielOwner?.map((padelfield, index) => {
                             return (
-                              <>
+                              (
                                 <Tr key={index}>
                                   <Td>
                                     <Flex gap='1rem' alignItems='center'>
-                                      <Avatar size='sm' src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg' />
-                                      { }
+                                      <Avatar size='sm' src={padelfield.image} />
+                                      {padelfield.name}
                                     </Flex>
                                   </Td>
                                   <Td textAlign='center'>
                                     <Link to='/actualizarCancha'>
-                                      <IconButton icon={<BiUpload />} bg='#98D035' />
+                                      <IconButton icon={<BiUpload />} bg='#98D035' value={padelfield.id} onClick={(e) => handleSetIdPadel(padelfield.id)} />
                                     </Link>
                                   </Td>
-                                  <Td onClick={onOpen} textAlign='center'><IconButton icon={<AiFillDelete />} bg='red.500' /></Td>
+                                  <Td onClick={onOpen} textAlign='center'>
+                                    <IconButton icon={<AiFillDelete />} bg='red.500' value={padelfield.id} onClick={(e) => handleSetIdPadel(padelfield.id)} />
+                                  </Td>
                                 </Tr>
-                              </>
+                              )
                             )
                           })
                           : (<Tr>
                             <Td>
-                              No hay info
+                              Todavia no creaste una cancha
                             </Td>
                             <Td>
                               No hay info
