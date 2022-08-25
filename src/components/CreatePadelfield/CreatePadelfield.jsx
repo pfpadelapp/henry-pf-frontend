@@ -139,7 +139,7 @@ export default function CreatePadelfield() {
         ownerId: '',
         availability: ''
       })
-      navigate('/panel')
+      navigate('/home')
     }
   }
   // console.log(input)
@@ -265,6 +265,7 @@ export default function CreatePadelfield() {
                       placeholder='Ingrese el precio de la cancha'
                       type='number'
                     />
+
                   </InputGroup>
                   {errors.price && (
                     <FormHelperText color='red.400'>
@@ -290,17 +291,8 @@ export default function CreatePadelfield() {
                   </Button>
                   <Link to='/panel'>
                     <Button
-                      _hover={{
-                        color: '#98D035',
-                        transition: 'all .5s ease',
-                        backgroundColor: '#E3FFB2'
-                      }}
-                      _active={{
-                        color: '#98D035',
-                        transition: 'all .5s ease',
-                        backgroundColor: '#E3FFB2'
-                      }}
-                      backgroundColor='#98D035'>
+                      marginLeft='1rem'
+                    >
                       Cancelar
                     </Button>
                   </Link>
