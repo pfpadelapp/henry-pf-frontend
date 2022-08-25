@@ -28,7 +28,6 @@ import Contact from '../Contact/Contact'
 import LoginButton from '../LoginButton/LoginButton'
 import { useAuth0 } from '@auth0/auth0-react'
 
-const { user } = useAuth0
 const developers = [
   {
     nombre: 'Yamila Belen Lair',
@@ -77,10 +76,10 @@ const developers = [
     linkedin: 'https://www.linkedin.com/in/eduardo-rios-jaen/'
   }
 ]
-
 export default function SocialProfileSimple() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { colorMode } = useColorMode()
+  const { user } = useAuth0()
   return (
     <>
       <Flex
