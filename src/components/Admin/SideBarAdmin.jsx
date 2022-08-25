@@ -75,6 +75,13 @@ export default function Sidebar() {
             else changeNavSize('small')
           }}
         />
+        <Link to='/home'>
+          <NavItem
+            navSize={navSize}
+            icon={ FiHome }
+            title='Inicio'
+          />
+        </Link>
         <Link to='/admin'>
           {window.location.href.replace('http://127.0.0.1:5173', '') ===
           '/home'
@@ -82,7 +89,7 @@ export default function Sidebar() {
             <NavItem
               navSize={navSize}
               icon={GrUserAdmin}
-              title='Inicio'
+              title='Lista de Administradores'
               link='/'
               active
             />
@@ -92,7 +99,7 @@ export default function Sidebar() {
               navSize={navSize}
               icon={GrUserAdmin}
               link='/'
-              title='Inicio'
+              title='Lista de Administradores'
             />
               )}
         </Link>
