@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllOwners } from '../../redux/owner/ownerSlice'
-import { fetchAllUsers, postUser } from '../../redux/users/usersSlice'
+import { fetchAllUsers, createGoogleUser } from '../../redux/users/usersSlice'
 import { fetchAllPadelFields } from '../../redux/padelField/padelFieldSlice'
 import CardPadel from '../CardPadel/CardPadel.jsx'
 import Sidebar from '../Sidebar/Sidebar'
@@ -35,7 +35,7 @@ export default function Home() {
     // console.log(allPadelField)
     useEffect(() => {
       // dispatch(fetchAllOwners())
-      // dispatch(fetchAllUsers())
+      dispatch(createGoogleUser(user))
       dispatch(fetchAllPadelFields())
       dispatch(fetchAllUsers())
     }, [])
