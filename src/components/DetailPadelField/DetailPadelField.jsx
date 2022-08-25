@@ -200,7 +200,7 @@ export default function DetailPadelField() {
         text: 'Publicaste una reseña',
         confirmButtonColor: '#98D035'
       })
-      // window.location.reload()
+      window.location.reload()
     }
   }
   // console.log('inputtttt', dataRender.id)
