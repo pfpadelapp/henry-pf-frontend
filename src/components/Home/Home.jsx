@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllUsers } from '../../redux/users/usersSlice'
+import { fetchAllUsers, createGoogleUser } from '../../redux/users/usersSlice'
 import { fetchAllPadelFields } from '../../redux/padelField/padelFieldSlice'
 import CardPadel from '../CardPadel/CardPadel.jsx'
 import Sidebar from '../Sidebar/Sidebar'

@@ -102,7 +102,7 @@ export function getDataDetail(email) {
     }
   }
 }
-export function postUser(user) {
+export function createGoogleUser(user) {
   return async function () {
     try {
       // console.log('input que recibo', input)
