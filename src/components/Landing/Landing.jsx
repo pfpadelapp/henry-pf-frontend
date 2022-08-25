@@ -19,7 +19,7 @@ import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { useAuth0 } from '@auth0/auth0-react'
 import Contact from '../Contact/Contact'
-import Slider from '../slider/slider'
+import Slider from '../Slider/Slider'
 
 export function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure()
