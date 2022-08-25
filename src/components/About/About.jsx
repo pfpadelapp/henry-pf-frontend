@@ -25,14 +25,16 @@ import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { NavLink } from 'react-router-dom'
 import Contact from '../Contact/Contact'
-
 import LoginButton from '../LoginButton/LoginButton'
+import { useAuth0 } from '@auth0/auth0-react'
 
+const { user } = useAuth0
 const developers = [
   {
     nombre: 'Yamila Belen Lair',
     team: 'Backend',
-    imagen: 'https://avatars.githubusercontent.com/u/83593236?s=400&u=914d7b8300ecbbd709d420cfb8d7906080889f80&v=4',
+    imagen:
+      'https://avatars.githubusercontent.com/u/83593236?s=400&u=914d7b8300ecbbd709d420cfb8d7906080889f80&v=4',
     linkedin: 'https://www.linkedin.com/in/yamila-belen-lair/'
   },
   {
@@ -51,22 +53,19 @@ const developers = [
   {
     nombre: 'Paul Andres Andia',
     team: 'Backend',
-    imagen:
-      'https://avatars.githubusercontent.com/u/98241120?v=4',
+    imagen: 'https://avatars.githubusercontent.com/u/98241120?v=4',
     linkedin: 'https://www.linkedin.com/in/paulandia/'
   },
   {
     nombre: ' Diego Cano Mera',
     team: 'Full Stack',
-    imagen:
-      'https://avatars.githubusercontent.com/u/57439165?v=4',
+    imagen: 'https://avatars.githubusercontent.com/u/57439165?v=4',
     linkedin: 'https://www.linkedin.com/in/diego-cano-mera-556998146/'
   },
   {
     nombre: 'Cristian Gonzalez Fuentes',
     team: 'Full Stack',
-    imagen:
-      'https://avatars.githubusercontent.com/u/92184989?v=4',
+    imagen: 'https://avatars.githubusercontent.com/u/92184989?v=4',
     linkedin:
       'https://www.linkedin.com/in/cristian-gonzalez-fuentes-developerfullstack/'
   },
@@ -78,9 +77,10 @@ const developers = [
     linkedin: 'https://www.linkedin.com/in/eduardo-rios-jaen/'
   }
 ]
+
 export default function SocialProfileSimple() {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { colorMode } = useColorMode()
   return (
     <>
       <Flex
@@ -113,11 +113,10 @@ export default function SocialProfileSimple() {
               </ModalBody>
             </ModalContent>
           </Modal>
-         
         </HStack>
         <Spacer />
         <HStack as='nav' spacing='5'>
-          <LoginButton />
+          {!user ? <LoginButton /> : null}
           <ToggleColorMode />
         </HStack>
       </Flex>
@@ -132,8 +131,9 @@ export default function SocialProfileSimple() {
           paddingLeft='75px'
           spacing={20}
           columns={{ base: 1, lg: 2, xl: 3 }}>
-          {developers.map((e) => (
+          {developers.map((e, i) => (
             <Box
+              key={i}
               columns={{ base: 1, md: 3 }}
               spacing={10}
               // columns={{ base: 1, lg: 2, xl: 3 }}

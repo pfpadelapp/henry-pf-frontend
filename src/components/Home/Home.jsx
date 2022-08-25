@@ -58,9 +58,9 @@ export default function Home() {
               flexDir='column'
               alignSelf='flex-start'>
               {!allPadelField.length ? (
-                (<Center height='50vh'>
+                <Center height='50vh'>
                   <Spinner size='xl' />
-                </Center>)
+                </Center>
               ) : (
                 <SimpleGrid
                   justifyItems='center'
@@ -68,19 +68,17 @@ export default function Home() {
                   paddingLeft='75px'
                   spacing={20}
                   columns={{ base: 1, lg: 2, xl: 3 }}>
-                  {
-                    allPadelField?.map((card) => (
-                      <CardPadel
-                        key={card.id}
-                        id={card.id}
-                        location={card.location}
-                        image={card.image}
-                        name={card.name}
-                        type={card.type}
-                        price={card.price}
-                      />
-                    ))
-                  }
+                  {allPadelField?.map((card) => (
+                    <CardPadel
+                      key={card.id}
+                      id={card.id}
+                      location={card.location}
+                      image={card.image}
+                      name={card.name}
+                      type={card.type}
+                      price={card.price}
+                    />
+                  ))}
                 </SimpleGrid>
               )}
               {/* <Center margin='4rem 0'>
