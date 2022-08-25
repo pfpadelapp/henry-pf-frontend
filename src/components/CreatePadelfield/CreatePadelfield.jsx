@@ -265,6 +265,7 @@ export default function CreatePadelfield() {
                       placeholder='Ingrese el precio de la cancha'
                       type='number'
                     />
+
                   </InputGroup>
                   {errors.price && (
                     <FormHelperText color='red.400'>
