@@ -13,7 +13,7 @@ export default function Slider() {
         type: 'loop',
         autoplay: true,
         drag: true,
-        interval: 2000,
+        interval: 3000,
         speed: 400,
         rewind: true,
         pagination: false,
