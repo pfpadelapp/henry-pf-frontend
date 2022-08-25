@@ -157,6 +157,7 @@ export default function Panel() {
   }
   function handleRemove(e) {
     e.preventDefault()
+
     console.log('el id en react es ', idFromRtk)
     dispatch(removePadelfieldOwner(idFromRtk))
     Swal.fire({
@@ -198,6 +199,266 @@ export default function Panel() {
             <Center
               backgroundColor={colorMode == 'dark' ? '#2C313D' : '#F8F8F8'}
               width='90%'
+              borderRadius='3xl'
+              alignItems='flex-start'
+              margin='2vh 0'>
+              <Flex
+                flexDirection='column'
+                gap='2.5rem'
+                padding='5rem 0'
+                width='70%'>
+                <Box>
+                  <Flex
+                    flexDirection='row'
+                    paddingBottom='2rem'
+                    alignItems='center'
+                    gap='1rem'>
+                    <Avatar size='xl' src={dataRender?.picture ? dataRender.picture : user.picture} />
+                    <Flex flexDirection='column'>
+                      <Heading>Hola<span style={{ color: '#98D035' }}> {dataRender?.name || user?.picture}</span></Heading>
+                      <Heading size='lg'>bienvenid@ de nuevo!</Heading>
+                    </Flex>
+                  </Flex>
+                </Box>
+                <Box>
+                  <Tabs isFitted variant='enclosed'>
+                    <TabList mb='1em'>
+                      <Tab>Datos de la cuenta</Tab>
+                      <Tab>Modificar datos</Tab>
+                    </TabList>
+                    <TabPanels>
+                      <TabPanel>
+                        <Box lineHeight='2rem'>
+                          <Text padding='1rem 0'>Usuario: {dataRender.name || user?.name}</Text>
+                          <Text padding='1rem 0'>Email: {dataRender.email || user?.email}</Text>
+                          <Text padding='1rem 0'>Telefono: {dataRender.user_metadata?.telePhone ? dataRender.user_metadata?.telePhone : dataRender.user_metadata?.telephone}</Text>
+                        </Box>
+                      </TabPanel>
+                      <TabPanel>
+                        <Box lineHeight='2rem' marginBottom='3rem'>
+                          <Stack>
+                            <FormControl isRequired>
+                              <FormLabel>Nombre de usuario</FormLabel>
+                              <Input
+                                focusBorderColor='#98D035'
+                                name='name'
+                                value={input.name}
+                                variant='flushed'
+                                htmlSize={4}
+                                size='md'
+                                placeholder='Ingrese el nuevo nombre de usuario'
+                                onChange={(e) => handleChange(e)}
+                                type='text'
+                              />
+                              {errors.name && (
+                                <FormHelperText color='red.400'>
+                                  {errors.name}
+                                </FormHelperText>
+                              )}
+                            </FormControl>
+                            <FormControl isRequired>
+                              <FormLabel>Telefono</FormLabel>
+                              <Input
+                                focusBorderColor='#98D035'
+                                name='telephone'
+                                value={input.telephone}
+                                variant='flushed'
+                                htmlSize={4}
+                                size='md'
+                                placeholder='Ingrese el nuevo numero de celular'
+                                onChange={(e) => handleChange(e)}
+                                type='number'
+                              />
+                              {errors.telephone && (
+                                <FormHelperText color='red.400'>
+                                  {errors.telephone}
+                                </FormHelperText>
+                              )}
+                            </FormControl>
+                            <FormControl>
+                              <FormLabel>Imagen</FormLabel>
+                              <InputGroup>
+                                <Input
+                                  focusBorderColor='#98D035'
+                                  name='image'
+                                  value={input.pic}
+                                  variant='flushed'
+                                  htmlSize={4}
+                                  size='md'
+                                  onChange={(e) => uploadImage(e.target.files)}
+                                  type='file'
+                                />
+                              </InputGroup>
+                            </FormControl>
+                          </Stack>
+                        </Box>
+                        <Button
+                          leftIcon={<BiUpload />}
+                          color='#ffffff'
+                          bg='#98D035'
+                          onClick={(e) => handleSubmit(e)}
+                          _hover={{
+                            color: '#98D035',
+                            transition: 'all .5s ease',
+                            backgroundColor: '#E3FFB2'
+                          }}
+                          _active={{
+                            color: '#98D035',
+                            transition: 'all .5s ease',
+                            backgroundColor: '#E3FFB2'
+                          }}
+                          backgroundColor='#98D035'
+                          isDisabled={
+                            !(Object.keys(errors).length === 0 &&
+                              input.name &&
+                              input.telephone)
+                          }>
+                          Actualizar datos
+                        </Button>
+                      </TabPanel>
+                    </TabPanels>
+                  </Tabs>
+                </Box>
+                <Divider />
+                <Box>
+                  <Heading margin='1rem 0'>Tus canchas</Heading>
+                  <TableContainer>
+                    <Table variant='striped' colorScheme='#98D035'>
+                      <Thead>
+                        <Tr>
+                          <Th>Nombre</Th>
+                          <Th textAlign='center'>Actualizar datos</Th>
+                          <Th textAlign='center'>Eliminar cancha</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {dataRender.padelFields?.length > 0
+                          ? dataRender.padelFields?.map((padelfield, index) => {
+                            return (
+                              <>
+                                <Tr key={index}>
+                                  <Td>
+                                    <Flex gap='1rem' alignItems='center'>
+                                      <Avatar size='sm' src='https://tn.com.ar/resizer/DTc339zZUnTPWVqchKDbvi-alm8=/1440x0/smart/cloudfront-us-east-1.images.arcpublishing.com/artear/5JDMLPHLJDWSALLJN7SK5TUDAI.jpg' />
+                                      { }
+                                    </Flex>
+                                  </Td>
+                                  <Td textAlign='center'>
+                                    <Link to='/actualizarCancha'>
+                                      <IconButton icon={<BiUpload />} bg='#98D035' />
+                                    </Link>
+                                  </Td>
+                                  <Td onClick={onOpen} textAlign='center'><IconButton icon={<AiFillDelete />} bg='red.500' /></Td>
+                                </Tr>
+                              </>
+                            )
+                          })
+                          : (<Tr>
+                            <Td>
+                              No hay info
+                            </Td>
+                            <Td>
+                              No hay info
+                            </Td>
+                            <Td>
+                              No hay info
+                            </Td>
+                          </Tr>)}
+                      </Tbody>
+                    </Table>
+                  </TableContainer>
+                  <Divider />
+                  <HStack
+                    width='100%'
+                    justifyContent='space-between'
+                    paddingTop='3rem'
+                    margin='2rem 0'>
+                    <Link to='/crearCancha'>
+                      <Button
+                        color='#ffffff'
+                        _hover={{
+                          color: '#98D035',
+                          transition: 'all .5s ease',
+                          backgroundColor: '#E3FFB2'
+                        }}
+                        _active={{
+                          color: '#98D035',
+                          transition: 'all .5s ease',
+                          backgroundColor: '#E3FFB2'
+                        }}
+                        backgroundColor='#98D035'
+                        bg='#98D035'>
+                        Crear cancha
+                      </Button>
+                    </Link>
+                    <Button
+                      _hover={{
+                        color: '#98D035',
+                        transition: 'all .5s ease',
+                        backgroundColor: '#E3FFB2'
+                      }}
+                      _active={{
+                        color: '#98D035',
+                        transition: 'all .5s ease',
+                        backgroundColor: '#E3FFB2'
+                      }}
+                      backgroundColor='#98D035'>
+                      Ver todas las canchas
+                    </Button>
+                  </HStack>
+                </Box>
+              </Flex>
+            </Center>
+            <AlertDialog
+              isOpen={isOpen}
+              leastDestructiveRef={cancelRef}
+              onClose={onClose}
+              isCentered>
+              <AlertDialogOverlay />
+              <AlertDialogContent>
+                <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                  Eliminar cancha
+                </AlertDialogHeader>
+                <AlertDialogBody>
+                  Estas seguro de que quieres eliminar esta cancha?
+                </AlertDialogBody>
+                <AlertDialogFooter>
+                  <Button ref={cancelRef} onClick={onClose}>
+                    Cancelar
+                  </Button>
+                  <Button
+                    bg='red.500'
+                    color='white'
+                    ml={3}
+                    onClick={(e) => {
+                      onClose()
+                      handleRemove(e)
+                    }}>
+                    Eliminar
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </Flex>
+        </Flex>
+      </>
+    )
+    : 
+        user.email_verified ? (
+          <>
+        <NavBar />
+        <Flex>
+          <Sidebar />
+          <Flex
+            marginTop='12vh'
+            marginLeft='75px'
+            width='100%'
+            flexDir='column'
+            alignItems='center'
+            padding={{ base: '', lg: '0 5rem', xl: '0 15rem' }}>
+            <Center
+              backgroundColor={colorMode == 'dark' ? '#2C313D' : '#F8F8F8'}
+              width='80%'
               borderRadius='3xl'
               alignItems='flex-start'
               margin='2vh 0'>
@@ -443,8 +704,5 @@ export default function Panel() {
           </Flex>
         </Flex>
       </>
-    )
-    : (
-      navigate('/')
-    )
+        ) : navigate("/")
 }
