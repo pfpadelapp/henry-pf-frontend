@@ -35,7 +35,9 @@ export default function Home() {
     // console.log(allPadelField)
     useEffect(() => {
       // dispatch(fetchAllOwners())
-      dispatch(createGoogleUser(user))
+      if(isLoading===false && user.email_verified === true){
+        dispatch(createGoogleUser(user))
+      }
       dispatch(fetchAllPadelFields())
       dispatch(fetchAllUsers())
     }, [])
