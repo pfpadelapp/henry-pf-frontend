@@ -1,6 +1,6 @@
 import SearchBar from '../Searchbar/SearchBar'
-import { Flex, Box, Spacer, Text } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Flex, Box, Spacer, Text, Link } from '@chakra-ui/react'
+import { Link as ReachLink } from 'react-router-dom'
 import { useColorMode } from '@chakra-ui/color-mode'
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 
@@ -21,7 +21,7 @@ export function NavBar() {
       borderBottomColor='none'
       borderBottomStyle='solid'
       borderBottomWidth='0px'>
-      <Link to={'/home'}>
+      <Link as={ReachLink} to={'/home'}>
         <Text fontWeight='bold' fontSize='2xl'>
           PadelApp
         </Text>

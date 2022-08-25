@@ -38,24 +38,6 @@ export function Landing() {
         backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}
         borderBottomColor='#F8F1F1'>
         <HStack as='nav' spacing='5'>
-          {user
-            ? (
-            <Link to='/home'>
-              <Button
-                fontSize='15px'
-                backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}>
-                Inicio
-              </Button>
-            </Link>
-              )
-            : (
-            <Button
-              onClick={() => login()}
-              fontSize='15px'
-              backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}>
-              Inicio
-            </Button>
-              )}
           <Button
             onClick={onOpen}
             fontSize='15px'
