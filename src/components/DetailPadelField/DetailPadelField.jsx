@@ -290,7 +290,7 @@ export default function DetailPadelField() {
                     <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                     <Text color='white'> {padelField.review?.length} Reseñas</Text>
                   </HStack>
-                )
+                  )
                 : padelField.ratingsAverage === 2
                   ? (
                     <HStack color='#98D035'>
@@ -301,7 +301,7 @@ export default function DetailPadelField() {
                       <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                       <Text color='white'>{padelField.review?.length} Reseñas</Text>
                     </HStack>
-                  )
+                    )
                   : padelField.ratingsAverage === 3
                     ? (
                       <HStack color='#98D035'>
@@ -312,7 +312,7 @@ export default function DetailPadelField() {
                         <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                         <Text color='white'>{padelField.review?.length} Reseñas</Text>
                       </HStack>
-                    )
+                      )
                     : padelField.ratingsAverage === 4
                       ? (
                         <HStack color='#98D035'>
@@ -323,7 +323,7 @@ export default function DetailPadelField() {
                           <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                           <Text color='white'>{padelField.review?.length} Reseñas</Text>
                         </HStack>
-                      )
+                        )
                       : (
                         <HStack color='#98D035'>
                           <Icon h='2rem' w='2rem' as={AiFillStar} />
@@ -333,7 +333,7 @@ export default function DetailPadelField() {
                           <Icon h='2rem' w='2rem' as={AiFillStar} />
                           <Text color='white'>{padelField.review?.length} Reseñas</Text>
                         </HStack>
-                      )}
+                        )}
               <>
                 <Button
                   marginTop='2rem'
@@ -385,8 +385,8 @@ export default function DetailPadelField() {
                         <Stack w='100%'>
                           {hourByDatePadelFiels.length > 0
                             ? (
-                              hourByDatePadelFiels?.map((element, i) => {
-                                return (
+                                hourByDatePadelFiels?.map((element, i) => {
+                                  return (
                                   <div key={i}>
                                     <Button
                                       width='100%'
@@ -399,9 +399,9 @@ export default function DetailPadelField() {
                                       {element} hs
                                     </Button>
                                   </div>
-                                )
-                              })
-                            )
+                                  )
+                                })
+                              )
                             : (
                               <Stack gap='2rem'>
                                 <Image
@@ -416,7 +416,7 @@ export default function DetailPadelField() {
                                   primero debes seleccionar una fecha
                                 </Text>
                               </Stack>
-                            )}
+                              )}
                           <AlertDialog
                             motionPreset='slideInBottom'
                             leastDestructiveRef={cancelRef}
@@ -818,7 +818,7 @@ export default function DetailPadelField() {
                   <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                   <Text color='white'> {padelField.review?.length} Reseñas</Text>
                 </HStack>
-              )
+                )
               : padelField.ratingsAverage === 2
                 ? (
                   <HStack color='#98D035'>
@@ -829,7 +829,7 @@ export default function DetailPadelField() {
                     <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                     <Text color='white'>{padelField.review?.length} Reseñas</Text>
                   </HStack>
-                )
+                  )
                 : padelField.ratingsAverage === 3
                   ? (
                     <HStack color='#98D035'>
@@ -840,7 +840,7 @@ export default function DetailPadelField() {
                       <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                       <Text color='white'>{padelField.review?.length} Reseñas</Text>
                     </HStack>
-                  )
+                    )
                   : padelField.ratingsAverage === 4
                     ? (
                       <HStack color='#98D035'>
@@ -851,7 +851,7 @@ export default function DetailPadelField() {
                         <Icon h='2rem' w='2rem' as={AiOutlineStar} />
                         <Text color='white'>{padelField.review?.length} Reseñas</Text>
                       </HStack>
-                    )
+                      )
                     : (
                       <HStack color='#98D035'>
                         <Icon h='2rem' w='2rem' as={AiFillStar} />
@@ -861,7 +861,7 @@ export default function DetailPadelField() {
                         <Icon h='2rem' w='2rem' as={AiFillStar} />
                         <Text color='white'>{padelField.review?.length} Reseñas</Text>
                       </HStack>
-                    )}
+                      )}
             <>
               <Button
                 marginTop='2rem'
@@ -913,8 +913,8 @@ export default function DetailPadelField() {
                       <Stack w='100%'>
                         {hourByDatePadelFiels.length > 0
                           ? (
-                            hourByDatePadelFiels?.map((element, i) => {
-                              return (
+                              hourByDatePadelFiels?.map((element, i) => {
+                                return (
                                 <div key={i}>
                                   <Button
                                     width='100%'
@@ -927,9 +927,9 @@ export default function DetailPadelField() {
                                     {element} hs
                                   </Button>
                                 </div>
-                              )
-                            })
-                          )
+                                )
+                              })
+                            )
                           : (
                             <Stack gap='2rem'>
                               <Image
@@ -944,7 +944,7 @@ export default function DetailPadelField() {
                                 primero debes seleccionar una fecha
                               </Text>
                             </Stack>
-                          )}
+                            )}
                         <AlertDialog
                           motionPreset='slideInBottom'
                           leastDestructiveRef={cancelRef}
