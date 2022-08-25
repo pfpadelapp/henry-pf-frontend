@@ -174,12 +174,8 @@ export default function Panel() {
     console.log('SE SUPONE QUE MI ID ES ', e)
     dispatch(catchTempPadel(e))
   }
-  useEffect(() => {
-    dispatch(fetchAllPadelFields())
-  }, [dispatch])
-
   const filterPadelfielOwner = allPadelfields?.filter((elem) => elem.user === dataRender.id && elem.isActive === true)
-  const filterPadelfielOwnerRecents = allPadelfields?.slice(allPadelfields?.length - 3)
+  const filterPadelfielOwnerRecents = filterPadelfielOwner?.slice(filterPadelfielOwner?.length - 3)
   // console.log('allPadelfields', allPadelfields)
   // console.log('allPadelfields', filterPadelfielOwner)
   // console.log('useer padelfieldddds', dataRender)
@@ -434,20 +430,6 @@ export default function Panel() {
                           })}
                         </ModalBody>
                         <ModalFooter>
-                          <Button
-                            bg='#98D035'
-                            _hover={{
-                              color: '#98D035',
-                              backgroundColor: '#E3FFB2'
-                            }}
-                            _active={{
-                              color: '#98D035',
-                              backgroundColor: '#E3FFB2'
-                            }}
-                            onClick={deleteModal.onClose}
-                            color='white' >
-                            Cerrar
-                          </Button>
                         </ModalFooter>
                       </ModalContent>
                     </Modal>
