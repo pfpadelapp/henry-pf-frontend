@@ -13,7 +13,7 @@ import {
   ModalContent,
   ModalHeader
 } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import LoginButton from '../LoginButton/LoginButton'
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 import { useColorMode } from '@chakra-ui/color-mode'
@@ -23,11 +23,8 @@ import Slider from '../Slider/Slider'
 
 export function Landing() {
   const { isOpen, onOpen, onClose } = useDisclosure()
-
   const { colorMode } = useColorMode()
   const { isAuthenticated, loginWithPopup, user } = useAuth0()
-
-  console.log(user)
 
   const login = async () => {
     await loginWithPopup()
@@ -41,7 +38,7 @@ export function Landing() {
         backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}
         borderBottomColor='#F8F1F1'>
         <HStack as='nav' spacing='5'>
-          {isAuthenticated
+          {user
             ? (
             <Link to='/home'>
               <Button
@@ -53,9 +50,7 @@ export function Landing() {
               )
             : (
             <Button
-              onClick={(e) => {
-                login()
-              }}
+              onClick={() => login()}
               fontSize='15px'
               backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}>
               Inicio
@@ -88,6 +83,7 @@ export function Landing() {
         <Spacer />
         <HStack as='nav' spacing='5'>
           {!user ? <LoginButton /> : null}
+          {isAuthenticated ? <Navigate replace to={'/home'} /> : null}
           <ToggleColorMode />
         </HStack>
       </Flex>
