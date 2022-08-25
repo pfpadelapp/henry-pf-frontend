@@ -2,7 +2,6 @@ import {
   Heading,
   Avatar,
   Box,
-  Center,
   Text,
   Stack,
   useDisclosure,
@@ -13,12 +12,19 @@ import {
   Flex,
   SimpleGrid,
   HStack,
-  Spacer
+  Spacer,
+  Modal,
+  ModalCloseButton,
+  ModalBody,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader
 } from '@chakra-ui/react'
 import Footer from '../Footer/Footer'
 import ToggleColorMode from '../ToggleColorMode/ToggleColorMode'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { NavLink } from 'react-router-dom'
+import Contact from '../Contact/Contact'
 
 import LoginButton from '../LoginButton/LoginButton'
 
@@ -26,7 +32,7 @@ const developers = [
   {
     nombre: 'Yamila Belen Lair',
     team: 'Backend',
-    imagen: 'http://gafadeportiva.com/img/cms/Blogs/Yaroslava%20Shedova.jpg',
+    imagen: 'https://avatars.githubusercontent.com/u/83593236?s=400&u=914d7b8300ecbbd709d420cfb8d7906080889f80&v=4',
     linkedin: 'https://www.linkedin.com/in/yamila-belen-lair/'
   },
   {
@@ -39,28 +45,28 @@ const developers = [
   {
     nombre: 'Matias Ferrari',
     team: 'Full Stack',
-    imagen: 'https://mejoratupadel.com/wp-content/uploads/2021/01/Imagen-2.png',
+    imagen: 'https://avatars.githubusercontent.com/u/51061931?v=4',
     linkedin: 'https://www.linkedin.com/in/matias-emanuel-ferrari/'
   },
   {
     nombre: 'Paul Andres Andia',
     team: 'Backend',
     imagen:
-      'https://www.padeladdict.com/wp-content/uploads/2017/05/uso-gafas-deportivas.jpg',
+      'https://avatars.githubusercontent.com/u/98241120?v=4',
     linkedin: 'https://www.linkedin.com/in/paulandia/'
   },
   {
     nombre: ' Diego Cano Mera',
     team: 'Full Stack',
     imagen:
-      'https://www.lens-sport.com/wp-content/uploads/2018/02/gafas-padel-y-gafas-proteccion-padel-1.jpg',
+      'https://avatars.githubusercontent.com/u/57439165?v=4',
     linkedin: 'https://www.linkedin.com/in/diego-cano-mera-556998146/'
   },
   {
     nombre: 'Cristian Gonzalez Fuentes',
     team: 'Full Stack',
     imagen:
-      'https://wptchallenger.com/wp-content/uploads/2022/01/marcello_jardim_destacada_logos_860x650.jpg',
+      'https://avatars.githubusercontent.com/u/92184989?v=4',
     linkedin:
       'https://www.linkedin.com/in/cristian-gonzalez-fuentes-developerfullstack/'
   },
@@ -92,17 +98,22 @@ export default function SocialProfileSimple() {
             </Button>
           </NavLink>
           <Button
+            onClick={onOpen}
             fontSize='15px'
             backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}>
             Contacto
           </Button>
-          <NavLink to='/about'>
-            <Button
-              fontSize='15px'
-              backgroundColor={colorMode === 'dark' ? '#2c313d' : 'white'}>
-              Acerca de Nosotros
-            </Button>
-          </NavLink>
+          <Modal isOpen={isOpen} onClose={onClose}>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader textColor='gray.00'>Contacto</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody pb={6}>
+                <Contact />
+              </ModalBody>
+            </ModalContent>
+          </Modal>
+         
         </HStack>
         <Spacer />
         <HStack as='nav' spacing='5'>
