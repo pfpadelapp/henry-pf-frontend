@@ -139,7 +139,6 @@ export default function CreatePadelfield() {
         ownerId: '',
         availability: ''
       })
-      navigate('/')
     }
   }
   // console.log(input)
