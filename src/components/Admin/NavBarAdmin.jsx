@@ -41,7 +41,7 @@ export default function NavBarAdmin({ onOpen }) {
       borderBottomStyle='solid'
       borderBottomWidth='0px'>
       <HStack as='nav' spacing='5'>
-        <Text>DASHBOARD ADMIN</Text>
+        <Text fontWeight='bold' fontSize='20px'>DASHBOARD ADMIN</Text>
       </HStack>
       <Spacer />
       <HStack as='nav' spacing='5'>
