@@ -45,6 +45,7 @@ export default function Home() {
     // const paginado = (pageNumber) => {
     //   setCurrentPage(pageNumber)
     // }
+    
 
     return isLoading === true ? null : isAuthenticated ? (
       find2 === true ? (
@@ -101,9 +102,65 @@ export default function Home() {
           {/*  2200 */}
           <Footer />
         </>
-      ) : (
-        navigate('/')
-      )
+      ) : 
+        user.email_verified ? (
+          <>
+          <NavBar setCurrentPage={setCurrentPage} />
+          <Flex>
+            <Sidebar current={currentPage} />
+            <Flex
+              width='100%'
+              justifyContent='center'
+              flexDir='column'
+              alignSelf='flex-start'>
+              {!allPadelField.length ? (
+                (<Center height='50vh'>
+                  <Spinner size='xl' />
+                </Center>)
+              ) : (
+                <SimpleGrid
+                  justifyItems='center'
+                  margin='12vh 10vw 0vh 10vw'
+                  paddingLeft='75px'
+                  spacing={20}
+                  columns={{ base: 1, lg: 2, xl: 3 }}>
+                  {
+                    allPadelField?.map((card) => (
+                      <CardPadel
+                        key={card.id}
+                        id={card.id}
+                        location={card.location}
+                        image={card.image}
+                        name={card.name}
+                        type={card.type}
+                        price={card.price}
+                      />
+                    ))
+                  }
+                </SimpleGrid>
+              )}
+              {/* <Center margin='4rem 0'>
+            <Paginado pageFunction={paginado} current={currentPage}/>
+          </Center> */}
+            </Flex>
+          </Flex>
+          <ScrollToTop
+            smooth
+            top='1400'
+            component={<IoIosArrowUp />}
+            style={{
+              background: '#2C313D',
+              paddingLeft: '11px',
+              color: '#98D035',
+              borderRadius: '6rem',
+              justifyContent: 'center'
+            }}
+          />{' '}
+          {/*  2200 */}
+          <Footer />
+        </>
+        ): navigate('/')
+      
     ) : (
       navigate('/')
     )
