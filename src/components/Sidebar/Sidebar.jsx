@@ -143,10 +143,10 @@ export default function Sidebar() {
                 link='/'
                 active
               />
-            )
+              )
             : (
               <NavItem navSize={navSize} icon={FiHome} link='/' title='Inicio' />
-            )}
+              )}
         </Link>
 
         <Flex
@@ -196,7 +196,7 @@ export default function Sidebar() {
                 link='/'
                 active
               />
-            )
+              )
             : (
               <NavItem
                 navSize={navSize}
@@ -204,10 +204,10 @@ export default function Sidebar() {
                 link='/'
                 title='Turnos'
               />
-            )}
+              )}
         </Link>
         {
-          superA === true  && (
+          superA === true && (
             <Link to='/admin'>
               <NavItem navSize={navSize} icon={RiAdminFill} title='Admin Interfaz' />
             </Link>
@@ -215,7 +215,7 @@ export default function Sidebar() {
         }
         {
 
-          admin === true  && (
+          admin === true && (
             <Link to='/admin'>
               <NavItem navSize={navSize} icon={RiAdminFill} title='Admin Interfaz' />
             </Link>
