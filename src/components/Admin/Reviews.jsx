@@ -27,7 +27,7 @@ export default function Reviews() {
 
   async function getReviews() {
     const res = await axios.get(`${urlDeploy}/field/${idField}`)
-    console.log('ok', res.data.review)
+    // console.log('ok', res.data.review)
     setReviews(res.data.review)
   }
 
@@ -39,7 +39,7 @@ export default function Reviews() {
 
   async function handleDelete(reviewId, fieldId, userId) {
     await axios.delete(`${urlDeploy}/reviews/${reviewId}/${fieldId}/${userId}`)
-    console.log('REVIEW BANEADA')
+    // console.log('REVIEW BANEADA')
     // alert('review eliminada exitosamente')
     window.location.reload()
   }

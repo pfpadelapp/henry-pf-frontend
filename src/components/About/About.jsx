@@ -40,7 +40,7 @@ const developers = [
     nombre: 'Abigail Sarzuri',
     team: 'Frontend',
     imagen:
-      'https://www.saludalia.com/Uploads/saludalia.com/ImagenesGrandes/utilizar-gafas-para-jugar-a-padel.jpg',
+      'https://media-exp1.licdn.com/dms/image/C4D03AQGTTJ8gtNuL5w/profile-displayphoto-shrink_800_800/0/1661418669061?e=1666828800&v=beta&t=y-H1NvpWLoJH8xGU2MqRkSJg5ljMeRa-Zqc3qiSPqk4',
     linkedin: 'https://www.linkedin.com/in/abigail-sarzuri-5a4b58174/'
   },
   {

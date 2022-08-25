@@ -43,13 +43,13 @@ export default function Admin() {
 
   async function handleDelete(id) {
     await axios.delete(`${urlDeploy}/user/${id}`)
-    console.log('ADMIN BANEADO')
+    // console.log('ADMIN BANEADO')
     dispatch(fetchAllUsers())
   }
 
   async function disableBanned(id) {
     await axios.put(`${urlDeploy}/user/able/${id}`)
-    console.log('ADMIN DESBANEADO')
+    // console.log('ADMIN DESBANEADO')
     dispatch(fetchAllUsers())
   }
 
@@ -97,31 +97,31 @@ export default function Admin() {
                         <Td>{e.user_metadata.rol}</Td>
                         {e.user_metadata.isActive === true
                           ? (
-                          <Td>
-                            <Button
-                              backgroundColor='#98D035'
-                              color='gray.500'
-                              bg='none'
-                              height='30px'
-                              width='150px'
-                              onClick={() => handleDelete(e.id)}>
-                              Habilitar Admin.
-                            </Button>
-                          </Td>
-                            )
+                            <Td>
+                              <Button
+                                backgroundColor='#98D035'
+                                color='gray.500'
+                                bg='none'
+                                height='30px'
+                                width='150px'
+                                onClick={() => handleDelete(e.id)}>
+                                Habilitar Admin.
+                              </Button>
+                            </Td>
+                          )
                           : (
-                          <Td>
-                            <Button
-                              backgroundColor='#95302f'
-                              color='white'
-                              bg='none'
-                              height='30px'
-                              width='150px'
-                              onClick={() => disableBanned(e.id)}>
-                              Deshabilitar Admin.
-                            </Button>
-                          </Td>
-                            )}
+                            <Td>
+                              <Button
+                                backgroundColor='#95302f'
+                                color='white'
+                                bg='none'
+                                height='30px'
+                                width='150px'
+                                onClick={() => disableBanned(e.id)}>
+                                Deshabilitar Admin.
+                              </Button>
+                            </Td>
+                          )}
                       </Tr>
                     ))}
                 </Tbody>
@@ -132,7 +132,7 @@ export default function Admin() {
         <ModalAdmin isOpen={isOpen} onClose={onClose} />
       </Flex>
     </>
-  ): (
+  ) : (
     navigate('/')
   )
 }

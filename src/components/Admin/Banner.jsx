@@ -44,19 +44,19 @@ export default function Banner() {
   async function handleSubmit() {
     const resU = await axios.get(`${urlDeploy}/admin/searchU?name=${name}`)
     const resT = resU.data
-    console.log(resT)
+    // console.log(resT)
     setUserToDelete(resT)
     // setName('')
   }
 
   async function handleDelete(id, role) {
-    console.log(id)
+    // console.log(id)
     if (role === 'jugador' || role === 'player' || role === 'owner') {
       await axios.delete(`${urlDeploy}/user/${id}`)
     } else {
       await axios.delete(`${urlDeploy}/owner/${id}`)
     }
-    console.log('USUARIO BANEADO')
+    // console.log('USUARIO BANEADO')
     handleSubmit()
     // setName('')
   }
@@ -68,7 +68,7 @@ export default function Banner() {
     } else {
       await axios.put(`${urlDeploy}/owner/able/${id}`)
     }
-    console.log('USUARIO DESBANEADO')
+    // console.log('USUARIO DESBANEADO')
     handleSubmit()
     // setName('')
   }
@@ -91,7 +91,7 @@ export default function Banner() {
             alignItems='flex-start'
             height='calc(230vh - 12vh)'
             margin='2vh 0'>
-              
+
 
             <TableContainer>
               <Flex padding='3%' justifyContent='center'>
@@ -142,31 +142,31 @@ export default function Banner() {
                         <Td>{e.role}</Td>
                         {e.isActive === true
                           ? (
-                          <Td>
-                            <Button
-                              backgroundColor='#98D035'
-                              color='gray.500'
-                              bg='none'
-                              height='30px'
-                              width='130px'
-                              onClick={() => handleDelete(e._id, e.role)}>
-                              Deshabilitar
-                            </Button>
-                          </Td>
-                            )
+                            <Td>
+                              <Button
+                                backgroundColor='#98D035'
+                                color='gray.500'
+                                bg='none'
+                                height='30px'
+                                width='130px'
+                                onClick={() => handleDelete(e._id, e.role)}>
+                                Deshabilitar
+                              </Button>
+                            </Td>
+                          )
                           : (
-                          <Td>
-                            <Button
-                              backgroundColor='#95302f'
-                              color='white'
-                              bg='none'
-                              height='30px'
-                              width='130px'
-                              onClick={() => disableBanned(e._id, e.role)}>
-                              Habilitar
-                            </Button>
-                          </Td>
-                            )}
+                            <Td>
+                              <Button
+                                backgroundColor='#95302f'
+                                color='white'
+                                bg='none'
+                                height='30px'
+                                width='130px'
+                                onClick={() => disableBanned(e._id, e.role)}>
+                                Habilitar
+                              </Button>
+                            </Td>
+                          )}
                       </Tr>
                     ))}
                 </Tbody>
@@ -177,7 +177,7 @@ export default function Banner() {
         <ModalAdmin isOpen={isOpen} onClose={onClose} />
       </Flex>
     </>
-  ): (
+  ) : (
     navigate('/')
   )
 }

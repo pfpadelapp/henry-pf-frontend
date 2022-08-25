@@ -159,7 +159,7 @@ export default function Panel() {
   }
   function handleRemove(e) {
     e.preventDefault()
-    console.log('el id en react es ', idFromRtk)
+    // console.log('el id en react es ', idFromRtk)
     dispatch(removePadelfieldOwner(idFromRtk))
     Swal.fire({
       icon: 'success',
@@ -171,7 +171,7 @@ export default function Panel() {
   }
 
   function handleSetIdPadel(e) {
-    console.log('SE SUPONE QUE MI ID ES ', e)
+    // console.log('SE SUPONE QUE MI ID ES ', e)
     dispatch(catchTempPadel(e))
   }
   const filterPadelfielOwner = allPadelfields?.filter((elem) => elem.user === dataRender.id && elem.isActive === true)
@@ -180,7 +180,7 @@ export default function Panel() {
   // console.log('allPadelfields', filterPadelfielOwner)
   // console.log('useer padelfieldddds', dataRender)
 
-  console.log('SE RENDERIZA?????', idFromRtk)
+  // console.log('SE RENDERIZA?????', idFromRtk)
   return isLoading === true ? null : isAuthenticated
     ? (
       <>
@@ -414,16 +414,18 @@ export default function Panel() {
                         <ModalBody>
                           {filterPadelfielOwner?.map((padelfield, index) => {
                             return (
-                              <Flex key={index}>
-                                <Flex gap='1rem' alignItems='center'>
+                              <Flex key={index} gap='2rem' marginBottom='1rem'>
+                                <Flex width='60%' gap='1rem' alignItems='center'>
                                   <Avatar size='sm' src={padelfield.image} />
                                   {padelfield.name}
                                 </Flex>
-                                <Link to='/actualizarCancha'>
-                                  <IconButton icon={<BiUpload />} bg='#98D035' value={padelfield.id} onClick={(e) => handleSetIdPadel(padelfield.id)} />
-                                </Link>
-                                <Flex onClick={deleteModal.onOpen} textAlign='center'>
-                                  <IconButton icon={<AiFillDelete />} bg='red.500' value={padelfield.id} onClick={(e) => handleSetIdPadel(padelfield.id)} />
+                                <Flex width='60%' justifyContent='flex-end' marginRight='2rem'>
+                                  <Link to='/actualizarCancha'>
+                                    <IconButton marginRight='2rem' icon={<BiUpload />} bg='#98D035' value={padelfield.id} onClick={(e) => handleSetIdPadel(padelfield.id)} />
+                                  </Link>
+                                  <Flex onClick={deleteModal.onOpen} textAlign='center'>
+                                    <IconButton icon={<AiFillDelete />} bg='red.500' value={padelfield.id} onClick={(e) => handleSetIdPadel(padelfield.id)} />
+                                  </Flex>
                                 </Flex>
                               </Flex>
                             )
