@@ -56,7 +56,7 @@ export default function ModalAdmin({ isOpen, onClose }) {
     } else {
       const resU = await axios.get(`${urlDeploy}/user`)
       const allUsers = resU.data
-      const userAd = allUsers.filter((e) => e.email === formInfo.email)
+      const userAd = allUsers?.filter((e) => e.email === formInfo.email)
       if (userAd.length > 0) {
         const idNewUser = userAd[0].id
         const r = await axios.put(`${urlDeploy}/user/${idNewUser}/admin`)
@@ -81,9 +81,9 @@ export default function ModalAdmin({ isOpen, onClose }) {
 
         <ModalHeader justifyContent='center' fontSize='15px' textColor='gray.00'>
           <IconButton
-          background='none'
-          mt={0}
-          icon={<FiAlertTriangle />}
+            background='none'
+            mt={0}
+            icon={<FiAlertTriangle />}
           />Ingrese el email del usuario que desea hacer administrador</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6} >

@@ -17,7 +17,7 @@ export default function NavBarAdmin({ onOpen }) {
   const navigate = useNavigate()
 
   if (isLoading === false) {
-    const find = allUsers.filter((e) => { return e.email === user.email })
+    const find = allUsers?.filter((e) => { return e.email === user.email })
     var superA = find[0]?.user_metadata.isSuperAdmin
     var admin = find[0]?.user_metadata.isAdmin
   }
@@ -47,18 +47,18 @@ export default function NavBarAdmin({ onOpen }) {
       <HStack as='nav' spacing='5'>
         <ToggleColorMode />
         {
-          superA === true  && (
-              <Button
+          superA === true && (
+            <Button
               fontSize='15px'
               onClick={onOpen}
               backgroundColor={colorMode === 'dark' ? '#98D035' : '#98D035'}>
               + Crear Admin
             </Button>
-            )
-          }
+          )
+        }
       </HStack>
     </Flex>
-  ): (
+  ) : (
     navigate('/')
   )
 }

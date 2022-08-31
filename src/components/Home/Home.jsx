@@ -20,14 +20,14 @@ export default function Home() {
   const { isAuthenticated, isLoading, user } = useAuth0()
 
   if (isLoading === false) {
-    const find = allUsers.filter((e) => {
+    const find = allUsers?.filter((e) => {
       return e.email === user.email
     })
     const find2 = find[0]?.user_metadata.isActive
     const navigate = useNavigate()
     useEffect(() => {
       // dispatch(fetchAllOwners())
-      if(isLoading===false && user.email_verified === true){
+      if (isLoading === false && user.email_verified === true) {
         dispatch(createGoogleUser(user))
       }
 
@@ -48,30 +48,30 @@ export default function Home() {
               alignSelf='flex-start'>
               {!allPadelField.length
                 ? (
-                <Center height='50vh'>
-                  <Spinner size='xl' />
-                </Center>
-                  )
+                  <Center height='50vh'>
+                    <Spinner size='xl' />
+                  </Center>
+                )
                 : (
-                <SimpleGrid
-                  justifyItems='center'
-                  margin='12vh 10vw 0vh 10vw'
-                  paddingLeft='75px'
-                  spacing={20}
-                  columns={{ base: 1, lg: 2, xl: 3 }}>
-                  {allPadelField?.map((card) => (
-                    <CardPadel
-                      key={card.id}
-                      id={card.id}
-                      location={card.location}
-                      image={card.image}
-                      name={card.name}
-                      type={card.type}
-                      price={card.price}
-                    />
-                  ))}
-                </SimpleGrid>
-                  )}
+                  <SimpleGrid
+                    justifyItems='center'
+                    margin='12vh 10vw 0vh 10vw'
+                    paddingLeft='75px'
+                    spacing={20}
+                    columns={{ base: 1, lg: 2, xl: 3 }}>
+                    {allPadelField?.map((card) => (
+                      <CardPadel
+                        key={card.id}
+                        id={card.id}
+                        location={card.location}
+                        image={card.image}
+                        name={card.name}
+                        type={card.type}
+                        price={card.price}
+                      />
+                    ))}
+                  </SimpleGrid>
+                )}
             </Flex>
           </Flex>
           <ScrollToTop
@@ -101,30 +101,30 @@ export default function Home() {
               alignSelf='flex-start'>
               {!allPadelField.length
                 ? (
-                <Center height='50vh'>
-                  <Spinner size='xl' />
-                </Center>
-                  )
+                  <Center height='50vh'>
+                    <Spinner size='xl' />
+                  </Center>
+                )
                 : (
-                <SimpleGrid
-                  justifyItems='center'
-                  margin='12vh 10vw 0vh 10vw'
-                  paddingLeft='75px'
-                  spacing={20}
-                  columns={{ base: 1, lg: 2, xl: 3 }}>
-                  {allPadelField?.map((card) => (
-                    <CardPadel
-                      key={card.id}
-                      id={card.id}
-                      location={card.location}
-                      image={card.image}
-                      name={card.name}
-                      type={card.type}
-                      price={card.price}
-                    />
-                  ))}
-                </SimpleGrid>
-                  )}
+                  <SimpleGrid
+                    justifyItems='center'
+                    margin='12vh 10vw 0vh 10vw'
+                    paddingLeft='75px'
+                    spacing={20}
+                    columns={{ base: 1, lg: 2, xl: 3 }}>
+                    {allPadelField?.map((card) => (
+                      <CardPadel
+                        key={card.id}
+                        id={card.id}
+                        location={card.location}
+                        image={card.image}
+                        name={card.name}
+                        type={card.type}
+                        price={card.price}
+                      />
+                    ))}
+                  </SimpleGrid>
+                )}
             </Flex>
           </Flex>
           <ScrollToTop

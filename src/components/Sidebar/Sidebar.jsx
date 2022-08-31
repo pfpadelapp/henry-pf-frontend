@@ -61,7 +61,7 @@ export default function Sidebar() {
   const allUsers = useSelector((state) => state.users.users)
 
   if (isLoading === false) {
-    const find = allUsers.filter((e) => { return e.email === user.email })
+    const find = allUsers?.filter((e) => { return e.email === user.email })
     var superA = find[0]?.user_metadata.isSuperAdmin
     var admin = find[0]?.user_metadata.isAdmin
   }
@@ -143,10 +143,10 @@ export default function Sidebar() {
                 link='/'
                 active
               />
-              )
+            )
             : (
               <NavItem navSize={navSize} icon={FiHome} link='/' title='Inicio' />
-              )}
+            )}
         </Link>
 
         <Flex
@@ -196,7 +196,7 @@ export default function Sidebar() {
                 link='/'
                 active
               />
-              )
+            )
             : (
               <NavItem
                 navSize={navSize}
@@ -204,7 +204,7 @@ export default function Sidebar() {
                 link='/'
                 title='Turnos'
               />
-              )}
+            )}
         </Link>
         {
           superA === true && (
