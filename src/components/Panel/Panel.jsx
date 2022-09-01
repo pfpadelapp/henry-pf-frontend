@@ -69,6 +69,10 @@ export default function Panel() {
     telephone: '',
     pic: ''
   })
+  useEffect(() => {
+    dispatch(fetchAllPadelFields())
+  }, [])
+  console.log(allPadelfields)
   const [image, setImage] = useState(null)
   const uploadImage = async (files) => {
     const formData = new FormData()
@@ -117,7 +121,6 @@ export default function Panel() {
     return errors
   }
   function handleChange(e) {
-    e.preventDefault()
     setInput({
       ...input,
       [e.target.name]: e.target.value
@@ -130,7 +133,6 @@ export default function Panel() {
     )
   }
   function handleSubmit(e) {
-    e.preventDefault()
     if (!input.telephone && !input.name) {
       return Swal.fire({
         icon: 'error',
@@ -174,7 +176,7 @@ export default function Panel() {
     // console.log('SE SUPONE QUE MI ID ES ', e)
     dispatch(catchTempPadel(e))
   }
-  const filterPadelfielOwner = allPadelfields?.filter((elem) => elem.user === dataRender.id && elem.isActive === true)
+  const filterPadelfielOwner = allPadelfields?.filter((elem) => elem.user === dataRender?.id && elem.isActive === true)
   const filterPadelfielOwnerRecents = filterPadelfielOwner?.slice(filterPadelfielOwner?.length - 3)
   // console.log('allPadelfields', allPadelfields)
   // console.log('allPadelfields', filterPadelfielOwner)
@@ -213,7 +215,7 @@ export default function Panel() {
                     gap='1rem'>
                     <Avatar size='xl' src={dataRender?.picture ? dataRender.picture : user.picture} />
                     <Flex flexDirection='column'>
-                      <Heading>Hola<span style={{ color: '#98D035' }}> {dataRender.name}</span></Heading>
+                      <Heading>Hola<span style={{ color: '#98D035' }}> {dataRender?.name}</span></Heading>
                       <Heading size='lg'>bienvenid@ de nuevo!</Heading>
                     </Flex>
                   </Flex>
@@ -227,9 +229,9 @@ export default function Panel() {
                     <TabPanels>
                       <TabPanel>
                         <Box lineHeight='2rem'>
-                          <Text padding='1rem 0'>Usuario: {dataRender.name}</Text>
-                          <Text padding='1rem 0'>Email: {dataRender.email}</Text>
-                          <Text padding='1rem 0'>Telefono: {dataRender.user_metadata?.telePhone ? dataRender.user_metadata?.telePhone : dataRender.user_metadata?.telephone}</Text>
+                          <Text padding='1rem 0'>Usuario: {dataRender?.name}</Text>
+                          <Text padding='1rem 0'>Email: {dataRender?.email}</Text>
+                          <Text padding='1rem 0'>Telefono: {dataRender?.user_metadata?.telePhone ? dataRender?.user_metadata?.telePhone : dataRender?.user_metadata?.telephone}</Text>
                         </Box>
                       </TabPanel>
                       <TabPanel>
